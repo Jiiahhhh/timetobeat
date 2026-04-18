@@ -1,0 +1,1957 @@
+[
+  {
+    "id": 1,
+    "title": "Hollow Knight",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/367520/header.jpg",
+    "genres": [
+      "Classic",
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 91,
+    "hltb_main": 27,
+    "hltb_extra": 45,
+    "hltb_completionist": 63,
+    "short_description": "A challenging 2D action-adventure set in a vast underground kingdom of insects and heroes.",
+    "steam_url": "https://store.steampowered.com/app/367520",
+    "trailer_youtube_id": "UAO2urG23S4"
+  },
+  {
+    "id": 2,
+    "title": "Celeste",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/504230/header.jpg",
+    "genres": [
+      "Classic",
+      "Action"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic"
+    ],
+    "rating": 94,
+    "hltb_main": 8,
+    "hltb_extra": 15,
+    "hltb_completionist": 35,
+    "short_description": "Help Madeline survive her inner demons on her journey to the top of Celeste Mountain.",
+    "steam_url": "https://store.steampowered.com/app/504230",
+    "trailer_youtube_id": "iofYDsA2yqc"
+  },
+  {
+    "id": 3,
+    "title": "Firewatch",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/383870/header.jpg",
+    "genres": [
+      "Relaxed",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 82,
+    "hltb_main": 4,
+    "hltb_extra": 6,
+    "hltb_completionist": 8,
+    "short_description": "A mystery set in the Wyoming wilderness where you play as a fire lookout investigating a conspiracy.",
+    "steam_url": "https://store.steampowered.com/app/383870",
+    "trailer_youtube_id": "cXWbVuJqeNg"
+  },
+  {
+    "id": 4,
+    "title": "Stardew Valley",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg",
+    "genres": [
+      "Relaxed"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 90,
+    "hltb_main": 52,
+    "hltb_extra": 105,
+    "hltb_completionist": 175,
+    "short_description": "Build the farm of your dreams in this beloved farming RPG with rich social simulation.",
+    "steam_url": "https://store.steampowered.com/app/413150",
+    "trailer_youtube_id": "ot7uXNQskhs"
+  },
+  {
+    "id": 5,
+    "title": "Journey",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/638230/header.jpg",
+    "genres": [
+      "Relaxed"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic"
+    ],
+    "rating": 92,
+    "hltb_main": 2,
+    "hltb_extra": 3,
+    "hltb_completionist": 4,
+    "short_description": "An interactive parable about two strangers who meet in a vast desert and travel together.",
+    "steam_url": "https://store.steampowered.com/app/638230",
+    "trailer_youtube_id": "mU3nNT4ncFw"
+  },
+  {
+    "id": 6,
+    "title": "A Short Hike",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1055540/header.jpg",
+    "genres": [
+      "Relaxed"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic"
+    ],
+    "rating": 88,
+    "hltb_main": 2,
+    "hltb_extra": 3,
+    "hltb_completionist": 5,
+    "short_description": "A short relaxing adventure about hiking to the top of a mountain at your own pace.",
+    "steam_url": "https://store.steampowered.com/app/1055540",
+    "trailer_youtube_id": "_yqgK-6E6Qo"
+  },
+  {
+    "id": 7,
+    "title": "Hades",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg",
+    "genres": [
+      "Action",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic"
+    ],
+    "rating": 93,
+    "hltb_main": 22,
+    "hltb_extra": 65,
+    "hltb_completionist": 95,
+    "short_description": "Defy the god of death as you hack and slash your way out of the Underworld in this rogue-like dungeon crawler.",
+    "steam_url": "https://store.steampowered.com/app/1145360",
+    "trailer_youtube_id": "mD8BNcwCAhw"
+  },
+  {
+    "id": 8,
+    "title": "Doom Eternal",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg",
+    "genres": [
+      "Action"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic"
+    ],
+    "rating": 88,
+    "hltb_main": 13,
+    "hltb_extra": 17,
+    "hltb_completionist": 25,
+    "short_description": "The ultimate combination of speed and power as you rip and tear through Hell's armies across dimensions.",
+    "steam_url": "https://store.steampowered.com/app/782330",
+    "trailer_youtube_id": "FkklG9MA0vM"
+  },
+  {
+    "id": 9,
+    "title": "Devil May Cry 5",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/601150/header.jpg",
+    "genres": [
+      "Action"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 87,
+    "hltb_main": 12,
+    "hltb_extra": 20,
+    "hltb_completionist": 48,
+    "short_description": "A stylish action game where three demon hunters must unite to prevent a demon tree from devouring humanity.",
+    "steam_url": "https://store.steampowered.com/app/601150",
+    "trailer_youtube_id": "K1Hw1pA4wbg"
+  },
+  {
+    "id": 10,
+    "title": "Sekiro: Shadows Die Twice",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/814380/header.jpg",
+    "genres": [
+      "Action",
+      "RPG"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 90,
+    "hltb_main": 30,
+    "hltb_extra": 42,
+    "hltb_completionist": 68,
+    "short_description": "Carve your own clever path to vengeance in this brutal and unforgiving action-adventure set in late 1500s Japan.",
+    "steam_url": "https://store.steampowered.com/app/814380",
+    "trailer_youtube_id": "rXMX4YJ7Lks"
+  },
+  {
+    "id": 11,
+    "title": "The Witcher 3: Wild Hunt",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg",
+    "genres": [
+      "Story",
+      "RPG"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG",
+      "Epic"
+    ],
+    "rating": 94,
+    "hltb_main": 51,
+    "hltb_extra": 103,
+    "hltb_completionist": 173,
+    "short_description": "Play as a professional monster hunter in a vast open world full of meaningful choices and stunning storytelling.",
+    "steam_url": "https://store.steampowered.com/app/292030",
+    "trailer_youtube_id": "c0i88t0Kacs"
+  },
+  {
+    "id": 12,
+    "title": "Disco Elysium",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/632470/header.jpg",
+    "genres": [
+      "Story",
+      "RPG"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 91,
+    "hltb_main": 21,
+    "hltb_extra": 32,
+    "hltb_completionist": 45,
+    "short_description": "A groundbreaking role playing game where you play a detective solving a murder in a city on the brink of revolution.",
+    "steam_url": "https://store.steampowered.com/app/632470",
+    "trailer_youtube_id": "T_jG-m_2z4Q"
+  },
+  {
+    "id": 13,
+    "title": "What Remains of Edith Finch",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/501300/header.jpg",
+    "genres": [
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic"
+    ],
+    "rating": 89,
+    "hltb_main": 2,
+    "hltb_extra": 3,
+    "hltb_completionist": 3,
+    "short_description": "A collection of strange tales about a family in Washington state as you explore the Finch house.",
+    "steam_url": "https://store.steampowered.com/app/501300",
+    "trailer_youtube_id": "2j1w2KAY-xM"
+  },
+  {
+    "id": 14,
+    "title": "Outer Wilds",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/753640/header.jpg",
+    "genres": [
+      "Story",
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic",
+      "GOG"
+    ],
+    "rating": 95,
+    "hltb_main": 15,
+    "hltb_extra": 20,
+    "hltb_completionist": 28,
+    "short_description": "An award-winning mystery about a solar system trapped in an endless time loop.",
+    "steam_url": "https://store.steampowered.com/app/753640",
+    "trailer_youtube_id": "d6LGnV4wShA"
+  },
+  {
+    "id": 15,
+    "title": "Portal 2",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/620/header.jpg",
+    "genres": [
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 96,
+    "hltb_main": 9,
+    "hltb_extra": 12,
+    "hltb_completionist": 18,
+    "short_description": "A mind-bending puzzle game using portals to navigate increasingly complex test chambers with a darkly funny story.",
+    "steam_url": "https://store.steampowered.com/app/620",
+    "trailer_youtube_id": "tax4e4hBBZc"
+  },
+  {
+    "id": 16,
+    "title": "Baba Is You",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/736260/header.jpg",
+    "genres": [
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 87,
+    "hltb_main": 12,
+    "hltb_extra": 20,
+    "hltb_completionist": 30,
+    "short_description": "A puzzle game where the rules themselves are objects you can interact with to solve seemingly impossible levels.",
+    "steam_url": "https://store.steampowered.com/app/736260",
+    "trailer_youtube_id": "z3_yA4HTJfs"
+  },
+  {
+    "id": 17,
+    "title": "The Witness",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/210970/header.jpg",
+    "genres": [
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 83,
+    "hltb_main": 20,
+    "hltb_extra": 35,
+    "hltb_completionist": 55,
+    "short_description": "Explore a beautiful deserted island filled with hundreds of mysterious puzzles waiting to be solved.",
+    "steam_url": "https://store.steampowered.com/app/210970",
+    "trailer_youtube_id": "KZokQov_aH0"
+  },
+  {
+    "id": 18,
+    "title": "Return of the Obra Dinn",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/653530/header.jpg",
+    "genres": [
+      "Puzzle",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 90,
+    "hltb_main": 8,
+    "hltb_extra": 10,
+    "hltb_completionist": 13,
+    "short_description": "A detective mystery set aboard a ghost ship where you must determine the fate of each crew member.",
+    "steam_url": "https://store.steampowered.com/app/653530",
+    "trailer_youtube_id": "ILolesm8kFY"
+  },
+  {
+    "id": 19,
+    "title": "Elden Ring",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1245620/header.jpg",
+    "genres": [
+      "RPG",
+      "Action"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 95,
+    "hltb_main": 58,
+    "hltb_extra": 95,
+    "hltb_completionist": 133,
+    "short_description": "An open world action RPG set in the Lands Between, crafted by FromSoftware and George R.R. Martin.",
+    "steam_url": "https://store.steampowered.com/app/1245620",
+    "trailer_youtube_id": "E3Huy2cdih0"
+  },
+  {
+    "id": 20,
+    "title": "Baldur's Gate 3",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1086940/header.jpg",
+    "genres": [
+      "RPG",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 97,
+    "hltb_main": 100,
+    "hltb_extra": 175,
+    "hltb_completionist": 250,
+    "short_description": "An epic RPG set in the Forgotten Realms where your choices shape an epic story of fellowship and betrayal.",
+    "steam_url": "https://store.steampowered.com/app/1086940",
+    "trailer_youtube_id": "1T22wetXQDU"
+  },
+  {
+    "id": 21,
+    "title": "Divinity: Original Sin 2",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/435150/header.jpg",
+    "genres": [
+      "RPG"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 93,
+    "hltb_main": 60,
+    "hltb_extra": 100,
+    "hltb_completionist": 145,
+    "short_description": "A deep tactical RPG where you choose your race and origin story in a world where magic is outlawed.",
+    "steam_url": "https://store.steampowered.com/app/435150",
+    "trailer_youtube_id": "bTWTFX8qzPI"
+  },
+  {
+    "id": 22,
+    "title": "Dark Souls III",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/374320/header.jpg",
+    "genres": [
+      "RPG",
+      "Action"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 89,
+    "hltb_main": 32,
+    "hltb_extra": 47,
+    "hltb_completionist": 90,
+    "short_description": "The latest chapter in the Dark Souls series with a breathtaking world full of interconnected areas.",
+    "steam_url": "https://store.steampowered.com/app/374320",
+    "trailer_youtube_id": "_zDZYrIUgKE"
+  },
+  {
+    "id": 23,
+    "title": "Dead Cells",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/588650/header.jpg",
+    "genres": [
+      "Classic",
+      "Action"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 88,
+    "hltb_main": 15,
+    "hltb_extra": 28,
+    "hltb_completionist": 75,
+    "short_description": "A rogue-lite metroidvania that constantly reinvents itself through procedurally generated levels.",
+    "steam_url": "https://store.steampowered.com/app/588650",
+    "trailer_youtube_id": "RvGJUJnt808"
+  },
+  {
+    "id": 24,
+    "title": "Shovel Knight",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/250760/header.jpg",
+    "genres": [
+      "Classic"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 87,
+    "hltb_main": 6,
+    "hltb_extra": 10,
+    "hltb_completionist": 18,
+    "short_description": "A sweeping classic action adventure with memorable characters and an 8-bit visual style.",
+    "steam_url": "https://store.steampowered.com/app/250760",
+    "trailer_youtube_id": "jo-XqOQZeqM"
+  },
+  {
+    "id": 25,
+    "title": "Ori and the Blind Forest",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/261570/header.jpg",
+    "genres": [
+      "Classic",
+      "Relaxed"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 88,
+    "hltb_main": 8,
+    "hltb_extra": 10,
+    "hltb_completionist": 14,
+    "short_description": "A visually stunning platformer about a young orphan destined for heroics in a dangerous forest.",
+    "steam_url": "https://store.steampowered.com/app/261570",
+    "trailer_youtube_id": "cklw-Yu3moE"
+  },
+  {
+    "id": 26,
+    "title": "Cuphead",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/268910/header.jpg",
+    "genres": [
+      "Classic",
+      "Action"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 87,
+    "hltb_main": 8,
+    "hltb_extra": 12,
+    "hltb_completionist": 20,
+    "short_description": "A classic run and gun action game with hand-drawn 1930s cartoon visuals and brutal difficulty.",
+    "steam_url": "https://store.steampowered.com/app/268910",
+    "trailer_youtube_id": "4TjUPXAn2Rg"
+  },
+  {
+    "id": 27,
+    "title": "Inside",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/304430/header.jpg",
+    "genres": [
+      "Classic",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 91,
+    "hltb_main": 3,
+    "hltb_extra": 4,
+    "hltb_completionist": 5,
+    "short_description": "A dark and atmospheric puzzle-platformer from the creators of Limbo with a haunting narrative.",
+    "steam_url": "https://store.steampowered.com/app/304430",
+    "trailer_youtube_id": "yDm6PAgNohU"
+  },
+  {
+    "id": 28,
+    "title": "Limbo",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/48000/header.jpg",
+    "genres": [
+      "Classic",
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 83,
+    "hltb_main": 3,
+    "hltb_extra": 4,
+    "hltb_completionist": 5,
+    "short_description": "A boy enters the land of the dead to search for his sister in this dark and atmospheric puzzle-platformer.",
+    "steam_url": "https://store.steampowered.com/app/48000",
+    "trailer_youtube_id": "a6uvTGB0L1I"
+  },
+  {
+    "id": 29,
+    "title": "Undertale",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/391540/header.jpg",
+    "genres": [
+      "Story",
+      "Classic"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 93,
+    "hltb_main": 6,
+    "hltb_extra": 10,
+    "hltb_completionist": 20,
+    "short_description": "A RPG where you don't have to destroy anyone, with a memorable cast and multiple unique endings.",
+    "steam_url": "https://store.steampowered.com/app/391540",
+    "trailer_youtube_id": "1Hojv0m3TqA"
+  },
+  {
+    "id": 30,
+    "title": "Night in the Woods",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/481510/header.jpg",
+    "genres": [
+      "Story",
+      "Relaxed"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 83,
+    "hltb_main": 7,
+    "hltb_extra": 9,
+    "hltb_completionist": 12,
+    "short_description": "A story-focused adventure game about a college dropout returning to her hometown and reconnecting with old friends.",
+    "steam_url": "https://store.steampowered.com/app/481510",
+    "trailer_youtube_id": "4wJt8Q1jYg0"
+  },
+  {
+    "id": 31,
+    "title": "Oxenfree",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/388880/header.jpg",
+    "genres": [
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 82,
+    "hltb_main": 5,
+    "hltb_extra": 7,
+    "hltb_completionist": 9,
+    "short_description": "A supernatural thriller about a group of friends who unwittingly open a ghostly rift.",
+    "steam_url": "https://store.steampowered.com/app/388880",
+    "trailer_youtube_id": "kH_gL1_i-sI"
+  },
+  {
+    "id": 32,
+    "title": "Gris",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/924970/header.jpg",
+    "genres": [
+      "Relaxed"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 83,
+    "hltb_main": 4,
+    "hltb_extra": 5,
+    "hltb_completionist": 6,
+    "short_description": "A serene and evocative experience about a young girl lost in her own world dealing with a painful experience.",
+    "steam_url": "https://store.steampowered.com/app/924970",
+    "trailer_youtube_id": "B0g1e9rM9hA"
+  },
+  {
+    "id": 33,
+    "title": "Spiritfarer",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/972660/header.jpg",
+    "genres": [
+      "Relaxed",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG",
+      "Epic"
+    ],
+    "rating": 86,
+    "hltb_main": 30,
+    "hltb_extra": 40,
+    "hltb_completionist": 52,
+    "short_description": "A cozy management game about being a ferrymaster for the dead, exploring a fantastical world.",
+    "steam_url": "https://store.steampowered.com/app/972660",
+    "trailer_youtube_id": "YwuERutjK2c"
+  },
+  {
+    "id": 34,
+    "title": "Control",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/870780/header.jpg",
+    "genres": [
+      "Action",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic",
+      "GOG"
+    ],
+    "rating": 85,
+    "hltb_main": 11,
+    "hltb_extra": 17,
+    "hltb_completionist": 28,
+    "short_description": "A third-person action-adventure set in a brutalist government building that hides supernatural secrets.",
+    "steam_url": "https://store.steampowered.com/app/870780",
+    "trailer_youtube_id": "PT5yMfC9LQM"
+  },
+  {
+    "id": 35,
+    "title": "Prey (2017)",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/480490/header.jpg",
+    "genres": [
+      "Action",
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 84,
+    "hltb_main": 18,
+    "hltb_extra": 28,
+    "hltb_completionist": 45,
+    "short_description": "A first-person sci-fi action-RPG set aboard a space station overrun by alien predators.",
+    "steam_url": "https://store.steampowered.com/app/480490",
+    "trailer_youtube_id": "Lq2OQvHkXEQ"
+  },
+  {
+    "id": 36,
+    "title": "BioShock Infinite",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/8870/header.jpg",
+    "genres": [
+      "Story",
+      "Action"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 94,
+    "hltb_main": 12,
+    "hltb_extra": 16,
+    "hltb_completionist": 25,
+    "short_description": "A first-person shooter set in the floating city of Columbia with a mind-bending narrative.",
+    "steam_url": "https://store.steampowered.com/app/8870",
+    "trailer_youtube_id": "bLHW78X1XeE"
+  },
+  {
+    "id": 37,
+    "title": "Titanfall 2",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1237970/header.jpg",
+    "genres": [
+      "Action"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 89,
+    "hltb_main": 6,
+    "hltb_extra": 8,
+    "hltb_completionist": 12,
+    "short_description": "A fast-paced first-person shooter with an exceptional single-player campaign and fluid movement mechanics.",
+    "steam_url": "https://store.steampowered.com/app/1237970",
+    "trailer_youtube_id": "EXwdWuSuiEA"
+  },
+  {
+    "id": 38,
+    "title": "God of War",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1593500/header.jpg",
+    "genres": [
+      "Action",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic"
+    ],
+    "rating": 94,
+    "hltb_main": 21,
+    "hltb_extra": 32,
+    "hltb_completionist": 51,
+    "short_description": "Kratos and his son Atreus journey through the brutal Norse wilds in this emotional action epic.",
+    "steam_url": "https://store.steampowered.com/app/1593500",
+    "trailer_youtube_id": "K0u_kAWLJOA"
+  },
+  {
+    "id": 39,
+    "title": "Red Dead Redemption 2",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg",
+    "genres": [
+      "Story",
+      "RPG"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic"
+    ],
+    "rating": 96,
+    "hltb_main": 49,
+    "hltb_extra": 78,
+    "hltb_completionist": 165,
+    "short_description": "A sweeping epic tale of life in America at the dawn of the modern era featuring an outlaw gang on the run.",
+    "steam_url": "https://store.steampowered.com/app/1174180",
+    "trailer_youtube_id": "gmA6MrX81z4"
+  },
+  {
+    "id": 40,
+    "title": "Cyberpunk 2077",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg",
+    "genres": [
+      "RPG",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG",
+      "Epic"
+    ],
+    "rating": 86,
+    "hltb_main": 25,
+    "hltb_extra": 55,
+    "hltb_completionist": 103,
+    "short_description": "An open-world action-adventure set in Night City, a megalopolis obsessed with power, glamour, and ceaseless modification.",
+    "steam_url": "https://store.steampowered.com/app/1091500",
+    "trailer_youtube_id": "qIcTM8WXFjk"
+  },
+  {
+    "id": 41,
+    "title": "Monster Hunter: World",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/582010/header.jpg",
+    "genres": [
+      "Action",
+      "RPG"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 88,
+    "hltb_main": 48,
+    "hltb_extra": 90,
+    "hltb_completionist": 375,
+    "short_description": "Hunt massive monsters across a living ecosystem in this action RPG with deep weapon customization.",
+    "steam_url": "https://store.steampowered.com/app/582010",
+    "trailer_youtube_id": "Ro6r15wzp2Y"
+  },
+  {
+    "id": 42,
+    "title": "Persona 5 Royal",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1687950/header.jpg",
+    "genres": [
+      "RPG",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic"
+    ],
+    "rating": 95,
+    "hltb_main": 101,
+    "hltb_extra": 120,
+    "hltb_completionist": 145,
+    "short_description": "Don the mask and join the Phantom Thieves as you explore a stylish RPG set in modern-day Tokyo.",
+    "steam_url": "https://store.steampowered.com/app/1687950",
+    "trailer_youtube_id": "D_A59h7k0tM"
+  },
+  {
+    "id": 43,
+    "title": "Subnautica",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/264710/header.jpg",
+    "genres": [
+      "Relaxed",
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic",
+      "GOG"
+    ],
+    "rating": 88,
+    "hltb_main": 29,
+    "hltb_extra": 42,
+    "hltb_completionist": 57,
+    "short_description": "Descend into the depths of an alien underwater world and survive its mysterious ecosystem.",
+    "steam_url": "https://store.steampowered.com/app/264710",
+    "trailer_youtube_id": "Rz2SNm8VguE"
+  },
+  {
+    "id": 44,
+    "title": "Terraria",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg",
+    "genres": [
+      "Classic",
+      "Relaxed"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 92,
+    "hltb_main": 58,
+    "hltb_extra": 120,
+    "hltb_completionist": 250,
+    "short_description": "Dig, fight, explore and build in a 2D sandbox adventure with endless possibilities.",
+    "steam_url": "https://store.steampowered.com/app/105600",
+    "trailer_youtube_id": "w7uOhFTrrq0"
+  },
+  {
+    "id": 45,
+    "title": "Into the Breach",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/590380/header.jpg",
+    "genres": [
+      "Puzzle",
+      "Classic"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG",
+      "Epic"
+    ],
+    "rating": 90,
+    "hltb_main": 9,
+    "hltb_extra": 20,
+    "hltb_completionist": 60,
+    "short_description": "Control powerful mechs from the future to defend humanity against a monstrous swarm in turn-based battles.",
+    "steam_url": "https://store.steampowered.com/app/590380",
+    "trailer_youtube_id": "0yYk9zD37Zc"
+  },
+  {
+    "id": 46,
+    "title": "Slay the Spire",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/646570/header.jpg",
+    "genres": [
+      "Puzzle",
+      "Action"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 89,
+    "hltb_main": 20,
+    "hltb_extra": 55,
+    "hltb_completionist": 100,
+    "short_description": "Craft a unique deck, encounter bizarre creatures, and discover relics of immense power in this roguelike deckbuilder.",
+    "steam_url": "https://store.steampowered.com/app/646570",
+    "trailer_youtube_id": "1kEwQvNlFwA"
+  },
+  {
+    "id": 47,
+    "title": "FTL: Faster Than Light",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/212680/header.jpg",
+    "genres": [
+      "Puzzle",
+      "Classic"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 84,
+    "hltb_main": 10,
+    "hltb_extra": 25,
+    "hltb_completionist": 60,
+    "short_description": "A spaceship simulation roguelike where you manage your crew and fight through a randomly generated galaxy.",
+    "steam_url": "https://store.steampowered.com/app/212680",
+    "trailer_youtube_id": "dK-dITxT8O0"
+  },
+  {
+    "id": 48,
+    "title": "Ori and the Will of the Wisps",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1057090/header.jpg",
+    "genres": [
+      "Classic",
+      "Relaxed"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 90,
+    "hltb_main": 9,
+    "hltb_extra": 12,
+    "hltb_completionist": 18,
+    "short_description": "Continue Ori's journey in a beautifully crafted sequel with expanded combat and exploration.",
+    "steam_url": "https://store.steampowered.com/app/1057090",
+    "trailer_youtube_id": "2reK8kGEqJw"
+  },
+  {
+    "id": 49,
+    "title": "Katana ZERO",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/460950/header.jpg",
+    "genres": [
+      "Action",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 88,
+    "hltb_main": 4,
+    "hltb_extra": 6,
+    "hltb_completionist": 8,
+    "short_description": "A stylish neo-noir action platformer where you slash through enemies using drugs, time manipulation, and lightning reflexes.",
+    "steam_url": "https://store.steampowered.com/app/460950",
+    "trailer_youtube_id": "zXzP3I7UuGw"
+  },
+  {
+    "id": 50,
+    "title": "Disco Elysium: The Final Cut",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/632470/header.jpg",
+    "genres": [
+      "Story",
+      "RPG"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 91,
+    "hltb_main": 21,
+    "hltb_extra": 32,
+    "hltb_completionist": 45,
+    "short_description": "The definitive edition of the award-winning RPG with full voice acting and new political vision quests.",
+    "steam_url": "https://store.steampowered.com/app/632470",
+    "trailer_youtube_id": "T_jG-m_2z4Q"
+  },
+  {
+    "id": 51,
+    "title": "Hades II",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1145350/header.jpg",
+    "genres": [
+      "Action",
+      "Story"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 94,
+    "hltb_main": 25,
+    "hltb_extra": 70,
+    "hltb_completionist": 110,
+    "short_description": "The sequel to the award-winning rogue-like dungeon crawler, now featuring Melino\u00eb, Princess of the Underworld.",
+    "steam_url": "https://store.steampowered.com/app/1145350",
+    "trailer_youtube_id": "l-iHDbE1nZ4"
+  },
+  {
+    "id": 52,
+    "title": "Vampire Survivors",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1794680/header.jpg",
+    "genres": [
+      "Action",
+      "Classic"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic"
+    ],
+    "rating": 92,
+    "hltb_main": 10,
+    "hltb_extra": 30,
+    "hltb_completionist": 80,
+    "short_description": "A gothic horror casual game with rogue-lite elements where your choices can allow you to quickly snowball.",
+    "steam_url": "https://store.steampowered.com/app/1794680",
+    "trailer_youtube_id": "QZ9W3zP_Nsc"
+  },
+  {
+    "id": 53,
+    "title": "Resident Evil 4 Remake",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/2050650/header.jpg",
+    "genres": [
+      "Action",
+      "Story"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 93,
+    "hltb_main": 16,
+    "hltb_extra": 22,
+    "hltb_completionist": 35,
+    "short_description": "A reimagining of the iconic survival horror game featuring Leon S. Kennedy on a mission to rescue the President's daughter.",
+    "steam_url": "https://store.steampowered.com/app/2050650",
+    "trailer_youtube_id": "j5Xv2lM9MEs"
+  },
+  {
+    "id": 54,
+    "title": "Deus Ex: Mankind Divided",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/337000/header.jpg",
+    "genres": [
+      "RPG",
+      "Action"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 84,
+    "hltb_main": 17,
+    "hltb_extra": 29,
+    "hltb_completionist": 45,
+    "short_description": "A cyberpunk action RPG where you play an augmented human agent in a society divided by discrimination.",
+    "steam_url": "https://store.steampowered.com/app/337000",
+    "trailer_youtube_id": "q2kd7F3YFz8"
+  },
+  {
+    "id": 55,
+    "title": "Bastion",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/107100/header.jpg",
+    "genres": [
+      "Action",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 86,
+    "hltb_main": 7,
+    "hltb_extra": 10,
+    "hltb_completionist": 15,
+    "short_description": "An action RPG featuring a reactive narrator who marks your every move in a beautifully hand-painted world.",
+    "steam_url": "https://store.steampowered.com/app/107100",
+    "trailer_youtube_id": "Tpt0Z9I0-Lg"
+  },
+  {
+    "id": 56,
+    "title": "Transistor",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/237930/header.jpg",
+    "genres": [
+      "Action",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 85,
+    "hltb_main": 7,
+    "hltb_extra": 10,
+    "hltb_completionist": 15,
+    "short_description": "A sci-fi themed action RPG from Supergiant Games where you wield an extraordinary weapon of unknown power.",
+    "steam_url": "https://store.steampowered.com/app/237930",
+    "trailer_youtube_id": "RT55lch6y_U"
+  },
+  {
+    "id": 57,
+    "title": "Pyre",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/462770/header.jpg",
+    "genres": [
+      "Story",
+      "RPG"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 84,
+    "hltb_main": 11,
+    "hltb_extra": 15,
+    "hltb_completionist": 20,
+    "short_description": "A party-based RPG where you lead a band of exiles through a purgatorial realm to earn their freedom.",
+    "steam_url": "https://store.steampowered.com/app/462770",
+    "trailer_youtube_id": "9Q8x-nN_4aA"
+  },
+  {
+    "id": 58,
+    "title": "Tunic",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/553420/header.jpg",
+    "genres": [
+      "Puzzle",
+      "Classic"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 85,
+    "hltb_main": 12,
+    "hltb_extra": 20,
+    "hltb_completionist": 30,
+    "short_description": "An isometric action adventure about a small fox exploring a ruined land with a mysterious manual to uncover.",
+    "steam_url": "https://store.steampowered.com/app/553420",
+    "trailer_youtube_id": "V-H38iX-R7o"
+  },
+  {
+    "id": 59,
+    "title": "Hob",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/404680/header.jpg",
+    "genres": [
+      "Relaxed",
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 80,
+    "hltb_main": 8,
+    "hltb_extra": 11,
+    "hltb_completionist": 14,
+    "short_description": "An action-adventure in a beautiful and mysterious world where you repair and reshape a broken planet.",
+    "steam_url": "https://store.steampowered.com/app/404680",
+    "trailer_youtube_id": "qCUKH0B0V3w"
+  },
+  {
+    "id": 60,
+    "title": "Chicory: A Colorful Tale",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1123450/header.jpg",
+    "genres": [
+      "Relaxed",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic"
+    ],
+    "rating": 86,
+    "hltb_main": 11,
+    "hltb_extra": 15,
+    "hltb_completionist": 22,
+    "short_description": "A paint-based adventure game about a dog wielding a magic paintbrush who must restore color to a drained world.",
+    "steam_url": "https://store.steampowered.com/app/1123450",
+    "trailer_youtube_id": "P8kG5p3-W8Y"
+  },
+  {
+    "id": 61,
+    "title": "Doki Doki Literature Club",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/698780/header.jpg",
+    "genres": [
+      "Story"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 86,
+    "hltb_main": 4,
+    "hltb_extra": 7,
+    "hltb_completionist": 10,
+    "short_description": "A psychological horror visual novel disguised as a cute anime dating sim that subverts all expectations.",
+    "steam_url": "https://store.steampowered.com/app/698780",
+    "trailer_youtube_id": "w9AWvii8vEw"
+  },
+  {
+    "id": 62,
+    "title": "Omori",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1150690/header.jpg",
+    "genres": [
+      "Story",
+      "RPG"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 90,
+    "hltb_main": 20,
+    "hltb_extra": 30,
+    "hltb_completionist": 50,
+    "short_description": "A surreal psychological horror RPG about a hikikomori boy exploring a dreamlike world with his friends.",
+    "steam_url": "https://store.steampowered.com/app/1150690",
+    "trailer_youtube_id": "A4zOa3d0mBc"
+  },
+  {
+    "id": 63,
+    "title": "Disco Elysium",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/632470/header.jpg",
+    "genres": [
+      "Story",
+      "RPG"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 91,
+    "hltb_main": 21,
+    "hltb_extra": 32,
+    "hltb_completionist": 45,
+    "short_description": "A groundbreaking RPG where you play a detective solving a murder with unprecedented freedom of choice.",
+    "steam_url": "https://store.steampowered.com/app/632470",
+    "trailer_youtube_id": "T_jG-m_2z4Q"
+  },
+  {
+    "id": 64,
+    "title": "Pathfinder: Wrath of the Righteous",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1184370/header.jpg",
+    "genres": [
+      "RPG"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 88,
+    "hltb_main": 80,
+    "hltb_extra": 120,
+    "hltb_completionist": 180,
+    "short_description": "A deep cRPG set in the Pathfinder universe where you lead a crusade against demonic forces.",
+    "steam_url": "https://store.steampowered.com/app/1184370",
+    "trailer_youtube_id": "Q-q4t4qM-W8"
+  },
+  {
+    "id": 65,
+    "title": "Pillars of Eternity II",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/560130/header.jpg",
+    "genres": [
+      "RPG",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 88,
+    "hltb_main": 42,
+    "hltb_extra": 75,
+    "hltb_completionist": 105,
+    "short_description": "Sail the seas and explore the archipelago of the Deadfire in this richly written RPG sequel.",
+    "steam_url": "https://store.steampowered.com/app/560130",
+    "trailer_youtube_id": "O9h8Vp_WEMk"
+  },
+  {
+    "id": 66,
+    "title": "Planescape: Torment Enhanced",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/466300/header.jpg",
+    "genres": [
+      "RPG",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 90,
+    "hltb_main": 25,
+    "hltb_extra": 40,
+    "hltb_completionist": 55,
+    "short_description": "An extraordinary RPG with one central question: What can change the nature of a man?",
+    "steam_url": "https://store.steampowered.com/app/466300",
+    "trailer_youtube_id": "3Fw2zZ9D0oA"
+  },
+  {
+    "id": 67,
+    "title": "Unpacking",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1135690/header.jpg",
+    "genres": [
+      "Relaxed",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 87,
+    "hltb_main": 4,
+    "hltb_extra": 5,
+    "hltb_completionist": 6,
+    "short_description": "A zen puzzle game about the familiar experience of unpacking boxes and finding a home for all your belongings.",
+    "steam_url": "https://store.steampowered.com/app/1135690",
+    "trailer_youtube_id": "wJ_dF-v1sO8"
+  },
+  {
+    "id": 68,
+    "title": "Coffee Talk",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1028310/header.jpg",
+    "genres": [
+      "Relaxed",
+      "Story"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 81,
+    "hltb_main": 4,
+    "hltb_extra": 6,
+    "hltb_completionist": 8,
+    "short_description": "A coffee brewing and conversation game set in a fictional Seattle where fantasy creatures and humans coexist.",
+    "steam_url": "https://store.steampowered.com/app/1028310",
+    "trailer_youtube_id": "cZ2r0R731iA"
+  },
+  {
+    "id": 69,
+    "title": "Alba: A Wildlife Adventure",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1337010/header.jpg",
+    "genres": [
+      "Relaxed"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic"
+    ],
+    "rating": 83,
+    "hltb_main": 3,
+    "hltb_extra": 5,
+    "hltb_completionist": 6,
+    "short_description": "Join Alba on a mission to protect the local nature reserve and all the animals that live there.",
+    "steam_url": "https://store.steampowered.com/app/1337010",
+    "trailer_youtube_id": "R4aC08qJ1-c"
+  },
+  {
+    "id": 70,
+    "title": "Flower",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/966330/header.jpg",
+    "genres": [
+      "Relaxed"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 84,
+    "hltb_main": 2,
+    "hltb_extra": 3,
+    "hltb_completionist": 4,
+    "short_description": "Experience the dreams of flowers in this beautiful and meditative journey through wind and petals.",
+    "steam_url": "https://store.steampowered.com/app/966330",
+    "trailer_youtube_id": "nJqzXgI44vE"
+  },
+  {
+    "id": 71,
+    "title": "Abzu",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/384190/header.jpg",
+    "genres": [
+      "Relaxed"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic"
+    ],
+    "rating": 82,
+    "hltb_main": 2,
+    "hltb_extra": 3,
+    "hltb_completionist": 4,
+    "short_description": "Dive into a stunning ocean world full of mystery and wonder in this meditative aquatic adventure.",
+    "steam_url": "https://store.steampowered.com/app/384190",
+    "trailer_youtube_id": "P2G54w8H4oM"
+  },
+  {
+    "id": 72,
+    "title": "Euro Truck Simulator 2",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/227300/header.jpg",
+    "genres": [
+      "Relaxed"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 85,
+    "hltb_main": 30,
+    "hltb_extra": 90,
+    "hltb_completionist": 200,
+    "short_description": "Experience the life of a truck driver delivering cargo across beautifully recreated European landscapes.",
+    "steam_url": "https://store.steampowered.com/app/227300",
+    "trailer_youtube_id": "xlTuC18xVII"
+  },
+  {
+    "id": 73,
+    "title": "Talos Principle",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/257510/header.jpg",
+    "genres": [
+      "Puzzle",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 88,
+    "hltb_main": 15,
+    "hltb_extra": 22,
+    "hltb_completionist": 35,
+    "short_description": "A philosophical first-person puzzle game where you must decide whether to trust your creator.",
+    "steam_url": "https://store.steampowered.com/app/257510",
+    "trailer_youtube_id": "mHj_bQ1fXEM"
+  },
+  {
+    "id": 74,
+    "title": "Antichamber",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/219890/header.jpg",
+    "genres": [
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 82,
+    "hltb_main": 5,
+    "hltb_extra": 8,
+    "hltb_completionist": 12,
+    "short_description": "A mind-bending psychological exploration game that turns logic on its head in Escher-like environments.",
+    "steam_url": "https://store.steampowered.com/app/219890",
+    "trailer_youtube_id": "fXqAmJm1aGE"
+  },
+  {
+    "id": 75,
+    "title": "The Room",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/288160/header.jpg",
+    "genres": [
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 83,
+    "hltb_main": 2,
+    "hltb_extra": 3,
+    "hltb_completionist": 4,
+    "short_description": "A physical puzzle game with atmospheric environments and stunning visuals wrapped in intrigue.",
+    "steam_url": "https://store.steampowered.com/app/288160",
+    "trailer_youtube_id": "x2w6K8F8p2A"
+  },
+  {
+    "id": 76,
+    "title": "Myst",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1255560/header.jpg",
+    "genres": [
+      "Puzzle",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG",
+      "Epic"
+    ],
+    "rating": 82,
+    "hltb_main": 6,
+    "hltb_extra": 9,
+    "hltb_completionist": 12,
+    "short_description": "The iconic puzzle adventure game remade in Unreal Engine, featuring fully explorable environments.",
+    "steam_url": "https://store.steampowered.com/app/1255560",
+    "trailer_youtube_id": "pBw8k0V2Gxc"
+  },
+  {
+    "id": 77,
+    "title": "Ace Attorney Trilogy",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/787480/header.jpg",
+    "genres": [
+      "Story",
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 89,
+    "hltb_main": 35,
+    "hltb_extra": 40,
+    "hltb_completionist": 45,
+    "short_description": "Three classic courtroom adventure games featuring rookie defense attorney Phoenix Wright.",
+    "steam_url": "https://store.steampowered.com/app/787480",
+    "trailer_youtube_id": "y0m8aY1l2U4"
+  },
+  {
+    "id": 78,
+    "title": "Danganronpa 1-2 Reload",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/413410/header.jpg",
+    "genres": [
+      "Story",
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 88,
+    "hltb_main": 30,
+    "hltb_extra": 38,
+    "hltb_completionist": 50,
+    "short_description": "A twisted murder mystery visual novel where students must investigate crimes to escape a sadistic bear.",
+    "steam_url": "https://store.steampowered.com/app/413410",
+    "trailer_youtube_id": "v4E_W8p9WcE"
+  },
+  {
+    "id": 79,
+    "title": "NieR: Automata",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/524220/header.jpg",
+    "genres": [
+      "Action",
+      "Story"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 90,
+    "hltb_main": 21,
+    "hltb_extra": 38,
+    "hltb_completionist": 61,
+    "short_description": "An action RPG set in a post-apocalyptic world where androids wage a proxy war against machines.",
+    "steam_url": "https://store.steampowered.com/app/524220",
+    "trailer_youtube_id": "ARHVsBbyzXU"
+  },
+  {
+    "id": 80,
+    "title": "Ghostrunner",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1139220/header.jpg",
+    "genres": [
+      "Action"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG",
+      "Epic"
+    ],
+    "rating": 84,
+    "hltb_main": 7,
+    "hltb_extra": 10,
+    "hltb_completionist": 15,
+    "short_description": "A lightning-fast cyberpunk action game about a warrior ascending a megastructure city one brutal death at a time.",
+    "steam_url": "https://store.steampowered.com/app/1139220",
+    "trailer_youtube_id": "PoRzRB8bIoE"
+  },
+  {
+    "id": 81,
+    "title": "Hyper Light Drifter",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/257850/header.jpg",
+    "genres": [
+      "Action",
+      "Classic"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 86,
+    "hltb_main": 8,
+    "hltb_extra": 12,
+    "hltb_completionist": 20,
+    "short_description": "An action adventure RPG in the vein of classic titles with gorgeous pixel art and wordless storytelling.",
+    "steam_url": "https://store.steampowered.com/app/257850",
+    "trailer_youtube_id": "uNENfF3O_wY"
+  },
+  {
+    "id": 82,
+    "title": "Enter the Gungeon",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/311690/header.jpg",
+    "genres": [
+      "Action",
+      "Classic"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG",
+      "Epic"
+    ],
+    "rating": 87,
+    "hltb_main": 12,
+    "hltb_extra": 35,
+    "hltb_completionist": 100,
+    "short_description": "A bullet hell dungeon crawler following a band of misfits seeking a gun to kill their pasts.",
+    "steam_url": "https://store.steampowered.com/app/311690",
+    "trailer_youtube_id": "1Yw0pQx3O0w"
+  },
+  {
+    "id": 83,
+    "title": "Risk of Rain 2",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/632360/header.jpg",
+    "genres": [
+      "Action"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 87,
+    "hltb_main": 12,
+    "hltb_extra": 35,
+    "hltb_completionist": 120,
+    "short_description": "A third-person roguelike shooter where you fight alien monsters and grow exponentially powerful.",
+    "steam_url": "https://store.steampowered.com/app/632360",
+    "trailer_youtube_id": "Z1m_tQp9hZg"
+  },
+  {
+    "id": 84,
+    "title": "Spelunky 2",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/418530/header.jpg",
+    "genres": [
+      "Classic",
+      "Action"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 90,
+    "hltb_main": 10,
+    "hltb_extra": 30,
+    "hltb_completionist": 100,
+    "short_description": "Master the danger of the mines in this punishingly hard but rewarding platformer roguelike sequel.",
+    "steam_url": "https://store.steampowered.com/app/418530",
+    "trailer_youtube_id": "nZ5vQf3z9K4"
+  },
+  {
+    "id": 85,
+    "title": "Salt and Sanctuary",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/283640/header.jpg",
+    "genres": [
+      "Action",
+      "RPG"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 83,
+    "hltb_main": 18,
+    "hltb_extra": 28,
+    "hltb_completionist": 45,
+    "short_description": "A dark 2D action RPG combining the punishing gameplay of Dark Souls with metroidvania exploration.",
+    "steam_url": "https://store.steampowered.com/app/283640",
+    "trailer_youtube_id": "b9R8G0r2aCg"
+  },
+  {
+    "id": 86,
+    "title": "Blasphemous",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/774361/header.jpg",
+    "genres": [
+      "Action",
+      "Classic"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 82,
+    "hltb_main": 16,
+    "hltb_extra": 22,
+    "hltb_completionist": 35,
+    "short_description": "A brutal action platformer with heavy Soulslike elements set in a cursed, twisted world of dark Spanish folklore.",
+    "steam_url": "https://store.steampowered.com/app/774361",
+    "trailer_youtube_id": "uF8A9b1T2Y0"
+  },
+  {
+    "id": 87,
+    "title": "Metroid Dread",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1059990/header.jpg",
+    "genres": [
+      "Classic",
+      "Action"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 88,
+    "hltb_main": 9,
+    "hltb_extra": 13,
+    "hltb_completionist": 18,
+    "short_description": "Samus faces a terrifying new threat as she explores the dangerous planet ZDR in this side-scrolling action game.",
+    "steam_url": "https://store.steampowered.com/app/1059990",
+    "trailer_youtube_id": "ER_x4vXS3Ag"
+  },
+  {
+    "id": 88,
+    "title": "Graveyard Keeper",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/599140/header.jpg",
+    "genres": [
+      "Relaxed"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 80,
+    "hltb_main": 25,
+    "hltb_extra": 45,
+    "hltb_completionist": 70,
+    "short_description": "Manage a medieval graveyard while discovering the mysteries of a nearby town in this darkly humorous sim.",
+    "steam_url": "https://store.steampowered.com/app/599140",
+    "trailer_youtube_id": "A-M60u9m67M"
+  },
+  {
+    "id": 89,
+    "title": "Planet Coaster",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/493340/header.jpg",
+    "genres": [
+      "Relaxed"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 84,
+    "hltb_main": 20,
+    "hltb_extra": 50,
+    "hltb_completionist": 100,
+    "short_description": "Build the theme park of your dreams with unprecedented creative control in this stunning coaster simulator.",
+    "steam_url": "https://store.steampowered.com/app/493340",
+    "trailer_youtube_id": "2vWw9Y-oDxg"
+  },
+  {
+    "id": 90,
+    "title": "Factorio",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/427520/header.jpg",
+    "genres": [
+      "Puzzle",
+      "Relaxed"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 97,
+    "hltb_main": 100,
+    "hltb_extra": 200,
+    "hltb_completionist": 500,
+    "short_description": "Build and manage factories on an alien planet while defending against native creatures in this addictive automation game.",
+    "steam_url": "https://store.steampowered.com/app/427520",
+    "trailer_youtube_id": "KVvXv1Z6EY8"
+  },
+  {
+    "id": 91,
+    "title": "Kenshi",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/233860/header.jpg",
+    "genres": [
+      "RPG"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 83,
+    "hltb_main": 60,
+    "hltb_extra": 120,
+    "hltb_completionist": 300,
+    "short_description": "A free-roaming squad based RPG in a post-apocalyptic world with no story and no hand-holding.",
+    "steam_url": "https://store.steampowered.com/app/233860",
+    "trailer_youtube_id": "v_h2h2xG2_w"
+  },
+  {
+    "id": 92,
+    "title": "Tyranny",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/362960/header.jpg",
+    "genres": [
+      "RPG",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 82,
+    "hltb_main": 22,
+    "hltb_extra": 35,
+    "hltb_completionist": 55,
+    "short_description": "A cRPG where evil has already won and you play as a minion of the overlord shaping the fate of conquered lands.",
+    "steam_url": "https://store.steampowered.com/app/362960",
+    "trailer_youtube_id": "9H8x0w1_qT4"
+  },
+  {
+    "id": 93,
+    "title": "Torchlight II",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/200710/header.jpg",
+    "genres": [
+      "Action",
+      "RPG"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic"
+    ],
+    "rating": 86,
+    "hltb_main": 20,
+    "hltb_extra": 40,
+    "hltb_completionist": 80,
+    "short_description": "An action RPG where you battle monsters through beautiful hand-painted environments in a colorful world.",
+    "steam_url": "https://store.steampowered.com/app/200710",
+    "trailer_youtube_id": "1q_1K2Z0oQ0"
+  },
+  {
+    "id": 94,
+    "title": "This War of Mine",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/282070/header.jpg",
+    "genres": [
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 84,
+    "hltb_main": 10,
+    "hltb_extra": 20,
+    "hltb_completionist": 35,
+    "short_description": "A war survival game where you play as a group of civilians, not soldiers, trying to survive in a besieged city.",
+    "steam_url": "https://store.steampowered.com/app/282070",
+    "trailer_youtube_id": "Hk1qZ1W_a_E"
+  },
+  {
+    "id": 95,
+    "title": "Frostpunk",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/323190/header.jpg",
+    "genres": [
+      "Story",
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG",
+      "Epic"
+    ],
+    "rating": 87,
+    "hltb_main": 13,
+    "hltb_extra": 22,
+    "hltb_completionist": 40,
+    "short_description": "A society survival game where heat means life and you are the ruler of the last city on earth.",
+    "steam_url": "https://store.steampowered.com/app/323190",
+    "trailer_youtube_id": "qqEpCBt_ZgI"
+  },
+  {
+    "id": 96,
+    "title": "Papers Please",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/239030/header.jpg",
+    "genres": [
+      "Puzzle",
+      "Story"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 88,
+    "hltb_main": 8,
+    "hltb_extra": 12,
+    "hltb_completionist": 18,
+    "short_description": "A dystopian document thriller where you play an immigration inspector controlling who can enter a fictional country.",
+    "steam_url": "https://store.steampowered.com/app/239030",
+    "trailer_youtube_id": "_WEuG3X_3aA"
+  },
+  {
+    "id": 97,
+    "title": "Kenshi",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/233860/header.jpg",
+    "genres": [
+      "RPG"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 83,
+    "hltb_main": 60,
+    "hltb_extra": 120,
+    "hltb_completionist": 300,
+    "short_description": "A free-roaming squad RPG set in a post-apocalyptic world with no hand-holding and total freedom.",
+    "steam_url": "https://store.steampowered.com/app/233860",
+    "trailer_youtube_id": "v_h2h2xG2_w"
+  },
+  {
+    "id": 98,
+    "title": "Noita",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/881100/header.jpg",
+    "genres": [
+      "Action",
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam"
+    ],
+    "rating": 88,
+    "hltb_main": 20,
+    "hltb_extra": 60,
+    "hltb_completionist": 200,
+    "short_description": "A magical roguelite where every pixel is physically simulated and you wield wands with unpredictable power.",
+    "steam_url": "https://store.steampowered.com/app/881100",
+    "trailer_youtube_id": "0cDkmQ0F0Jw"
+  },
+  {
+    "id": 99,
+    "title": "A Plague Tale: Innocence",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/752590/header.jpg",
+    "genres": [
+      "Story",
+      "Action"
+    ],
+    "platforms": [
+      "Steam",
+      "Epic",
+      "GOG"
+    ],
+    "rating": 86,
+    "hltb_main": 12,
+    "hltb_extra": 15,
+    "hltb_completionist": 20,
+    "short_description": "Guide Amicia and her brother through a devastating plague and inquisition in 14th century France.",
+    "steam_url": "https://store.steampowered.com/app/752590",
+    "trailer_youtube_id": "b3v_B1n2Otc"
+  },
+  {
+    "id": 100,
+    "title": "Twelve Minutes",
+    "cover_url": "https://cdn.akamai.steamstatic.com/steam/apps/1089870/header.jpg",
+    "genres": [
+      "Story",
+      "Puzzle"
+    ],
+    "platforms": [
+      "Steam",
+      "GOG"
+    ],
+    "rating": 80,
+    "hltb_main": 5,
+    "hltb_extra": 7,
+    "hltb_completionist": 10,
+    "short_description": "A top-down interactive thriller about a man trapped in a time loop trying to uncover the truth.",
+    "steam_url": "https://store.steampowered.com/app/1089870",
+    "trailer_youtube_id": "4WzW8gq-g8Q"
+  }
+]
