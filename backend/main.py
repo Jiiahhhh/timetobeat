@@ -7,7 +7,10 @@ app = FastAPI(title="TimeToBeat API", version="1.0.0")
 # Allow frontend (Next.js) to call backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://timetobeat-production.up.railway.app",  # sementara
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
