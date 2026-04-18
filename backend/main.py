@@ -9,7 +9,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
-        "https://timetobeat-production.up.railway.app",  # sementara
+        "https://timetobeat-saz7.vercel.app",
     ],
     allow_methods=["*"],
     allow_headers=["*"],

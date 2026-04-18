@@ -62,7 +62,7 @@ export default function Results() {
         },
       );
 
-      if (!res.ok) throw new Error("Gagal mengambil data dari server");
+      if (!res.ok) throw new Error("Failed to retrieve data from server");
       const newData = await res.json();
 
       newData.meta.time_available_minutes = timeToSend;
@@ -72,7 +72,7 @@ export default function Results() {
       setSelectedDifficulty(null);
     } catch (err) {
       console.error(err);
-      setError("Ups, server gagal merespons. Pastikan backend sudah berjalan.");
+      setError("Oops, the server failed to respond.");
     } finally {
       setLoading(false);
     }
@@ -114,7 +114,7 @@ export default function Results() {
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             ></path>
           </svg>
-          <p className="text-[#8f98a0]">Menganalisis library...</p>
+          <p className="text-[#8f98a0]">Analyzing library...</p>
         </div>
       </main>
     );
@@ -127,7 +127,7 @@ export default function Results() {
           onClick={() => router.push("/")}
           className="px-4 py-2 border border-[#3d6a8a] text-[#8f98a0] rounded-sm hover:text-[#c6d4df]"
         >
-          Kembali
+          Back
         </button>
       </main>
     );
