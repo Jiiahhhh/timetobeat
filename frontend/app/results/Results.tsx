@@ -84,10 +84,11 @@ export default function Results() {
   }, []);
 
   useEffect(() => {
-    if (data)
+    if (data) {
       setShorterHours(
         Math.round((data.meta.time_available_minutes / 60) * 10) / 10,
       );
+    }
   }, [data]);
 
   if (loading && !data)
@@ -114,20 +115,20 @@ export default function Results() {
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             ></path>
           </svg>
-          <p className="text-[#8f98a0]">Analyzing library...</p>
+          <p className="text-sm text-[#8f98a0]">Analyzing library...</p>
         </div>
       </main>
     );
 
   if (error)
     return (
-      <main className="min-h-screen bg-[#1b2838] flex flex-col items-center justify-center gap-4">
-        <p className="text-red-400">{error}</p>
+      <main className="min-h-screen bg-[#1b2838] flex flex-col items-center justify-center gap-4 p-5 text-center">
+        <p className="text-red-400 text-sm md:text-base">{error}</p>
         <button
           onClick={() => router.push("/")}
-          className="px-4 py-2 border border-[#3d6a8a] text-[#8f98a0] rounded-sm hover:text-[#c6d4df]"
+          className="px-4 py-2 border border-[#3d6a8a] text-[#8f98a0] rounded-sm hover:text-[#c6d4df] transition-colors"
         >
-          Back
+          Back to Home
         </button>
       </main>
     );
@@ -169,22 +170,22 @@ export default function Results() {
 
   return (
     <main className="min-h-screen bg-[#1b2838]">
-      {/* Navbar */}
-      <div className="bg-[#171a21] border-b border-[#2a475e] px-8 py-3 flex items-center justify-between">
-        <h1 className="text-lg font-bold text-[#c6d4df] tracking-wide">
+      {/* Navbar Responsif */}
+      <div className="bg-[#171a21] border-b border-[#2a475e] px-4 md:px-8 py-3 flex items-center justify-between">
+        <h1 className="text-base md:text-lg font-bold text-[#c6d4df] tracking-wide">
           TimeToBeat
         </h1>
         <button
           onClick={() => router.push("/")}
-          className="bg-transparent border border-[#3d6a8a] text-[#8f98a0] text-xs cursor-pointer px-3 py-1.5 rounded-sm hover:text-[#c6d4df] transition-colors"
+          className="bg-transparent border border-[#3d6a8a] text-[#8f98a0] text-[10px] md:text-xs cursor-pointer px-2 py-1.5 md:px-3 md:py-1.5 rounded-sm hover:text-[#c6d4df] transition-colors"
         >
           ← New search
         </button>
       </div>
 
-      <div className="max-w-5xl mx-auto px-8 py-8">
-        {/* Primary card */}
-        <div className="grid grid-cols-[auto_1fr_auto] gap-7 bg-[#2a475e] border border-[#a4d007] rounded-sm p-7 mb-6 items-start relative">
+      <div className="max-w-5xl mx-auto px-4 md:px-8 py-6 md:py-8">
+        {/* Primary Card - 1 Kolom di HP (grid-cols-1), 3 Kolom di Desktop (md:grid-cols-[auto_1fr_auto]) */}
+        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-5 md:gap-7 bg-[#2a475e] border border-[#a4d007] rounded-sm p-5 md:p-7 mb-6 items-start relative">
           {loading && (
             <div className="absolute inset-0 bg-[#2a475e]/80 flex items-center justify-center z-10 rounded-sm">
               <svg
@@ -210,65 +211,71 @@ export default function Results() {
             </div>
           )}
 
-          {data.primary.cover_url ? (
-            <img
-              src={data.primary.cover_url}
-              alt={data.primary.title}
-              className="w-[120px] h-[160px] object-cover rounded-sm shadow-md"
-            />
-          ) : (
-            <div className="w-[120px] h-[160px] bg-[#1b2838] rounded-sm flex items-center justify-center text-3xl shadow-md">
-              🎮
-            </div>
-          )}
+          {/* Cover Gambar - Tengah di HP, Kiri di Desktop */}
+          <div className="flex justify-center md:block">
+            {data.primary.cover_url ? (
+              <img
+                src={data.primary.cover_url}
+                alt={data.primary.title}
+                className="w-[100px] h-[140px] md:w-[120px] md:h-[160px] object-cover rounded-sm shadow-md"
+              />
+            ) : (
+              <div className="w-[100px] h-[140px] md:w-[120px] md:h-[160px] bg-[#1b2838] rounded-sm flex items-center justify-center text-3xl shadow-md">
+                🎮
+              </div>
+            )}
+          </div>
 
-          {/* Info */}
-          <div>
-            <div className="inline-block text-[10px] bg-[#4c6b22] text-[#a4d007] px-2 py-0.5 rounded-sm font-bold mb-2.5 tracking-wider">
+          {/* Info Teks - Rata tengah di HP, Rata kiri di Desktop */}
+          <div className="text-center md:text-left">
+            <div className="inline-block text-[9px] md:text-[10px] bg-[#4c6b22] text-[#a4d007] px-2 py-0.5 rounded-sm font-bold mb-2 tracking-wider">
               TOP PICK
             </div>
             <h2
               onClick={() => setModalGame(data.primary)}
-              className="text-3xl font-bold text-[#c6d4df] mb-2.5 cursor-pointer leading-tight hover:text-[#a4d007] transition-colors"
+              className="text-2xl md:text-3xl font-bold text-[#c6d4df] mb-2.5 cursor-pointer leading-tight hover:text-[#a4d007] transition-colors"
             >
               {data.primary.title}
             </h2>
-            <div className="flex gap-1.5 flex-wrap mb-2">
+
+            <div className="flex justify-center md:justify-start gap-1.5 flex-wrap mb-2">
               {data.primary.genres.map((g) => (
                 <span
                   key={g}
-                  className="text-[11px] text-[#8f98a0] bg-[#1b2838] border border-[#3d6a8a] rounded-sm px-2 py-0.5"
+                  className="text-[10px] md:text-[11px] text-[#8f98a0] bg-[#1b2838] border border-[#3d6a8a] rounded-sm px-2 py-0.5"
                 >
                   {g}
                 </span>
               ))}
               {data.primary.difficulty_label && (
-                <span className="text-[11px] text-[#8f98a0] bg-[#1b2838] border border-[#3d6a8a] rounded-sm px-2 py-0.5">
+                <span className="text-[10px] md:text-[11px] text-[#8f98a0] bg-[#1b2838] border border-[#3d6a8a] rounded-sm px-2 py-0.5">
                   {data.primary.difficulty_label}
                 </span>
               )}
             </div>
-            <div className="flex gap-5 text-[13px] text-[#8f98a0] mb-3.5">
+
+            <div className="flex justify-center md:justify-start gap-4 md:gap-5 text-xs md:text-[13px] text-[#8f98a0] mb-3.5">
               <span>⭐ {data.primary.rating}/100</span>
               <span>🕒 ~{data.primary.main_story}h main story</span>
             </div>
-            <div className="bg-[#1b2838] border border-[#2a475e] rounded-sm px-3.5 py-3 max-w-[420px]">
-              <div className="text-[13px] text-[#a4d007] font-semibold mb-1">
+
+            <div className="bg-[#1b2838] border border-[#2a475e] rounded-sm px-3 md:px-3.5 py-2.5 md:py-3 max-w-full md:max-w-[420px] mx-auto md:mx-0">
+              <div className="text-xs md:text-[13px] text-[#a4d007] font-semibold mb-1">
                 At {Math.round(timeHours * 10) / 10}h/day → finish around{" "}
                 <span className="text-[#c6d4df]">{finishLabel}</span> (
                 {daysToFinish} days)
               </div>
-              <div className="text-[11px] text-[#4c6b22] italic">
+              <div className="text-[10px] md:text-[11px] text-[#4c6b22] italic">
                 Games aren&apos;t deadlines — enjoy every hour of it.
               </div>
             </div>
           </div>
 
-          {/* Actions */}
-          <div className="flex flex-col gap-2 min-w-[200px]">
+          {/* Action Buttons */}
+          <div className="flex flex-col gap-2 w-full md:min-w-[200px] mt-4 md:mt-0">
             <button
               onClick={() => openStore(data.primary)}
-              className="py-2.5 px-4 bg-[#4c6b22] text-[#a4d007] text-[13px] font-bold border-none rounded-sm cursor-pointer hover:bg-[#5a7d28] transition-colors"
+              className="py-2.5 px-4 bg-[#4c6b22] text-[#a4d007] text-xs md:text-[13px] font-bold border-none rounded-sm cursor-pointer hover:bg-[#5a7d28] transition-colors shadow-sm"
             >
               Find on {platformLabel} →
             </button>
@@ -283,7 +290,7 @@ export default function Results() {
               disabled={loading}
               className="py-2 px-4 bg-transparent border border-[#3d6a8a] text-[#8f98a0] text-xs rounded-sm cursor-pointer hover:bg-[#1b2838] disabled:opacity-60 transition-colors"
             >
-              Not this one
+              {loading ? "Finding..." : "Not this one"}
             </button>
 
             {/* Fine tune row */}
@@ -315,14 +322,14 @@ export default function Results() {
               </button>
             </div>
 
-            {/* Shorter panel */}
+            {/* Shorter Panel */}
             {showShorterSlider && (
               <div className="bg-[#1b2838] border border-[#3d6a8a] rounded-sm p-3 mt-1 shadow-inner">
                 <div className="flex justify-between mb-2">
                   <span className="text-[11px] text-[#8f98a0]">
                     Hours per day
                   </span>
-                  <span className="text-[13px] font-bold text-[#a4d007]">
+                  <span className="text-xs md:text-[13px] font-bold text-[#a4d007]">
                     {shorterHours}h
                   </span>
                 </div>
@@ -335,7 +342,7 @@ export default function Results() {
                   onChange={(e) => setShorterHours(parseFloat(e.target.value))}
                   className="w-full accent-[#a4d007] mb-1.5 cursor-pointer"
                 />
-                <div className="flex justify-between text-[10px] text-[#8f98a0] mb-2.5">
+                <div className="flex justify-between text-[9px] md:text-[10px] text-[#8f98a0] mb-2.5">
                   <span>30m</span>
                   <span>2h</span>
                   <span>4h</span>
@@ -356,18 +363,18 @@ export default function Results() {
               </div>
             )}
 
-            {/* Intensity panel */}
+            {/* Intensity Panel */}
             {showIntensePanel && (
               <div className="bg-[#1b2838] border border-[#3d6a8a] rounded-sm p-3 mt-1 shadow-inner">
                 <div className="mb-2.5 p-2 bg-[#2a475e] rounded-sm border border-[#3d6a8a]">
-                  <span className="text-[10px] text-[#8f98a0] block mb-1">
+                  <span className="text-[9px] md:text-[10px] text-[#8f98a0] block mb-1">
                     This game is:
                   </span>
-                  <span className="text-[13px] text-[#c6d4df] font-semibold">
+                  <span className="text-xs md:text-[13px] text-[#c6d4df] font-semibold">
                     {data.primary.difficulty_label || "⚔️ Fair fight"}
                   </span>
                 </div>
-                <p className="text-[11px] text-[#8f98a0] mb-2">
+                <p className="text-[10px] md:text-[11px] text-[#8f98a0] mb-2">
                   I want something:
                 </p>
 
@@ -377,7 +384,7 @@ export default function Results() {
                   return (
                     <label
                       key={opt.val}
-                      className={`flex items-center gap-2 p-1.5 rounded-sm transition-colors ${!isAvailable ? "opacity-40 cursor-not-allowed" : selectedDifficulty === opt.val ? "bg-[#2a3d1a] cursor-pointer" : "bg-transparent cursor-pointer hover:bg-[#2a475e]"}`}
+                      className={`flex items-center gap-2 p-1.5 rounded-sm transition-colors cursor-pointer ${!isAvailable ? "opacity-40 cursor-not-allowed" : selectedDifficulty === opt.val ? "bg-[#2a3d1a]" : "hover:bg-[#2a475e]"}`}
                     >
                       <input
                         type="radio"
@@ -389,11 +396,13 @@ export default function Results() {
                         className="accent-[#a4d007] cursor-inherit"
                       />
                       <span
-                        className={`text-xs ${!isAvailable ? "text-[#8f98a0]" : selectedDifficulty === opt.val ? "text-[#a4d007]" : "text-[#c6d4df]"}`}
+                        className={`text-[11px] md:text-xs ${!isAvailable ? "text-[#8f98a0]" : selectedDifficulty === opt.val ? "text-[#a4d007]" : "text-[#c6d4df]"}`}
                       >
                         {opt.label}{" "}
                         {!isAvailable && (
-                          <span className="italic ml-1 text-[10px]">(N/A)</span>
+                          <span className="italic ml-1 text-[9px] md:text-[10px]">
+                            (N/A)
+                          </span>
                         )}
                       </span>
                     </label>
@@ -409,7 +418,7 @@ export default function Results() {
                     })
                   }
                   disabled={!selectedDifficulty || loading}
-                  className={`w-full py-2 text-xs font-bold border-none rounded-sm mt-2 transition-colors ${selectedDifficulty ? "bg-[#4c6b22] text-[#a4d007] cursor-pointer hover:bg-[#5a7d28]" : "bg-[#2a475e] text-[#8f98a0] cursor-default opacity-60"}`}
+                  className={`w-full py-2 text-[11px] md:text-xs font-bold border-none rounded-sm mt-2 transition-colors ${selectedDifficulty ? "bg-[#4c6b22] text-[#a4d007] cursor-pointer hover:bg-[#5a7d28]" : "bg-[#2a475e] text-[#8f98a0] cursor-default opacity-60"}`}
                 >
                   Find intensity →
                 </button>
@@ -418,11 +427,11 @@ export default function Results() {
           </div>
         </div>
 
-        {/* Alternatives */}
-        <p className="text-[11px] text-[#8f98a0] uppercase tracking-wider mb-2.5 font-semibold">
+        {/* Alternatives - 1 Kolom di HP (grid-cols-1), 2 Kolom di Desktop (sm:grid-cols-2) */}
+        <p className="text-[10px] md:text-[11px] text-[#8f98a0] uppercase tracking-wider mb-2 font-semibold">
           Alternatives
         </p>
-        <div className="grid grid-cols-2 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
           {data.alternatives.map((game) => (
             <AlternativeCard
               key={game.title}
@@ -434,13 +443,12 @@ export default function Results() {
 
         <button
           onClick={() => router.push("/")}
-          className="py-2.5 px-5 bg-transparent border border-[#2a475e] text-[#8f98a0] text-xs rounded-sm cursor-pointer hover:text-[#c6d4df] hover:border-[#3d6a8a] transition-colors"
+          className="py-2.5 px-4 md:px-5 bg-transparent border border-[#2a475e] text-[#8f98a0] text-xs rounded-sm cursor-pointer hover:text-[#c6d4df] hover:border-[#3d6a8a] transition-colors w-full sm:w-auto shadow-sm"
         >
           ← Try with different settings
         </button>
       </div>
 
-      {/* Modal Details Component */}
       {modalGame && (
         <GameModal
           game={modalGame}
