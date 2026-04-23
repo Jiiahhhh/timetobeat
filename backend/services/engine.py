@@ -34,10 +34,7 @@ def get_recommendations(req: RecommendRequest) -> dict:
 
     # Filter by platform
     if req.platform and req.platform != "any":
-        platform_map = {"steam": "Steam", "gog": "GOG", "epic": "Epic"}
-        plat = platform_map.get(req.platform)
-        if plat:
-            filtered = [g for g in filtered if plat in g["platforms"]]
+        filtered = [g for g in filtered if req.platform in g["platforms"]]
 
     # available difficulties before modifier
     available_diffs = list(set([g.get("difficulty") or 3 for g in filtered]))
