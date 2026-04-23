@@ -102,8 +102,9 @@ export default function GameModal({
                   </p>
                   <a
                     href={
-                      game.steam_url ||
-                      `https://store.steampowered.com/search/?term=${encodeURIComponent(game.title)}`
+                      game.steam_app_id
+                        ? `https://store.steampowered.com/app/${game.steam_app_id}`
+                        : `https://store.steampowered.com/search/?term=${encodeURIComponent(game.title)}`
                     }
                     target="_blank"
                     rel="noreferrer"

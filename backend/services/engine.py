@@ -110,7 +110,7 @@ def get_recommendations(req: RecommendRequest) -> dict:
             "difficulty": diff,
             "difficulty_label": DIFFICULTY_LABELS.get(diff, "⚔️ Fair fight"),
             "framing": framing,
-            "steam_url": g.get("steam_url"),
+            "steam_app_id": g.get("steam_app_id"),
             "trailer_youtube_id": g.get("trailer_youtube_id"),
             "short_description": g.get("short_description"),
             "trailer_valid": g.get("trailer_valid") or False,

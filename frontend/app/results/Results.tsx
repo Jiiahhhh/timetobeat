@@ -48,6 +48,7 @@ export default function Results() {
 
       const res = await fetch(
         "https://timetobeat-production.up.railway.app/api/recommend",
+        // "http://localhost:8000/api/recommend",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -64,6 +65,7 @@ export default function Results() {
 
       if (!res.ok) throw new Error("Failed to retrieve data from server");
       const newData = await res.json();
+      console.log("DEBUG DATA DARI BACKEND:", newData);
 
       newData.meta.time_available_minutes = timeToSend;
       setData(newData);
@@ -152,12 +154,19 @@ export default function Results() {
       : data.meta.platform.charAt(0).toUpperCase() +
         data.meta.platform.slice(1);
 
-  const openStore = (game: Game) =>
-    window.open(
-      game.steam_url ||
+  const openStore = (game: Game) => {
+    if (game.steam_app_id) {
+      window.open(
+        `https://store.steampowered.com/app/${game.steam_app_id}`,
+        "_blank",
+      );
+    } else {
+      window.open(
         `https://store.steampowered.com/search/?term=${encodeURIComponent(game.title)}`,
-      "_blank",
-    );
+        "_blank",
+      );
+    }
+  };
 
   const promoteAlternative = (game: Game) => {
     const newAlts = [

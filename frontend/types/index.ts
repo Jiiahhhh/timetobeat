@@ -7,7 +7,7 @@ export interface Game {
   main_story: number;
   main_extra?: number;
   framing: string;
-  steam_url?: string;
+  steam_app_id?: number;
   trailer_youtube_id?: string;
   short_description?: string;
   difficulty?: number;
