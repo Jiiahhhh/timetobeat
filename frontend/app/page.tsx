@@ -199,7 +199,7 @@ export default function Home() {
                 Which platform?
               </h2>
               <p className="text-xs md:text-sm text-[#8f98a0] mb-6">
-                Any PC is selected by default.
+                Any platform is selected by default.
               </p>
 
               <div
@@ -213,7 +213,7 @@ export default function Home() {
                   <div
                     className={`text-sm md:text-base font-bold ${platform === "any" ? "text-[#a4d007]" : "text-[#c6d4df]"}`}
                   >
-                    💻 Any PC
+                    💻 Any OS / Device
                   </div>
                   <div className="text-[10px] md:text-xs text-[#8f98a0]">
                     Recommend from all platforms
@@ -224,12 +224,12 @@ export default function Home() {
                 )}
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-2 mb-8 md:mb-10">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-8 md:mb-10">
                 {PLATFORMS.map((p) => (
                   <button
                     key={p.id}
                     onClick={() => setPlatform(p.id)}
-                    className={`flex-1 py-2.5 md:py-3 text-xs md:text-sm font-semibold rounded-sm transition-all border cursor-pointer ${platform === p.id ? "bg-[#1a3a52] text-[#1a9fff] border-[#1a9fff]" : "bg-[#2a475e] text-[#8f98a0] border-[#3d6a8a] hover:text-[#c6d4df]"}`}
+                    className={`py-2.5 md:py-3 text-xs md:text-sm font-semibold rounded-sm transition-all border cursor-pointer ${platform === p.id ? "bg-[#1a3a52] text-[#1a9fff] border-[#1a9fff]" : "bg-[#2a475e] text-[#8f98a0] border-[#3d6a8a] hover:text-[#c6d4df]"}`}
                   >
                     {p.label}
                   </button>

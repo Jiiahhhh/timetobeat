@@ -285,7 +285,7 @@ export default function Results() {
               onClick={() => openStore(data.primary)}
               className="py-2.5 px-4 bg-[#4c6b22] text-[#a4d007] text-xs md:text-[13px] font-bold border-none rounded-sm cursor-pointer hover:bg-[#5a7d28] transition-colors shadow-sm"
             >
-              Find on {platformLabel} →
+              Find on Steam →
             </button>
             <button
               onClick={() => setModalGame(data.primary)}
