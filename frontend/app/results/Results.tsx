@@ -65,7 +65,6 @@ export default function Results() {
 
       if (!res.ok) throw new Error("Failed to retrieve data from server");
       const newData = await res.json();
-      console.log("DEBUG DATA DARI BACKEND:", newData);
 
       newData.meta.time_available_minutes = timeToSend;
       setData(newData);
