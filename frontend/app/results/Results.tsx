@@ -242,17 +242,34 @@ export default function Results() {
 
           {/* Cover image - centered on mobile, left on desktop */}
           <div className="flex justify-center md:block">
-            {data.primary.cover_portrait_url ? (
-              <img
-                src={data.primary.cover_portrait_url}
-                alt={data.primary.title}
-                className="w-[100px] h-[140px] md:w-[120px] md:h-[160px] object-cover rounded-sm shadow-md"
-              />
-            ) : (
-              <div className="w-[100px] h-[140px] md:w-[120px] md:h-[160px] bg-[#1b2838] rounded-sm flex items-center justify-center text-3xl shadow-md">
-                🎮
-              </div>
-            )}
+            <div className="w-[100px] h-[140px] md:w-[120px] md:h-[160px] bg-[#1b2838] rounded-sm shadow-md flex items-center justify-center text-3xl overflow-hidden">
+              {data.primary.cover_portrait_url || data.primary.cover_url ? (
+                <img
+                  src={
+                    data.primary.cover_portrait_url ||
+                    data.primary.cover_url ||
+                    ""
+                  }
+                  alt={data.primary.title}
+                  className="w-full h-full object-cover rounded-sm"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    const fallback = data.primary.cover_url;
+                    if (fallback && target.src !== fallback) {
+                      target.src = fallback;
+                    } else {
+                      target.replaceWith(
+                        Object.assign(document.createElement("span"), {
+                          textContent: "🎮",
+                        }),
+                      );
+                    }
+                  }}
+                />
+              ) : (
+                <span>🎮</span>
+              )}
+            </div>
           </div>
 
           {/* Text info - centered on mobile, left aligned on desktop */}

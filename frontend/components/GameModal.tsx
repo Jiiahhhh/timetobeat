@@ -43,13 +43,30 @@ export default function GameModal({
         <div className="p-4 md:p-6">
           {/* Cover + info - stacked vertically on mobile, side by side on desktop */}
           <div className="flex flex-col md:flex-row gap-4 md:gap-5 mb-6">
-            {game.cover_portrait_url && (
-              <img
-                src={game.cover_portrait_url}
-                alt={game.title}
-                className="w-[100px] h-[135px] md:w-[100px] md:h-[135px] object-cover rounded-sm shrink-0 shadow-md mx-auto md:mx-0"
-              />
-            )}
+            <div className="w-[100px] h-[135px] md:w-[100px] md:h-[135px] shrink-0 mx-auto md:mx-0 bg-[#1b2838] rounded-sm shadow-md flex items-center justify-center text-3xl overflow-hidden">
+              {game.cover_portrait_url || game.cover_url ? (
+                <img
+                  src={game.cover_portrait_url || game.cover_url || ""}
+                  alt={game.title}
+                  className="w-full h-full object-cover rounded-sm"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    const fallback = game.cover_url;
+                    if (fallback && target.src !== fallback) {
+                      target.src = fallback;
+                    } else {
+                      target.replaceWith(
+                        Object.assign(document.createElement("span"), {
+                          textContent: "🎮",
+                        }),
+                      );
+                    }
+                  }}
+                />
+              ) : (
+                <span>🎮</span>
+              )}
+            </div>
 
             {/* Text centered on mobile, left aligned on desktop */}
             <div className="text-center md:text-left mt-2 md:mt-0">
