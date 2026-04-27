@@ -105,7 +105,7 @@ export default function Home() {
               <input
                 type="range"
                 min={15}
-                max={240}
+                max={480}
                 step={15}
                 value={time}
                 onChange={(e) => setTime(parseInt(e.target.value))}
@@ -116,8 +116,9 @@ export default function Home() {
                 <span>15 min</span>
                 <span>1 hour</span>
                 <span>2 hours</span>
-                <span>3 hours</span>
                 <span>4 hours</span>
+                <span>6 hours</span>
+                <span>8 hours</span>
               </div>
 
               <button
