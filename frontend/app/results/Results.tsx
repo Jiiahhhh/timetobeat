@@ -18,6 +18,7 @@ export default function Results() {
   const [showShorterSlider, setShowShorterSlider] = useState(false);
   const [shorterHours, setShorterHours] = useState(1);
   const [showIntensePanel, setShowIntensePanel] = useState(false);
+  const [shownTitles, setShownTitles] = useState<string[]>([]);
   const [selectedDifficulty, setSelectedDifficulty] = useState<number | null>(
     null,
   );
@@ -34,21 +35,20 @@ export default function Results() {
   }) => {
     setLoading(true);
     setError("");
+
     try {
       const timeToSend =
         opts.overrideMinutes ??
         (data?.meta?.time_available_minutes || initTime);
-      const excludeList =
-        opts.exclude ??
-        (data
-          ? [data.primary.title, ...data.alternatives.map((g) => g.title)]
-          : []);
+
+      // Use shownTitles as exclude list
+      const excludeList = opts.exclude ?? shownTitles;
+
       const vibeToSend = data?.meta?.vibe || initVibe;
       const platformToSend = data?.meta?.platform || initPlatform;
 
       const res = await fetch(
         "https://timetobeat-production.up.railway.app/api/recommend",
-        // "http://localhost:8000/api/recommend",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -64,9 +64,18 @@ export default function Results() {
       );
 
       if (!res.ok) throw new Error("Failed to retrieve data from server");
+
       const newData = await res.json();
 
+      // Update shownTitles with newly displayed games
+      setShownTitles((prev) => [
+        ...prev,
+        newData.primary.title,
+        ...newData.alternatives.map((g: Game) => g.title),
+      ]);
+
       newData.meta.time_available_minutes = timeToSend;
+
       setData(newData);
       setShowShorterSlider(false);
       setShowIntensePanel(false);
@@ -80,7 +89,9 @@ export default function Results() {
   };
 
   useEffect(() => {
+    setShownTitles([]);
     fetchRecommend({ overrideMinutes: initTime, exclude: [] });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -116,6 +127,7 @@ export default function Results() {
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             ></path>
           </svg>
+
           <p className="text-sm text-[#8f98a0]">Analyzing library...</p>
         </div>
       </main>
@@ -125,6 +137,7 @@ export default function Results() {
     return (
       <main className="min-h-screen bg-[#1b2838] flex flex-col items-center justify-center gap-4 p-5 text-center">
         <p className="text-red-400 text-sm md:text-base">{error}</p>
+
         <button
           onClick={() => router.push("/")}
           className="px-4 py-2 border border-[#3d6a8a] text-[#8f98a0] rounded-sm hover:text-[#c6d4df] transition-colors"
@@ -140,13 +153,17 @@ export default function Results() {
     data.meta.time_available_minutes > 0
       ? data.meta.time_available_minutes / 60
       : 1;
+
   const daysToFinish = Math.ceil(data.primary.main_story / timeHours);
+
   const finishDate = new Date();
   finishDate.setDate(finishDate.getDate() + daysToFinish);
+
   const finishLabel = finishDate.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
   });
+
   const platformLabel =
     data.meta.platform === "any"
       ? "Steam"
@@ -172,17 +189,19 @@ export default function Results() {
       data.primary,
       ...data.alternatives.filter((g) => g.title !== game.title),
     ];
+
     setData({ ...data, primary: game, alternatives: newAlts.slice(0, 2) });
     setModalGame(null);
   };
 
   return (
     <main className="min-h-screen bg-[#1b2838]">
-      {/* Navbar Responsif */}
+      {/* Responsive Navbar */}
       <div className="bg-[#171a21] border-b border-[#2a475e] px-4 md:px-8 py-3 flex items-center justify-between">
         <h1 className="text-base md:text-lg font-bold text-[#c6d4df] tracking-wide">
           TimeToBeat
         </h1>
+
         <button
           onClick={() => router.push("/")}
           className="bg-transparent border border-[#3d6a8a] text-[#8f98a0] text-[10px] md:text-xs cursor-pointer px-2 py-1.5 md:px-3 md:py-1.5 rounded-sm hover:text-[#c6d4df] transition-colors"
@@ -192,7 +211,7 @@ export default function Results() {
       </div>
 
       <div className="max-w-5xl mx-auto px-4 md:px-8 py-6 md:py-8">
-        {/* Primary Card - 1 Kolom di HP (grid-cols-1), 3 Kolom di Desktop (md:grid-cols-[auto_1fr_auto]) */}
+        {/* Primary Card - 1 column on mobile, 3 columns on desktop */}
         <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-5 md:gap-7 bg-[#2a475e] border border-[#a4d007] rounded-sm p-5 md:p-7 mb-6 items-start relative">
           {loading && (
             <div className="absolute inset-0 bg-[#2a475e]/80 flex items-center justify-center z-10 rounded-sm">
@@ -210,6 +229,7 @@ export default function Results() {
                   stroke="currentColor"
                   strokeWidth="4"
                 ></circle>
+
                 <path
                   className="opacity-75"
                   fill="currentColor"
@@ -219,7 +239,7 @@ export default function Results() {
             </div>
           )}
 
-          {/* Cover Gambar - Tengah di HP, Kiri di Desktop */}
+          {/* Cover image - centered on mobile, left on desktop */}
           <div className="flex justify-center md:block">
             {data.primary.cover_url ? (
               <img
@@ -234,11 +254,12 @@ export default function Results() {
             )}
           </div>
 
-          {/* Info Teks - Rata tengah di HP, Rata kiri di Desktop */}
+          {/* Text info - centered on mobile, left aligned on desktop */}
           <div className="text-center md:text-left">
             <div className="inline-block text-[9px] md:text-[10px] bg-[#4c6b22] text-[#a4d007] px-2 py-0.5 rounded-sm font-bold mb-2 tracking-wider">
               TOP PICK
             </div>
+
             <h2
               onClick={() => setModalGame(data.primary)}
               className="text-2xl md:text-3xl font-bold text-[#c6d4df] mb-2.5 cursor-pointer leading-tight hover:text-[#a4d007] transition-colors"
@@ -255,6 +276,7 @@ export default function Results() {
                   {g}
                 </span>
               ))}
+
               {data.primary.difficulty_label && (
                 <span className="text-[10px] md:text-[11px] text-[#8f98a0] bg-[#1b2838] border border-[#3d6a8a] rounded-sm px-2 py-0.5">
                   {data.primary.difficulty_label}
@@ -273,6 +295,7 @@ export default function Results() {
                 <span className="text-[#c6d4df]">{finishLabel}</span> (
                 {daysToFinish} days)
               </div>
+
               <div className="text-[10px] md:text-[11px] text-[#4c6b22] italic">
                 Games aren&apos;t deadlines — enjoy every hour of it.
               </div>
@@ -287,12 +310,14 @@ export default function Results() {
             >
               Find on Steam →
             </button>
+
             <button
               onClick={() => setModalGame(data.primary)}
               className="py-2 px-4 bg-transparent border border-[#3d6a8a] text-[#c6d4df] text-xs rounded-sm cursor-pointer hover:bg-[#1b2838] transition-colors"
             >
               View details
             </button>
+
             <button
               onClick={() => fetchRecommend({})}
               disabled={loading}
@@ -308,19 +333,29 @@ export default function Results() {
                   setShowShorterSlider(!showShorterSlider);
                   setShowIntensePanel(false);
                 }}
-                className={`flex-1 py-1.5 px-1 text-[10px] rounded-sm cursor-pointer border transition-colors ${showShorterSlider ? "bg-[#2a3d1a] border-[#a4d007] text-[#a4d007]" : "bg-[#1b2838] border-[#3d6a8a] text-[#8f98a0] hover:text-[#c6d4df]"}`}
+                className={`flex-1 py-1.5 px-1 text-[10px] rounded-sm cursor-pointer border transition-colors ${
+                  showShorterSlider
+                    ? "bg-[#2a3d1a] border-[#a4d007] text-[#a4d007]"
+                    : "bg-[#1b2838] border-[#3d6a8a] text-[#8f98a0] hover:text-[#c6d4df]"
+                }`}
               >
                 ⏱ Shorter
               </button>
+
               <button
                 onClick={() => {
                   setShowIntensePanel(!showIntensePanel);
                   setShowShorterSlider(false);
                 }}
-                className={`flex-1 py-1.5 px-1 text-[10px] rounded-sm cursor-pointer border transition-colors ${showIntensePanel ? "bg-[#2a3d1a] border-[#a4d007] text-[#a4d007]" : "bg-[#1b2838] border-[#3d6a8a] text-[#8f98a0] hover:text-[#c6d4df]"}`}
+                className={`flex-1 py-1.5 px-1 text-[10px] rounded-sm cursor-pointer border transition-colors ${
+                  showIntensePanel
+                    ? "bg-[#2a3d1a] border-[#a4d007] text-[#a4d007]"
+                    : "bg-[#1b2838] border-[#3d6a8a] text-[#8f98a0] hover:text-[#c6d4df]"
+                }`}
               >
                 🎯 Intensity
               </button>
+
               <button
                 onClick={() => fetchRecommend({ modifier: "coop" })}
                 disabled={loading}
@@ -337,10 +372,12 @@ export default function Results() {
                   <span className="text-[11px] text-[#8f98a0]">
                     Hours per day
                   </span>
+
                   <span className="text-xs md:text-[13px] font-bold text-[#a4d007]">
                     {shorterHours}h
                   </span>
                 </div>
+
                 <input
                   type="range"
                   min={0.5}
@@ -350,6 +387,7 @@ export default function Results() {
                   onChange={(e) => setShorterHours(parseFloat(e.target.value))}
                   className="w-full accent-[#a4d007] mb-1.5 cursor-pointer"
                 />
+
                 <div className="flex justify-between text-[9px] md:text-[10px] text-[#8f98a0] mb-2.5">
                   <span>30m</span>
                   <span>2h</span>
@@ -357,6 +395,7 @@ export default function Results() {
                   <span>6h</span>
                   <span>8h</span>
                 </div>
+
                 <button
                   onClick={() =>
                     fetchRecommend({
@@ -378,10 +417,12 @@ export default function Results() {
                   <span className="text-[9px] md:text-[10px] text-[#8f98a0] block mb-1">
                     This game is:
                   </span>
+
                   <span className="text-xs md:text-[13px] text-[#c6d4df] font-semibold">
                     {data.primary.difficulty_label || "⚔️ Fair fight"}
                   </span>
                 </div>
+
                 <p className="text-[10px] md:text-[11px] text-[#8f98a0] mb-2">
                   I want something:
                 </p>
@@ -389,10 +430,17 @@ export default function Results() {
                 {DIFFICULTY_OPTIONS.map((opt) => {
                   const isAvailable =
                     data.meta.available_difficulties?.includes(opt.val) ?? true;
+
                   return (
                     <label
                       key={opt.val}
-                      className={`flex items-center gap-2 p-1.5 rounded-sm transition-colors cursor-pointer ${!isAvailable ? "opacity-40 cursor-not-allowed" : selectedDifficulty === opt.val ? "bg-[#2a3d1a]" : "hover:bg-[#2a475e]"}`}
+                      className={`flex items-center gap-2 p-1.5 rounded-sm transition-colors cursor-pointer ${
+                        !isAvailable
+                          ? "opacity-40 cursor-not-allowed"
+                          : selectedDifficulty === opt.val
+                            ? "bg-[#2a3d1a]"
+                            : "hover:bg-[#2a475e]"
+                      }`}
                     >
                       <input
                         type="radio"
@@ -403,8 +451,15 @@ export default function Results() {
                         disabled={!isAvailable}
                         className="accent-[#a4d007] cursor-inherit"
                       />
+
                       <span
-                        className={`text-[11px] md:text-xs ${!isAvailable ? "text-[#8f98a0]" : selectedDifficulty === opt.val ? "text-[#a4d007]" : "text-[#c6d4df]"}`}
+                        className={`text-[11px] md:text-xs ${
+                          !isAvailable
+                            ? "text-[#8f98a0]"
+                            : selectedDifficulty === opt.val
+                              ? "text-[#a4d007]"
+                              : "text-[#c6d4df]"
+                        }`}
                       >
                         {opt.label}{" "}
                         {!isAvailable && (
@@ -426,7 +481,11 @@ export default function Results() {
                     })
                   }
                   disabled={!selectedDifficulty || loading}
-                  className={`w-full py-2 text-[11px] md:text-xs font-bold border-none rounded-sm mt-2 transition-colors ${selectedDifficulty ? "bg-[#4c6b22] text-[#a4d007] cursor-pointer hover:bg-[#5a7d28]" : "bg-[#2a475e] text-[#8f98a0] cursor-default opacity-60"}`}
+                  className={`w-full py-2 text-[11px] md:text-xs font-bold border-none rounded-sm mt-2 transition-colors ${
+                    selectedDifficulty
+                      ? "bg-[#4c6b22] text-[#a4d007] cursor-pointer hover:bg-[#5a7d28]"
+                      : "bg-[#2a475e] text-[#8f98a0] cursor-default opacity-60"
+                  }`}
                 >
                   Find intensity →
                 </button>
@@ -435,10 +494,11 @@ export default function Results() {
           </div>
         </div>
 
-        {/* Alternatives - 1 Kolom di HP (grid-cols-1), 2 Kolom di Desktop (sm:grid-cols-2) */}
+        {/* Alternatives - 1 column on mobile, 2 columns on desktop */}
         <p className="text-[10px] md:text-[11px] text-[#8f98a0] uppercase tracking-wider mb-2 font-semibold">
           Alternatives
         </p>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
           {data.alternatives.map((game) => (
             <AlternativeCard

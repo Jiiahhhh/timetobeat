@@ -1,7 +1,9 @@
 import json
+import random
 from services.supabase_client import supabase
 from core.constants import VIBE_TO_GENRES, DIFFICULTY_LABELS
 from schemas.request_models import RecommendRequest
+
 
 def parse_genres(genres_val):
     if isinstance(genres_val, list): return genres_val
@@ -10,6 +12,7 @@ def parse_genres(genres_val):
         except: return [genres_val]
     return []
 
+
 def parse_platforms(platforms_val):
     if isinstance(platforms_val, list): return platforms_val
     if isinstance(platforms_val, str):
@@ -17,36 +20,66 @@ def parse_platforms(platforms_val):
         except: return [platforms_val]
     return []
 
+
+def tier_shuffle(games: list, tier_size: int = 5) -> list:
+    """
+    Shuffle games within tiers of tier_size.
+    Games in the same tier (similar score range) are randomized,
+    but higher-scoring tiers always come before lower-scoring tiers.
+    This ensures variety without sacrificing quality.
+    """
+    result = []
+    for i in range(0, len(games), tier_size):
+        tier = games[i:i + tier_size]
+        random.shuffle(tier)
+        result.extend(tier)
+    return result
+
+
 def get_recommendations(req: RecommendRequest) -> dict:
     time_hours = req.time_available / 60
     target_genres = VIBE_TO_GENRES.get(req.vibe, VIBE_TO_GENRES["surprise"])
 
-    res = supabase.table("games").select("*").execute()
-    all_games = res.data
+    # ── Database-level filtering ────────────────────────────────────
+    query = supabase.table("games").select("*")
 
-    # Normalize
-    for g in all_games:
+    # Apply genre filter at database level (skip if surprise)
+    if req.vibe != "surprise":
+        query = query.overlaps("genres", target_genres)
+
+    # Apply platform filter at database level
+    if req.platform and req.platform != "any":
+        query = query.overlaps("platforms", [req.platform])
+
+    res = query.execute()
+    filtered = res.data
+
+    # ── Normalize data ──────────────────────────────────────────────
+    for g in filtered:
         g["genres"] = parse_genres(g["genres"])
         g["platforms"] = parse_platforms(g["platforms"])
 
-    # Filter by genre
-    filtered = [g for g in all_games if any(genre in g["genres"] for genre in target_genres)]
+    # Store all_games for fallback
+    all_games = filtered[:]
 
-    # Filter by platform
-    if req.platform and req.platform != "any":
-        filtered = [g for g in filtered if req.platform in g["platforms"]]
-
-    # available difficulties before modifier
+    # ── Available difficulties (before modifier) ───────────────────
     available_diffs = list(set([g.get("difficulty") or 3 for g in filtered]))
 
-    # Apply modifier filters
+    # ── Modifier filters ────────────────────────────────────────────
     if req.modifier == "coop":
-        coop_games = [g for g in all_games if g.get("is_coop")]
+        coop_games = [g for g in filtered if g.get("is_coop")]
+
         if req.platform and req.platform != "any":
-            platform_map = {"steam": "Steam", "gog": "GOG", "epic": "Epic"}
-            plat = platform_map.get(req.platform)
+            platform_map = {
+                "windows": "Windows",
+                "mac": "Mac",
+                "linux": "Linux",
+                "steam deck": "Steam Deck",
+            }
+            plat = platform_map.get(req.platform.lower())
             if plat:
                 coop_games = [g for g in coop_games if plat in g["platforms"]]
+
         if len(coop_games) >= 1:
             filtered = coop_games
 
@@ -57,38 +90,62 @@ def get_recommendations(req: RecommendRequest) -> dict:
         if len(exact) >= 1:
             filtered = exact
 
-    # Exclude titles
+    # ── Exclude already-shown titles ────────────────────────────────
     if req.exclude_titles:
         filtered = [g for g in filtered if g["title"] not in req.exclude_titles]
 
-    # Scoring Engine
+    # ── Scoring Engine ──────────────────────────────────────────────
     def score(g):
-        rating = float(g["rating"] or 0)
+        # 1. RATING — null = 70 (neutral, not 0)
+        rating = float(g["rating"] or 70)
+
+        # 2. SESSION FIT — how well game duration matches user time
         main_hours = float(g["hltb_main"] or 0)
-        sessions_needed = main_hours / time_hours if time_hours > 0 else 999
+        sessions = main_hours / time_hours if time_hours > 0 else 999
 
-        if sessions_needed <= 1: bonus = 20
-        elif sessions_needed <= 3: bonus = 15
-        elif sessions_needed <= 7: bonus = 10
-        elif sessions_needed <= 14: bonus = 3
-        elif sessions_needed <= 30: bonus = 0
-        else: bonus = -30
+        if sessions <= 1:    fit_bonus = 25   # finish today
+        elif sessions <= 3:  fit_bonus = 20   # finish in 3 days
+        elif sessions <= 7:  fit_bonus = 15   # finish in a week
+        elif sessions <= 14: fit_bonus = 8    # finish in 2 weeks
+        elif sessions <= 30: fit_bonus = 2    # finish in a month
+        else:                fit_bonus = -20  # too long
 
-        return rating + bonus
+        # 3. SWEET SPOT BONUS — 2-5 sessions is ideal
+        # Gives a sense of progress without being overwhelming
+        sweet_spot = 5 if 2 <= sessions <= 5 else 0
 
-    # Sort & Deduplicate
+        # 4. COMPLETION RATIO — proxy for gameplay quality
+        # Games where completionist time is close to main story = engaging until the end
+        comp = float(g["hltb_completionist"] or 0)
+        main = float(g["hltb_main"] or 0)
+        completion_bonus = 0
+        if comp > 0 and main > 0:
+            ratio = comp / main
+            if ratio <= 2:    completion_bonus = 5   # close completionist time = engaging
+            elif ratio <= 4:  completion_bonus = 2
+            else:             completion_bonus = -3  # far completionist time = grindy
+
+        return rating + fit_bonus + sweet_spot + completion_bonus
+
+    # ── Sort + Tier Shuffle ────────────────────────────────────────
     sorted_games = sorted(filtered, key=score, reverse=True)
-    
+
+    # Shuffle within tiers — adds variety without sacrificing quality
+    shuffled_games = tier_shuffle(sorted_games, tier_size=5)
+
+    # ── Deduplicate ────────────────────────────────────────────────
     seen = set()
     unique = []
-    for g in sorted_games:
+    for g in shuffled_games:
         if g["title"] not in seen:
             seen.add(g["title"])
             unique.append(g)
 
+    # Fallback if filtered results are empty
     if not unique:
-        unique = all_games 
+        unique = all_games
 
+    # ── Format response ────────────────────────────────────────────
     def format_game(g):
         main = float(g["hltb_main"] or 0)
         days = round(main / time_hours) if time_hours > 0 and main > 0 else None
@@ -125,6 +182,6 @@ def get_recommendations(req: RecommendRequest) -> dict:
             "platform": req.platform,
             "modifier": req.modifier,
             "total_matches": len(unique),
-            "available_difficulties": available_diffs
+            "available_difficulties": available_diffs,
         }
     }

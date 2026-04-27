@@ -31,6 +31,7 @@ export default function GameModal({
           <h3 className="text-lg md:text-xl font-bold text-[#c6d4df] truncate pr-4">
             {game.title}
           </h3>
+
           <button
             onClick={onClose}
             className="bg-transparent border-none text-[#8f98a0] text-2xl cursor-pointer hover:text-white transition-colors"
@@ -40,7 +41,7 @@ export default function GameModal({
         </div>
 
         <div className="p-4 md:p-6">
-          {/* Cover + info - Tumpuk Atas-Bawah di HP (flex-col), Sebelahan di Desktop (md:flex-row) */}
+          {/* Cover + info - stacked vertically on mobile, side by side on desktop */}
           <div className="flex flex-col md:flex-row gap-4 md:gap-5 mb-6">
             {game.cover_url && (
               <img
@@ -50,7 +51,7 @@ export default function GameModal({
               />
             )}
 
-            {/* Teks Rata Tengah di HP, Kiri di Desktop */}
+            {/* Text centered on mobile, left aligned on desktop */}
             <div className="text-center md:text-left mt-2 md:mt-0">
               <div className="flex justify-center md:justify-start gap-1.5 flex-wrap mb-3">
                 {game.genres.map((g) => (
@@ -61,18 +62,22 @@ export default function GameModal({
                     {g}
                   </span>
                 ))}
+
                 {game.difficulty_label && (
                   <span className="text-[10px] md:text-[11px] text-[#a4d007] bg-[#2a3d1a] border border-[#4c6b22] rounded-sm px-2 py-0.5">
                     {game.difficulty_label}
                   </span>
                 )}
               </div>
+
               <div className="text-xs md:text-[13px] text-[#8f98a0] mb-1.5">
                 ⭐ {game.rating}/100
               </div>
+
               <div className="text-xs md:text-[13px] text-[#a4d007] font-semibold mb-3">
                 🕒 Main Story: ~{game.main_story}h
               </div>
+
               {game.short_description && (
                 <p className="text-xs md:text-[13px] text-[#c6d4df] leading-relaxed opacity-90 text-left">
                   {game.short_description}
@@ -86,6 +91,7 @@ export default function GameModal({
             <p className="text-[10px] md:text-[11px] text-[#8f98a0] uppercase tracking-wider mb-2 font-semibold">
               Trailer
             </p>
+
             {game.trailer_youtube_id && game.trailer_valid !== false ? (
               <div className="relative pb-[56.25%] h-0 rounded-sm overflow-hidden bg-black shadow-inner">
                 <iframe
@@ -100,6 +106,7 @@ export default function GameModal({
                   <p className="text-[#8f98a0] text-xs md:text-sm mb-2">
                     🎬 Trailer not available
                   </p>
+
                   <a
                     href={
                       game.steam_app_id
@@ -117,7 +124,7 @@ export default function GameModal({
             )}
           </div>
 
-          {/* Action buttons - Tumpuk Atas-Bawah di HP (flex-col), Berjajar di Desktop (sm:flex-row) */}
+          {/* Action buttons - stacked vertically on mobile, inline on desktop */}
           <div className="flex flex-col sm:flex-row gap-2.5 md:gap-3">
             <button
               onClick={() => onOpenStore(game)}
@@ -125,6 +132,7 @@ export default function GameModal({
             >
               Find on Steam →
             </button>
+
             {isAlternative && (
               <button
                 onClick={() => onPromoteAlternative(game)}
@@ -133,6 +141,7 @@ export default function GameModal({
                 Make this my pick →
               </button>
             )}
+
             <button
               onClick={onClose}
               className="py-2.5 md:py-3 px-4 md:px-6 bg-transparent border border-[#3d6a8a] text-[#8f98a0] text-xs font-semibold rounded-sm cursor-pointer hover:bg-[#2a475e] transition-colors"
