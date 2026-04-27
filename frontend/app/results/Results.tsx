@@ -49,6 +49,7 @@ export default function Results() {
 
       const res = await fetch(
         "https://timetobeat-production.up.railway.app/api/recommend",
+        // "http://localhost:8000/api/recommend",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -241,9 +242,9 @@ export default function Results() {
 
           {/* Cover image - centered on mobile, left on desktop */}
           <div className="flex justify-center md:block">
-            {data.primary.cover_url ? (
+            {data.primary.cover_portrait_url ? (
               <img
-                src={data.primary.cover_url}
+                src={data.primary.cover_portrait_url}
                 alt={data.primary.title}
                 className="w-[100px] h-[140px] md:w-[120px] md:h-[160px] object-cover rounded-sm shadow-md"
               />

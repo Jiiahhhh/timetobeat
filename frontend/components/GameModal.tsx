@@ -43,9 +43,9 @@ export default function GameModal({
         <div className="p-4 md:p-6">
           {/* Cover + info - stacked vertically on mobile, side by side on desktop */}
           <div className="flex flex-col md:flex-row gap-4 md:gap-5 mb-6">
-            {game.cover_url && (
+            {game.cover_portrait_url && (
               <img
-                src={game.cover_url}
+                src={game.cover_portrait_url}
                 alt={game.title}
                 className="w-[100px] h-[135px] md:w-[100px] md:h-[135px] object-cover rounded-sm shrink-0 shadow-md mx-auto md:mx-0"
               />

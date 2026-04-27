@@ -1,6 +1,7 @@
 export interface Game {
   title: string;
   cover_url: string | null;
+  cover_portrait_url?: string;
   genres: string[];
   platforms: string[];
   rating: number;

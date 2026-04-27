@@ -156,6 +156,7 @@ def get_recommendations(req: RecommendRequest) -> dict:
         return {
             "title": g["title"],
             "cover_url": g["cover_url"],
+            "cover_portrait_url": g.get("cover_portrait_url"),
             "genres": g["genres"],
             "platforms": g["platforms"],
             "rating": float(g["rating"] or 0),
