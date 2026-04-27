@@ -285,7 +285,9 @@ export default function Results() {
             </div>
 
             <div className="flex justify-center md:justify-start gap-4 md:gap-5 text-xs md:text-[13px] text-[#8f98a0] mb-3.5">
-              <span>⭐ {data.primary.rating}/100</span>
+              {data.primary.rating > 0 && (
+                <span>⭐ {data.primary.rating}/100</span>
+              )}
               <span>🕒 ~{data.primary.main_story}h main story</span>
             </div>
 

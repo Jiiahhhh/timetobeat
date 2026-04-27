@@ -70,9 +70,11 @@ export default function GameModal({
                 )}
               </div>
 
-              <div className="text-xs md:text-[13px] text-[#8f98a0] mb-1.5">
-                ⭐ {game.rating}/100
-              </div>
+              {game.rating > 0 && (
+                <div className="text-xs md:text-[13px] text-[#8f98a0] mb-1.5">
+                  ⭐ {game.rating}/100
+                </div>
+              )}
 
               <div className="text-xs md:text-[13px] text-[#a4d007] font-semibold mb-3">
                 🕒 Main Story: ~{game.main_story}h
