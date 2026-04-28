@@ -112,13 +112,33 @@ export default function Home() {
                 className="w-full accent-[#a4d007] cursor-pointer mb-2"
               />
 
-              <div className="flex justify-between text-[10px] md:text-xs text-[#8f98a0] mb-8 md:mb-10">
-                <span>15 min</span>
-                <span>1 hour</span>
-                <span>2 hours</span>
-                <span>4 hours</span>
-                <span>6 hours</span>
-                <span>8 hours</span>
+              <div className="relative text-[10px] md:text-xs text-[#8f98a0] mb-8 md:mb-10 h-4">
+                {[
+                  { label: "15m", value: 15 },
+                  { label: "1h", value: 60 },
+                  { label: "2h", value: 120 },
+                  { label: "4h", value: 240 },
+                  { label: "6h", value: 360 },
+                  { label: "8h", value: 480 },
+                ].map(({ label, value }, index, arr) => {
+                  const percent = ((value - 15) / (480 - 15)) * 100;
+                  const isFirst = index === 0;
+                  const isLast = index === arr.length - 1;
+                  return (
+                    <span
+                      key={value}
+                      className="absolute"
+                      style={{
+                        left: isFirst ? "0%" : isLast ? "auto" : `${percent}%`,
+                        right: isLast ? "0%" : "auto",
+                        transform:
+                          isFirst || isLast ? "none" : "translateX(-50%)",
+                      }}
+                    >
+                      {label}
+                    </span>
+                  );
+                })}
               </div>
 
               <button
