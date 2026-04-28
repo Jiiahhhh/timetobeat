@@ -13,9 +13,59 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TimeToBeat | Find your next game",
+  title: "TimeToBeat | Find Your Next Game Tonight",
   description:
-    "Stop staring at your library. Start playing. Find the perfect game that fits your schedule and mood.",
+    "Stop staring at your backlog. Tell us how much time you have tonight and we'll tell you exactly which game to play. Free, no login required.",
+
+  // Canonical URL
+  metadataBase: new URL("https://timetobeat.app"),
+  alternates: {
+    canonical: "/",
+  },
+
+  // Open Graph — for Discord, Facebook, WhatsApp previews
+  openGraph: {
+    title: "TimeToBeat | Find Your Next Game Tonight",
+    description:
+      "Stop staring at your backlog. Tell us how much time you have and we'll tell you exactly which game to play.",
+    url: "https://timetobeat.app",
+    siteName: "TimeToBeat",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "TimeToBeat — Find your next game based on your available time",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+
+  // Twitter / X Card
+  twitter: {
+    card: "summary_large_image",
+    title: "TimeToBeat | Find Your Next Game Tonight",
+    description:
+      "Stop staring at your backlog. Tell us how much time you have and we'll tell you exactly which game to play.",
+    images: ["/og-image.png"],
+  },
+
+  // Additional SEO
+  keywords: [
+    "game recommendation",
+    "backlog",
+    "how long to beat",
+    "steam games",
+    "game picker",
+    "time to beat",
+    "gaming backlog",
+    "what game should i play",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
