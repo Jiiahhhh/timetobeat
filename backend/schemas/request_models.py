@@ -3,7 +3,7 @@ from typing import Optional
 
 class RecommendRequest(BaseModel):
     time_available: int
-    vibe: str
+    vibe: str | list[str] 
     platform: Optional[str] = None
     modifier: Optional[str] = None
     max_difficulty: Optional[int] = None

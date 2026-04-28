@@ -24,7 +24,8 @@ export default function Results() {
   );
 
   const initTime = parseInt(searchParams.get("time") || "60");
-  const initVibe = searchParams.get("vibe") || "surprise";
+  const initVibes = searchParams.getAll("vibe");
+  const initVibe = initVibes.length > 0 ? initVibes : ["surprise"];
   const initPlatform = searchParams.get("platform") || "any";
 
   const fetchRecommend = async (opts: {
@@ -44,7 +45,8 @@ export default function Results() {
       // Use shownTitles as exclude list
       const excludeList = opts.exclude ?? shownTitles;
 
-      const vibeToSend = data?.meta?.vibe || initVibe;
+      const rawVibe = data?.meta?.vibe || initVibe;
+      const vibeToSend = Array.isArray(rawVibe) ? rawVibe : rawVibe.split(",");
       const platformToSend = data?.meta?.platform || initPlatform;
 
       const res = await fetch(

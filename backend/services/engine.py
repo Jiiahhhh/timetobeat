@@ -38,13 +38,19 @@ def tier_shuffle(games: list, tier_size: int = 5) -> list:
 
 def get_recommendations(req: RecommendRequest) -> dict:
     time_hours = req.time_available / 60
-    target_genres = VIBE_TO_GENRES.get(req.vibe, VIBE_TO_GENRES["surprise"])
+    vibes = req.vibe if isinstance(req.vibe, list) else [req.vibe]
+    
+    #  ── Database-level filtering ────────────────────────────────────
+    target_genres = []
+    for v in vibes:
+        target_genres.extend(VIBE_TO_GENRES.get(v, []))
+    target_genres = list(set(target_genres)) # deduplicate
 
-    # ── Database-level filtering ────────────────────────────────────
     query = supabase.table("games").select("*")
 
     # Apply genre filter at database level (skip if surprise)
-    if req.vibe != "surprise":
+    is_surprise = "surprise" in vibes
+    if not is_surprise and target_genres:
         query = query.overlaps("genres", target_genres)
 
     # Apply platform filter at database level
@@ -125,7 +131,22 @@ def get_recommendations(req: RecommendRequest) -> dict:
             elif ratio <= 4:  completion_bonus = 2
             else:             completion_bonus = -3  # far completionist time = grindy
 
-        return rating + fit_bonus + sweet_spot + completion_bonus
+        # 5. GENRE MATCH BONUS — more genre matches = more relevant
+        if not is_surprise:
+            game_genres = g.get("genres", [])
+            matched = sum(1 for genre in target_genres if genre in game_genres)
+            if matched == len(vibes):
+                genre_bonus = 15   # matches all selected genres
+            elif matched >= 2:
+                genre_bonus = 8    # matches most selected genres
+            elif matched == 1:
+                genre_bonus = 0    # minimal match, no bonus
+            else:
+                genre_bonus = -10  # no match at all
+        else:
+            genre_bonus = 0
+            
+        return rating + fit_bonus + sweet_spot + completion_bonus + genre_bonus
 
     # ── Sort + Tier Shuffle ────────────────────────────────────────
     sorted_games = sorted(filtered, key=score, reverse=True)
@@ -179,7 +200,7 @@ def get_recommendations(req: RecommendRequest) -> dict:
         "alternatives": alts,
         "meta": {
             "time_available_minutes": req.time_available,
-            "vibe": req.vibe,
+            "vibe": req.vibe if isinstance(req.vibe, list) else [req.vibe],
             "platform": req.platform,
             "modifier": req.modifier,
             "total_matches": len(unique),

@@ -35,8 +35,9 @@ export default function Home() {
 
   const handleSubmit = () => {
     setLoading(true);
-    const vibe = selectedMoods[0] || "surprise";
-    router.push(`/results?time=${time}&vibe=${vibe}&platform=${platform}`);
+    const vibes = selectedMoods.length > 0 ? selectedMoods : ["surprise"];
+    const vibeParams = vibes.map((v) => `vibe=${v}`).join("&");
+    router.push(`/results?time=${time}&${vibeParams}&platform=${platform}`);
   };
 
   return (
