@@ -310,6 +310,11 @@ export default function Results() {
               )}
               <span>🕒 ~{data.primary.main_story}h main story</span>
             </div>
+            {data.primary.explanation && (
+              <div className="text-[11px] text-[#66c0f4] mb-3 text-center md:text-left">
+                {data.primary.explanation}
+              </div>
+            )}
 
             <div className="bg-[#1b2838] border border-[#2a475e] rounded-sm px-3 md:px-3.5 py-2.5 md:py-3 max-w-full md:max-w-[420px] mx-auto md:mx-0">
               <div className="text-xs md:text-[13px] text-[#a4d007] font-semibold mb-1">
