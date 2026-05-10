@@ -102,6 +102,11 @@ export default function GameModal({
                   {game.short_description}
                 </p>
               )}
+              {game.explanation && (
+                <div className="text-[11px] text-[#66c0f4] mb-2">
+                  {game.explanation}
+                </div>
+              )}
             </div>
           </div>
 
