@@ -244,7 +244,7 @@ export default function Results() {
 
           {/* Cover image - centered on mobile, left on desktop */}
           <div className="flex justify-center md:block">
-            <div className="w-[100px] h-[140px] md:w-[120px] md:h-[160px] bg-[#1b2838] rounded-sm shadow-md flex items-center justify-center text-3xl overflow-hidden">
+            <div className="w-[160px] h-[220px] md:w-[120px] md:h-[160px] bg-[#1b2838] rounded-sm shadow-md flex items-center justify-center text-3xl overflow-hidden">
               {data.primary.cover_portrait_url || data.primary.cover_url ? (
                 <img
                   src={
@@ -311,8 +311,15 @@ export default function Results() {
               <span>🕒 ~{data.primary.main_story}h main story</span>
             </div>
             {data.primary.explanation && (
-              <div className="text-[11px] text-[#66c0f4] mb-3 text-center md:text-left">
-                {data.primary.explanation}
+              <div className="text-[11px] text-[#66c0f4] mb-3 text-center md:text-left leading-relaxed">
+                {data.primary.explanation.split(" · ").map((part, i, arr) => (
+                  <span key={i}>
+                    {part}
+                    {i < arr.length - 1 && (
+                      <span className="opacity-70"> · </span>
+                    )}
+                  </span>
+                ))}
               </div>
             )}
 
