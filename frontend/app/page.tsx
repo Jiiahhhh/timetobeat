@@ -18,6 +18,23 @@ export default function Home() {
   const [platform, setPlatform] = useState("any");
   const [loading, setLoading] = useState(false);
 
+  const trackEvent = (name: string, data?: Record<string, string>) => {
+    if (
+      typeof window !== "undefined" &&
+      (
+        window as Window & {
+          umami?: { track: (n: string, d?: Record<string, string>) => void };
+        }
+      ).umami
+    ) {
+      (
+        window as Window & {
+          umami?: { track: (n: string, d?: Record<string, string>) => void };
+        }
+      ).umami?.track(name, data);
+    }
+  };
+
   const previewGames = () => {
     const all = new Set<string>();
 
@@ -35,6 +52,7 @@ export default function Home() {
 
   const handleSubmit = () => {
     setLoading(true);
+    trackEvent("funnel_step3_completed", { platform });
     const vibes = selectedMoods.length > 0 ? selectedMoods : ["surprise"];
     const vibeParams = vibes.map((v) => `vibe=${v}`).join("&");
     router.push(`/results?time=${time}&${vibeParams}&platform=${platform}`);
@@ -222,7 +240,12 @@ export default function Home() {
 
               {/* VALIDATION: Disable Next button if nothing selected */}
               <button
-                onClick={() => setStep(3)}
+                onClick={() => {
+                  trackEvent("funnel_step2_completed", {
+                    vibes: selectedMoods.join(","),
+                  });
+                  setStep(3);
+                }}
                 disabled={selectedMoods.length === 0}
                 className={`w-full py-3 md:py-3.5 font-bold text-sm md:text-base rounded-sm transition-colors mb-1 ${
                   selectedMoods.length === 0
@@ -337,7 +360,12 @@ export default function Home() {
               </button>
 
               <button
-                onClick={() => setStep(2)}
+                onClick={() => {
+                  trackEvent("funnel_step2_completed", {
+                    vibes: selectedMoods.join(","),
+                  });
+                  setStep(2);
+                }}
                 className="w-full py-2 text-[#8f98a0] text-xs md:text-sm bg-transparent border-none cursor-pointer hover:text-[#c6d4df]"
               >
                 ← Back
