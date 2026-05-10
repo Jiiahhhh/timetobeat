@@ -161,7 +161,10 @@ export default function Home() {
               </div>
 
               <button
-                onClick={() => setStep(2)}
+                onClick={() => {
+                  trackEvent("funnel_step1_completed", { time: String(time) });
+                  setStep(2);
+                }}
                 className="w-full py-3 md:py-3.5 bg-[#4c6b22] text-[#a4d007] font-bold text-sm md:text-base rounded-sm hover:bg-[#5a7d28] transition-colors"
               >
                 Next →
@@ -361,9 +364,6 @@ export default function Home() {
 
               <button
                 onClick={() => {
-                  trackEvent("funnel_step2_completed", {
-                    vibes: selectedMoods.join(","),
-                  });
                   setStep(2);
                 }}
                 className="w-full py-2 text-[#8f98a0] text-xs md:text-sm bg-transparent border-none cursor-pointer hover:text-[#c6d4df]"
