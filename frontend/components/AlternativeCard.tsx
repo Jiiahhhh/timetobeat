@@ -40,6 +40,11 @@ export default function AlternativeCard({ game, onClick }: Props) {
           {game.title}
         </div>
         <div className="text-[11px] text-[#8f98a0] mb-1.5">{game.framing}</div>
+        {game.explanation && (
+          <div className="text-[10px] text-[#66c0f4] mt-0.5">
+            {game.explanation}
+          </div>
+        )}
         <div className="text-xs text-[#a4d007] font-semibold">
           ~{game.main_story}h
         </div>

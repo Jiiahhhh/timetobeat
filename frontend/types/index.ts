@@ -14,6 +14,7 @@ export interface Game {
   difficulty?: number;
   difficulty_label?: string;
   trailer_valid?: boolean;
+  explanation?: string;
 }
 
 export interface Recommendation {

@@ -50,8 +50,8 @@ export default function Results() {
       const platformToSend = data?.meta?.platform || initPlatform;
 
       const res = await fetch(
-        "https://timetobeat-production.up.railway.app/api/recommend",
-        // "http://localhost:8000/api/recommend",
+        // "https://timetobeat-production.up.railway.app/api/recommend",
+        "http://localhost:8000/api/recommend",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
