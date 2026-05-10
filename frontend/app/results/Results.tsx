@@ -28,6 +28,27 @@ export default function Results() {
   const initVibe = initVibes.length > 0 ? initVibes : ["surprise"];
   const initPlatform = searchParams.get("platform") || "any";
 
+  const trackEvent = (name: string, data?: Record<string, string>) => {
+    if (
+      typeof window !== "undefined" &&
+      (
+        window as Window & {
+          umami?: {
+            track: (n: string, d?: Record<string, string>) => void;
+          };
+        }
+      ).umami
+    ) {
+      (
+        window as Window & {
+          umami?: {
+            track: (n: string, d?: Record<string, string>) => void;
+          };
+        }
+      ).umami?.track(name, data);
+    }
+  };
+
   const fetchRecommend = async (opts: {
     modifier?: string;
     overrideMinutes?: number;
@@ -80,6 +101,10 @@ export default function Results() {
       newData.meta.time_available_minutes = timeToSend;
 
       setData(newData);
+      trackEvent("recommendation_generated", {
+        vibe: vibeToSend.join(","),
+        modifier: opts.modifier || "none",
+      });
       setShowShorterSlider(false);
       setShowIntensePanel(false);
       setSelectedDifficulty(null);
@@ -174,6 +199,7 @@ export default function Results() {
         data.meta.platform.slice(1);
 
   const openStore = (game: Game) => {
+    trackEvent("find_on_steam_clicked", { game: game.title });
     if (game.steam_app_id) {
       window.open(
         `https://store.steampowered.com/app/${game.steam_app_id}`,
@@ -353,7 +379,10 @@ export default function Results() {
             </button>
 
             <button
-              onClick={() => fetchRecommend({})}
+              onClick={() => {
+                trackEvent("not_this_one_clicked");
+                fetchRecommend({});
+              }}
               disabled={loading}
               className="py-2 px-4 bg-transparent border border-[#3d6a8a] text-[#8f98a0] text-xs rounded-sm cursor-pointer hover:bg-[#1b2838] disabled:opacity-60 transition-colors"
             >
