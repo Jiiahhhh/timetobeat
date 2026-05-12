@@ -227,6 +227,7 @@ export default function Results() {
 
     setData({ ...data, primary: game, alternatives: newAlts.slice(0, 2) });
     setModalGame(null);
+    setFeedbackSent(null);
   };
 
   const submitFeedback = async (value: boolean) => {
