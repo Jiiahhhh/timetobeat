@@ -1,4 +1,5 @@
 export interface Game {
+  id?: number;
   title: string;
   cover_url: string | null;
   cover_portrait_url?: string;

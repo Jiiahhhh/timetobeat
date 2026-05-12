@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Game } from "../types";
 
 interface Props {
@@ -17,6 +18,13 @@ export default function GameModal({
   onOpenStore,
   onPromoteAlternative,
 }: Props) {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
+
   return (
     <div
       onClick={onClose}

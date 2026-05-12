@@ -208,6 +208,7 @@ def get_recommendations(req: RecommendRequest) -> dict:
             explanation += " · High-intensity from start to finish"
 
         return {
+            "id": g["id"],
             "title": g["title"],
             "cover_url": g["cover_url"],
             "cover_portrait_url": g.get("cover_portrait_url"),

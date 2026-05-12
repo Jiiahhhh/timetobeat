@@ -22,6 +22,9 @@ export default function Results() {
   const [selectedDifficulty, setSelectedDifficulty] = useState<number | null>(
     null,
   );
+  const [feedbackSent, setFeedbackSent] = useState<
+    "positive" | "negative" | null
+  >(null);
 
   const initTime = parseInt(searchParams.get("time") || "60");
   const initVibes = searchParams.getAll("vibe");
@@ -56,6 +59,7 @@ export default function Results() {
     exclude?: string[];
   }) => {
     setLoading(true);
+    setFeedbackSent(null);
     setError("");
 
     try {
@@ -104,6 +108,8 @@ export default function Results() {
       trackEvent("recommendation_generated", {
         vibe: vibeToSend.join(","),
         modifier: opts.modifier || "none",
+        hours_available: String(timeToSend / 60),
+        platform: platformToSend,
       });
       setShowShorterSlider(false);
       setShowIntensePanel(false);
@@ -221,6 +227,33 @@ export default function Results() {
 
     setData({ ...data, primary: game, alternatives: newAlts.slice(0, 2) });
     setModalGame(null);
+  };
+
+  const submitFeedback = async (value: boolean) => {
+    if (!data?.primary?.id) return;
+    const type = value ? "positive" : "negative";
+    setFeedbackSent(type as "positive" | "negative");
+    trackEvent("recommendation_feedback", {
+      game: data.primary.title,
+      value: type,
+    });
+    try {
+      await fetch("https://timetobeat-production.up.railway.app/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          game_id: data.primary.id,
+          feedback: value,
+          vibe: Array.isArray(data.meta.vibe)
+            ? data.meta.vibe.join(",")
+            : data.meta.vibe,
+          hours_available: data.meta.time_available_minutes / 60,
+          platform: data.meta.platform,
+        }),
+      });
+    } catch (e) {
+      console.error("Feedback error:", e);
+    }
   };
 
   return (
@@ -554,6 +587,30 @@ export default function Results() {
                 </button>
               </div>
             )}
+
+            <div className="border-t border-[#3d6a8a] mt-3 pt-3">
+              {feedbackSent ? (
+                <p className="text-[11px] text-[#8f98a0] text-center">
+                  Thanks for the feedback 🙏
+                </p>
+              ) : (
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-[11px] text-[#8f98a0]">Good pick?</span>
+                  <button
+                    onClick={() => submitFeedback(true)}
+                    className="px-3 py-1 text-xs bg-[#1a3a28] text-[#4caf7d] border border-[#2a5a3a] rounded-sm hover:bg-[#1f4a30] transition-colors"
+                  >
+                    👍 Yes
+                  </button>
+                  <button
+                    onClick={() => submitFeedback(false)}
+                    className="px-3 py-1 text-xs bg-[#3a1a1a] text-[#e05c5c] border border-[#5a2a2a] rounded-sm hover:bg-[#4a1f1f] transition-colors"
+                  >
+                    👎 No
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
