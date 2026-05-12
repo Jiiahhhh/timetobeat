@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import recommendations
+from routers.feedback import router as feedback_router
 
 app = FastAPI(title="TimeToBeat API", version="1.0.0")
+app.include_router(feedback_router, prefix="/api")
 
 origins = [
     "http://localhost:3000",
