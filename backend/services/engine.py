@@ -195,17 +195,19 @@ def get_recommendations(req: RecommendRequest) -> dict:
         else:
             explanation = "A longer commitment, but worth it"
 
-        # Vibe layer — override jika fit lebih spesifik
-        if "Relaxed" in game_genres and diff <= 2:
-            explanation += " · Perfect for winding down"
-        elif "Story" in game_genres:
-            explanation += " · A story worth experiencing"
-        elif "RPG" in game_genres:
-            explanation += " · Deep enough to get lost in"
-        elif "Puzzle" in game_genres:
-            explanation += " · Satisfying to think through"
-        elif "Action" in game_genres and diff >= 4:
-            explanation += " · High-intensity from start to finish"
+        # Vibe layer — based on user input
+        vibe_explanations = {
+            "relaxed": "Perfect for winding down",
+            "story":   "A story worth experiencing",
+            "action":  "High-intensity from start to finish",
+            "rpg":     "Deep enough to get lost in",
+            "puzzle":  "Satisfying to think through",
+            "surprise": "Something different tonight",
+        }
+
+        primary_vibe = vibes[0] if vibes else None
+        if primary_vibe and primary_vibe in vibe_explanations:
+            explanation += f" · {vibe_explanations[primary_vibe]}"
 
         return {
             "id": g["id"],
