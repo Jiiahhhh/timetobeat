@@ -102,6 +102,12 @@ def get_recommendations(req: RecommendRequest) -> dict:
 
     # ── Scoring Engine ──────────────────────────────────────────────
     def score(g):
+        # 0. HARD FILTERS — eliminate mismatches immediately
+        if "relaxed" in vibes:
+            diff = g.get("difficulty") or 3
+            if diff >= 3:
+                return -999
+
         # 1. RATING — null = 70 (neutral, not 0)
         rating = float(g["rating"] or 70)
 
@@ -144,7 +150,7 @@ def get_recommendations(req: RecommendRequest) -> dict:
             else:
                 genre_bonus = -10  # no match at all
         else:
-            genre_bonus = 0
+            genre_bonus = 0  
             
         return rating + fit_bonus + sweet_spot + completion_bonus + genre_bonus
 
