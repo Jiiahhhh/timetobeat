@@ -65,6 +65,21 @@ def get_recommendations(req: RecommendRequest) -> dict:
         g["genres"] = parse_genres(g["genres"])
         g["platforms"] = parse_platforms(g["platforms"])
 
+    # If database returned no games matching the filters, return a clean empty response
+    if not filtered:
+        return {
+            "primary": None,
+            "alternatives": [],
+            "meta": {
+                "time_available_minutes": req.time_available,
+                "vibe": vibes,
+                "platform": req.platform,
+                "modifier": req.modifier,
+                "total_matches": 0,
+                "available_difficulties": [],
+            }
+        }
+
     # Store all_games for fallback
     all_games = filtered[:]
 

@@ -19,11 +19,11 @@ export interface Game {
 }
 
 export interface Recommendation {
-  primary: Game;
+  primary: Game | null;
   alternatives: Game[];
   meta: {
     time_available_minutes: number;
-    vibe: string;
+    vibe: string[];
     platform: string;
     modifier?: string;
     available_difficulties: number[];

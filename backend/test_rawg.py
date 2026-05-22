@@ -1,11 +1,15 @@
+import os
 import requests
 import json
+from dotenv import load_dotenv
 
-RAPIDAPI_KEY = "1af6b54851msh823aa6511de0db6p13f989jsn59400668c149"
+load_dotenv()
+
+RAPIDAPI_KEY = os.getenv("RAWG_API_KEY")
 
 headers = {
     "x-rapidapi-key": RAPIDAPI_KEY,
-    "x-rapidapi-host": "rawg-video-games-database.p.rapidapi.com"
+    "x-rapidapi-host": os.getenv("RAWG_API_HOST", "rawg-video-games-database.p.rapidapi.com")
 }
 
 res = requests.get(

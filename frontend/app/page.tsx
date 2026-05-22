@@ -9,6 +9,7 @@ import {
   PLATFORMS,
   STEP_LABELS,
 } from "../lib/constants";
+import { trackEvent } from "../lib/analytics";
 
 export default function Home() {
   const router = useRouter();
@@ -17,23 +18,6 @@ export default function Home() {
   const [selectedMoods, setSelectedMoods] = useState<string[]>([]);
   const [platform, setPlatform] = useState("any");
   const [loading, setLoading] = useState(false);
-
-  const trackEvent = (name: string, data?: Record<string, string>) => {
-    if (
-      typeof window !== "undefined" &&
-      (
-        window as Window & {
-          umami?: { track: (n: string, d?: Record<string, string>) => void };
-        }
-      ).umami
-    ) {
-      (
-        window as Window & {
-          umami?: { track: (n: string, d?: Record<string, string>) => void };
-        }
-      ).umami?.track(name, data);
-    }
-  };
 
   const previewGames = () => {
     const all = new Set<string>();

@@ -6,6 +6,7 @@ import { Game, Recommendation } from "../../types";
 import { DIFFICULTY_OPTIONS } from "../../lib/constants";
 import AlternativeCard from "../../components/AlternativeCard";
 import GameModal from "../../components/GameModal";
+import { trackEvent } from "../../lib/analytics";
 
 export default function Results() {
   const router = useRouter();
@@ -31,26 +32,7 @@ export default function Results() {
   const initVibe = initVibes.length > 0 ? initVibes : ["surprise"];
   const initPlatform = searchParams.get("platform") || "any";
 
-  const trackEvent = (name: string, data?: Record<string, string>) => {
-    if (
-      typeof window !== "undefined" &&
-      (
-        window as Window & {
-          umami?: {
-            track: (n: string, d?: Record<string, string>) => void;
-          };
-        }
-      ).umami
-    ) {
-      (
-        window as Window & {
-          umami?: {
-            track: (n: string, d?: Record<string, string>) => void;
-          };
-        }
-      ).umami?.track(name, data);
-    }
-  };
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://timetobeat-production.up.railway.app";
 
   const fetchRecommend = async (opts: {
     modifier?: string;
@@ -71,12 +53,11 @@ export default function Results() {
       const excludeList = opts.exclude ?? shownTitles;
 
       const rawVibe = data?.meta?.vibe || initVibe;
-      const vibeToSend = Array.isArray(rawVibe) ? rawVibe : rawVibe.split(",");
+      const vibeToSend = rawVibe;
       const platformToSend = data?.meta?.platform || initPlatform;
 
       const res = await fetch(
-        "https://timetobeat-production.up.railway.app/api/recommend",
-        // "http://localhost:8000/api/recommend",
+        `${API_BASE_URL}/api/recommend`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -95,12 +76,14 @@ export default function Results() {
 
       const newData = await res.json();
 
-      // Update shownTitles with newly displayed games
-      setShownTitles((prev) => [
-        ...prev,
-        newData.primary.title,
-        ...newData.alternatives.map((g: Game) => g.title),
-      ]);
+      // Update shownTitles with newly displayed games safely if primary is found
+      if (newData.primary) {
+        setShownTitles((prev) => [
+          ...prev,
+          newData.primary.title,
+          ...newData.alternatives.map((g: Game) => g.title),
+        ]);
+      }
 
       newData.meta.time_available_minutes = timeToSend;
 
@@ -181,22 +164,28 @@ export default function Results() {
       </main>
     );
 
-  if (!data || !data.primary) return null;
+  if (!data) return null;
+
+  const primary = data.primary;
 
   const timeHours =
     data.meta.time_available_minutes > 0
       ? data.meta.time_available_minutes / 60
       : 1;
 
-  const daysToFinish = Math.ceil(data.primary.main_story / timeHours);
+  const daysToFinish = primary ? Math.ceil(primary.main_story / timeHours) : 0;
 
   const finishDate = new Date();
-  finishDate.setDate(finishDate.getDate() + daysToFinish);
+  if (primary) {
+    finishDate.setDate(finishDate.getDate() + daysToFinish);
+  }
 
-  const finishLabel = finishDate.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-  });
+  const finishLabel = primary
+    ? finishDate.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      })
+    : "";
 
   const platformLabel =
     data.meta.platform === "any"
@@ -220,8 +209,9 @@ export default function Results() {
   };
 
   const promoteAlternative = (game: Game) => {
+    if (!primary) return;
     const newAlts = [
-      data.primary,
+      primary,
       ...data.alternatives.filter((g) => g.title !== game.title),
     ];
 
@@ -239,7 +229,7 @@ export default function Results() {
       value: type,
     });
     try {
-      await fetch("https://timetobeat-production.up.railway.app/api/feedback", {
+      await fetch(`${API_BASE_URL}/api/feedback`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -274,368 +264,405 @@ export default function Results() {
       </div>
 
       <div className="max-w-5xl mx-auto px-4 md:px-8 py-6 md:py-8">
-        {/* Primary Card - 1 column on mobile, 3 columns on desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-5 md:gap-7 bg-[#2a475e] border border-[#a4d007] rounded-sm p-5 md:p-7 mb-6 items-start relative">
-          {loading && (
-            <div className="absolute inset-0 bg-[#2a475e]/80 flex items-center justify-center z-10 rounded-sm">
-              <svg
-                className="animate-spin h-6 w-6 text-[#a4d007]"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-            </div>
-          )}
-
-          {/* Cover image - centered on mobile, left on desktop */}
-          <div className="flex justify-center md:block">
-            <div className="w-[160px] h-[220px] md:w-[120px] md:h-[160px] bg-[#1b2838] rounded-sm shadow-md flex items-center justify-center text-3xl overflow-hidden">
-              {data.primary.cover_portrait_url || data.primary.cover_url ? (
-                <img
-                  src={
-                    data.primary.cover_portrait_url ||
-                    data.primary.cover_url ||
-                    ""
-                  }
-                  alt={data.primary.title}
-                  className="w-full h-full object-cover rounded-sm"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    const fallback = data.primary.cover_url;
-                    if (fallback && target.src !== fallback) {
-                      target.src = fallback;
-                    } else {
-                      target.replaceWith(
-                        Object.assign(document.createElement("span"), {
-                          textContent: "🎮",
-                        }),
-                      );
-                    }
-                  }}
-                />
-              ) : (
-                <span>🎮</span>
-              )}
-            </div>
-          </div>
-
-          {/* Text info - centered on mobile, left aligned on desktop */}
-          <div className="text-center md:text-left">
-            <div className="inline-block text-[9px] md:text-[10px] bg-[#4c6b22] text-[#a4d007] px-2 py-0.5 rounded-sm font-bold mb-2 tracking-wider">
-              TOP PICK
-            </div>
-
-            <h2
-              onClick={() => setModalGame(data.primary)}
-              className="text-2xl md:text-3xl font-bold text-[#c6d4df] mb-2.5 cursor-pointer leading-tight hover:text-[#a4d007] transition-colors"
-            >
-              {data.primary.title}
+        {!primary ? (
+          /* Premium Empty State */
+          <div className="bg-[#2a475e]/40 border border-[#3d6a8a] rounded-sm p-8 md:p-12 text-center flex flex-col items-center justify-center max-w-2xl mx-auto my-8 shadow-xl backdrop-blur-sm animate-in fade-in zoom-in-95 duration-500">
+            <div className="text-5xl md:text-6xl mb-6 animate-bounce">🎮🌌</div>
+            <h2 className="text-2xl md:text-3xl font-bold text-[#c6d4df] mb-4 tracking-tight leading-tight">
+              Oops! Backlog Anda Terlalu Tangguh
             </h2>
-
-            <div className="flex justify-center md:justify-start gap-1.5 flex-wrap mb-2">
-              {data.primary.genres.map((g) => (
-                <span
-                  key={g}
-                  className="text-[10px] md:text-[11px] text-[#8f98a0] bg-[#1b2838] border border-[#3d6a8a] rounded-sm px-2 py-0.5"
-                >
-                  {g}
-                </span>
-              ))}
-
-              {data.primary.difficulty_label && (
-                <span className="text-[10px] md:text-[11px] text-[#8f98a0] bg-[#1b2838] border border-[#3d6a8a] rounded-sm px-2 py-0.5">
-                  {data.primary.difficulty_label}
-                </span>
-              )}
-            </div>
-
-            <div className="flex justify-center md:justify-start gap-4 md:gap-5 text-xs md:text-[13px] text-[#8f98a0] mb-3.5">
-              {data.primary.rating > 0 && (
-                <span>⭐ {data.primary.rating}/100</span>
-              )}
-              <span>🕒 ~{data.primary.main_story}h main story</span>
-            </div>
-            {data.primary.explanation && (
-              <div className="text-[11px] text-[#66c0f4] mb-3 text-center md:text-left leading-relaxed">
-                {data.primary.explanation.split(" · ").map((part, i, arr) => (
-                  <span key={i}>
-                    {part}
-                    {i < arr.length - 1 && (
-                      <span className="opacity-70"> · </span>
-                    )}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            <div className="bg-[#1b2838] border border-[#2a475e] rounded-sm px-3 md:px-3.5 py-2.5 md:py-3 max-w-full md:max-w-[420px] mx-auto md:mx-0">
-              <div className="text-xs md:text-[13px] text-[#a4d007] font-semibold mb-1">
-                At {Math.round(timeHours * 10) / 10}h/day → finish around{" "}
-                <span className="text-[#c6d4df]">{finishLabel}</span> (
-                {daysToFinish} days)
-              </div>
-
-              <div className="text-[10px] md:text-[11px] text-[#4c6b22] italic">
-                Games aren&apos;t deadlines — enjoy every hour of it.
-              </div>
+            <p className="text-sm md:text-base text-[#8f98a0] mb-8 max-w-md leading-relaxed">
+              Kami tidak menemukan game di database yang cocok dengan semua kriteria filter Anda saat ini. Coba kurangi kombinasi filter atau pilih kategori yang lebih luas!
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <button
+                onClick={() => router.push("/")}
+                className="py-3 px-6 bg-[#4c6b22] text-[#a4d007] text-sm font-bold border-none rounded-sm cursor-pointer hover:bg-[#5a7d28] hover:scale-102 active:scale-98 transition-all shadow-md"
+              >
+                ← Ulangi Pencarian
+              </button>
+              <button
+                onClick={() => {
+                  router.push("/results?time=120&vibe=surprise&platform=any");
+                  setShownTitles([]);
+                  fetchRecommend({ overrideMinutes: 120, exclude: [] });
+                }}
+                className="py-3 px-6 bg-transparent border border-[#3d6a8a] text-[#c6d4df] text-sm font-semibold rounded-sm cursor-pointer hover:bg-[#1b2838] transition-colors"
+              >
+                🎲 Surprise Me!
+              </button>
             </div>
           </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-col gap-2 w-full md:min-w-[200px] mt-4 md:mt-0">
-            <button
-              onClick={() => openStore(data.primary)}
-              className="py-2.5 px-4 bg-[#4c6b22] text-[#a4d007] text-xs md:text-[13px] font-bold border-none rounded-sm cursor-pointer hover:bg-[#5a7d28] transition-colors shadow-sm"
-            >
-              Find on Steam →
-            </button>
-
-            <button
-              onClick={() => setModalGame(data.primary)}
-              className="py-2 px-4 bg-transparent border border-[#3d6a8a] text-[#c6d4df] text-xs rounded-sm cursor-pointer hover:bg-[#1b2838] transition-colors"
-            >
-              View details
-            </button>
-
-            <button
-              onClick={() => {
-                trackEvent("not_this_one_clicked");
-                fetchRecommend({});
-              }}
-              disabled={loading}
-              className="py-2 px-4 bg-transparent border border-[#3d6a8a] text-[#8f98a0] text-xs rounded-sm cursor-pointer hover:bg-[#1b2838] disabled:opacity-60 transition-colors"
-            >
-              {loading ? "Finding..." : "Not this one"}
-            </button>
-
-            {/* Fine tune row */}
-            <div className="flex gap-1 mt-1">
-              <button
-                onClick={() => {
-                  setShowShorterSlider(!showShorterSlider);
-                  setShowIntensePanel(false);
-                }}
-                className={`flex-1 py-1.5 px-1 text-[10px] rounded-sm cursor-pointer border transition-colors ${
-                  showShorterSlider
-                    ? "bg-[#2a3d1a] border-[#a4d007] text-[#a4d007]"
-                    : "bg-[#1b2838] border-[#3d6a8a] text-[#8f98a0] hover:text-[#c6d4df]"
-                }`}
-              >
-                ⏱ Shorter
-              </button>
-
-              <button
-                onClick={() => {
-                  setShowIntensePanel(!showIntensePanel);
-                  setShowShorterSlider(false);
-                }}
-                className={`flex-1 py-1.5 px-1 text-[10px] rounded-sm cursor-pointer border transition-colors ${
-                  showIntensePanel
-                    ? "bg-[#2a3d1a] border-[#a4d007] text-[#a4d007]"
-                    : "bg-[#1b2838] border-[#3d6a8a] text-[#8f98a0] hover:text-[#c6d4df]"
-                }`}
-              >
-                🎯 Intensity
-              </button>
-
-              <button
-                onClick={() => fetchRecommend({ modifier: "coop" })}
-                disabled={loading}
-                className="flex-1 py-1.5 px-1 text-[10px] rounded-sm cursor-pointer border bg-[#1b2838] border-[#3d6a8a] text-[#8f98a0] hover:text-[#c6d4df] transition-colors"
-              >
-                👥 Co-op
-              </button>
-            </div>
-
-            {/* Shorter Panel */}
-            {showShorterSlider && (
-              <div className="bg-[#1b2838] border border-[#3d6a8a] rounded-sm p-3 mt-1 shadow-inner">
-                <div className="flex justify-between mb-2">
-                  <span className="text-[11px] text-[#8f98a0]">
-                    Hours per day
-                  </span>
-
-                  <span className="text-xs md:text-[13px] font-bold text-[#a4d007]">
-                    {shorterHours}h
-                  </span>
+        ) : (
+          /* Normal Pick & Alternatives */
+          <>
+            {/* Primary Card - 1 column on mobile, 3 columns on desktop */}
+            <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-5 md:gap-7 bg-[#2a475e] border border-[#a4d007] rounded-sm p-5 md:p-7 mb-6 items-start relative">
+              {loading && (
+                <div className="absolute inset-0 bg-[#2a475e]/80 flex items-center justify-center z-10 rounded-sm">
+                  <svg
+                    className="animate-spin h-6 w-6 text-[#a4d007]"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
                 </div>
+              )}
 
-                <input
-                  type="range"
-                  min={0.5}
-                  max={8}
-                  step={0.5}
-                  value={shorterHours}
-                  onChange={(e) => setShorterHours(parseFloat(e.target.value))}
-                  className="w-full accent-[#a4d007] mb-1.5 cursor-pointer"
-                />
-
-                <div className="flex justify-between text-[9px] md:text-[10px] text-[#8f98a0] mb-2.5">
-                  <span>30m</span>
-                  <span>2h</span>
-                  <span>4h</span>
-                  <span>6h</span>
-                  <span>8h</span>
+              {/* Cover image - centered on mobile, left on desktop */}
+              <div className="flex justify-center md:block">
+                <div className="w-[160px] h-[220px] md:w-[120px] md:h-[160px] bg-[#1b2838] rounded-sm shadow-md flex items-center justify-center text-3xl overflow-hidden">
+                  {primary.cover_portrait_url || primary.cover_url ? (
+                    <img
+                      src={
+                        primary.cover_portrait_url ||
+                        primary.cover_url ||
+                        ""
+                      }
+                      alt={primary.title}
+                      className="w-full h-full object-cover rounded-sm"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        const fallback = primary.cover_url;
+                        if (fallback && target.src !== fallback) {
+                          target.src = fallback;
+                        } else {
+                          target.replaceWith(
+                            Object.assign(document.createElement("span"), {
+                              textContent: "🎮",
+                            }),
+                          );
+                        }
+                      }}
+                    />
+                  ) : (
+                    <span>🎮</span>
+                  )}
                 </div>
-
-                <button
-                  onClick={() =>
-                    fetchRecommend({
-                      overrideMinutes: Math.round(shorterHours * 60),
-                    })
-                  }
-                  disabled={loading}
-                  className="w-full py-2 bg-[#4c6b22] text-[#a4d007] text-xs font-bold border-none rounded-sm cursor-pointer hover:bg-[#5a7d28] transition-colors"
-                >
-                  Update Time →
-                </button>
               </div>
-            )}
 
-            {/* Intensity Panel */}
-            {showIntensePanel && (
-              <div className="bg-[#1b2838] border border-[#3d6a8a] rounded-sm p-3 mt-1 shadow-inner">
-                <div className="mb-2.5 p-2 bg-[#2a475e] rounded-sm border border-[#3d6a8a]">
-                  <span className="text-[9px] md:text-[10px] text-[#8f98a0] block mb-1">
-                    This game is:
-                  </span>
-
-                  <span className="text-xs md:text-[13px] text-[#c6d4df] font-semibold">
-                    {data.primary.difficulty_label || "⚔️ Fair fight"}
-                  </span>
+              {/* Text info - centered on mobile, left aligned on desktop */}
+              <div className="text-center md:text-left">
+                <div className="inline-block text-[9px] md:text-[10px] bg-[#4c6b22] text-[#a4d007] px-2 py-0.5 rounded-sm font-bold mb-2 tracking-wider">
+                  TOP PICK
                 </div>
 
-                <p className="text-[10px] md:text-[11px] text-[#8f98a0] mb-2">
-                  I want something:
-                </p>
+                <h2
+                  onClick={() => setModalGame(primary)}
+                  className="text-2xl md:text-3xl font-bold text-[#c6d4df] mb-2.5 cursor-pointer leading-tight hover:text-[#a4d007] transition-colors"
+                >
+                  {primary.title}
+                </h2>
 
-                {DIFFICULTY_OPTIONS.map((opt) => {
-                  const isAvailable =
-                    data.meta.available_difficulties?.includes(opt.val) ?? true;
-
-                  return (
-                    <label
-                      key={opt.val}
-                      className={`flex items-center gap-2 p-1.5 rounded-sm transition-colors cursor-pointer ${
-                        !isAvailable
-                          ? "opacity-40 cursor-not-allowed"
-                          : selectedDifficulty === opt.val
-                            ? "bg-[#2a3d1a]"
-                            : "hover:bg-[#2a475e]"
-                      }`}
+                <div className="flex justify-center md:justify-start gap-1.5 flex-wrap mb-2">
+                  {primary.genres.map((g) => (
+                    <span
+                      key={g}
+                      className="text-[10px] md:text-[11px] text-[#8f98a0] bg-[#1b2838] border border-[#3d6a8a] rounded-sm px-2 py-0.5"
                     >
-                      <input
-                        type="radio"
-                        name="difficulty"
-                        value={opt.val}
-                        checked={selectedDifficulty === opt.val}
-                        onChange={() => setSelectedDifficulty(opt.val)}
-                        disabled={!isAvailable}
-                        className="accent-[#a4d007] cursor-inherit"
-                      />
+                      {g}
+                    </span>
+                  ))}
 
-                      <span
-                        className={`text-[11px] md:text-xs ${
-                          !isAvailable
-                            ? "text-[#8f98a0]"
-                            : selectedDifficulty === opt.val
-                              ? "text-[#a4d007]"
-                              : "text-[#c6d4df]"
-                        }`}
-                      >
-                        {opt.label}{" "}
-                        {!isAvailable && (
-                          <span className="italic ml-1 text-[9px] md:text-[10px]">
-                            (N/A)
-                          </span>
+                  {primary.difficulty_label && (
+                    <span className="text-[10px] md:text-[11px] text-[#8f98a0] bg-[#1b2838] border border-[#3d6a8a] rounded-sm px-2 py-0.5">
+                      {primary.difficulty_label}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex justify-center md:justify-start gap-4 md:gap-5 text-xs md:text-[13px] text-[#8f98a0] mb-3.5">
+                  {primary.rating > 0 && (
+                    <span>⭐ {primary.rating}/100</span>
+                  )}
+                  <span>🕒 ~{primary.main_story}h main story</span>
+                </div>
+                {primary.explanation && (
+                  <div className="text-[11px] text-[#66c0f4] mb-3 text-center md:text-left leading-relaxed">
+                    {primary.explanation.split(" · ").map((part, i, arr) => (
+                      <span key={i}>
+                        {part}
+                        {i < arr.length - 1 && (
+                          <span className="opacity-70"> · </span>
                         )}
                       </span>
-                    </label>
-                  );
-                })}
+                    ))}
+                  </div>
+                )}
+
+                <div className="bg-[#1b2838] border border-[#2a475e] rounded-sm px-3 md:px-3.5 py-2.5 md:py-3 max-w-full md:max-w-[420px] mx-auto md:mx-0">
+                  <div className="text-xs md:text-[13px] text-[#a4d007] font-semibold mb-1">
+                    At {Math.round(timeHours * 10) / 10}h/day → finish around{" "}
+                    <span className="text-[#c6d4df]">{finishLabel}</span> (
+                    {daysToFinish} days)
+                  </div>
+
+                  <div className="text-[10px] md:text-[11px] text-[#4c6b22] italic">
+                    Games aren&apos;t deadlines — enjoy every hour of it.
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col gap-2 w-full md:min-w-[200px] mt-4 md:mt-0">
+                <button
+                  onClick={() => openStore(primary)}
+                  className="py-2.5 px-4 bg-[#4c6b22] text-[#a4d007] text-xs md:text-[13px] font-bold border-none rounded-sm cursor-pointer hover:bg-[#5a7d28] transition-colors shadow-sm"
+                >
+                  Find on Steam →
+                </button>
 
                 <button
-                  onClick={() =>
-                    selectedDifficulty &&
-                    fetchRecommend({
-                      modifier: "intensity",
-                      maxDifficulty: selectedDifficulty,
-                    })
-                  }
-                  disabled={!selectedDifficulty || loading}
-                  className={`w-full py-2 text-[11px] md:text-xs font-bold border-none rounded-sm mt-2 transition-colors ${
-                    selectedDifficulty
-                      ? "bg-[#4c6b22] text-[#a4d007] cursor-pointer hover:bg-[#5a7d28]"
-                      : "bg-[#2a475e] text-[#8f98a0] cursor-default opacity-60"
-                  }`}
+                  onClick={() => setModalGame(primary)}
+                  className="py-2 px-4 bg-transparent border border-[#3d6a8a] text-[#c6d4df] text-xs rounded-sm cursor-pointer hover:bg-[#1b2838] transition-colors"
                 >
-                  Find intensity →
+                  View details
                 </button>
-              </div>
-            )}
 
-            <div className="border-t border-[#3d6a8a] mt-3 pt-3">
-              {feedbackSent ? (
-                <p className="text-[11px] text-[#8f98a0] text-center">
-                  Thanks for the feedback 🙏
-                </p>
-              ) : (
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-[11px] text-[#8f98a0]">Good pick?</span>
+                <button
+                  onClick={() => {
+                    trackEvent("not_this_one_clicked");
+                    fetchRecommend({});
+                  }}
+                  disabled={loading}
+                  className="py-2 px-4 bg-transparent border border-[#3d6a8a] text-[#8f98a0] text-xs rounded-sm cursor-pointer hover:bg-[#1b2838] disabled:opacity-60 transition-colors"
+                >
+                  {loading ? "Finding..." : "Not this one"}
+                </button>
+
+                {/* Fine tune row */}
+                <div className="flex gap-1 mt-1">
                   <button
-                    onClick={() => submitFeedback(true)}
-                    className="px-3 py-1 text-xs bg-[#1a3a28] text-[#4caf7d] border border-[#2a5a3a] rounded-sm hover:bg-[#1f4a30] transition-colors"
+                    onClick={() => {
+                      setShowShorterSlider(!showShorterSlider);
+                      setShowIntensePanel(false);
+                    }}
+                    className={`flex-1 py-1.5 px-1 text-[10px] rounded-sm cursor-pointer border transition-colors ${
+                      showShorterSlider
+                        ? "bg-[#2a3d1a] border-[#a4d007] text-[#a4d007]"
+                        : "bg-[#1b2838] border-[#3d6a8a] text-[#8f98a0] hover:text-[#c6d4df]"
+                    }`}
                   >
-                    👍 Yes
+                    ⏱ Shorter
                   </button>
+
                   <button
-                    onClick={() => submitFeedback(false)}
-                    className="px-3 py-1 text-xs bg-[#3a1a1a] text-[#e05c5c] border border-[#5a2a2a] rounded-sm hover:bg-[#4a1f1f] transition-colors"
+                    onClick={() => {
+                      setShowIntensePanel(!showIntensePanel);
+                      setShowShorterSlider(false);
+                    }}
+                    className={`flex-1 py-1.5 px-1 text-[10px] rounded-sm cursor-pointer border transition-colors ${
+                      showIntensePanel
+                        ? "bg-[#2a3d1a] border-[#a4d007] text-[#a4d007]"
+                        : "bg-[#1b2838] border-[#3d6a8a] text-[#8f98a0] hover:text-[#c6d4df]"
+                    }`}
                   >
-                    👎 No
+                    🎯 Intensity
+                  </button>
+
+                  <button
+                    onClick={() => fetchRecommend({ modifier: "coop" })}
+                    disabled={loading}
+                    className="flex-1 py-1.5 px-1 text-[10px] rounded-sm cursor-pointer border bg-[#1b2838] border-[#3d6a8a] text-[#8f98a0] hover:text-[#c6d4df] transition-colors"
+                  >
+                    👥 Co-op
                   </button>
                 </div>
-              )}
+
+                {/* Shorter Panel */}
+                {showShorterSlider && (
+                  <div className="bg-[#1b2838] border border-[#3d6a8a] rounded-sm p-3 mt-1 shadow-inner">
+                    <div className="flex justify-between mb-2">
+                      <span className="text-[11px] text-[#8f98a0]">
+                        Hours per day
+                      </span>
+
+                      <span className="text-xs md:text-[13px] font-bold text-[#a4d007]">
+                        {shorterHours}h
+                      </span>
+                    </div>
+
+                    <input
+                      type="range"
+                      min={0.5}
+                      max={8}
+                      step={0.5}
+                      value={shorterHours}
+                      onChange={(e) => setShorterHours(parseFloat(e.target.value))}
+                      className="w-full accent-[#a4d007] mb-1.5 cursor-pointer"
+                    />
+
+                    <div className="flex justify-between text-[9px] md:text-[10px] text-[#8f98a0] mb-2.5">
+                      <span>30m</span>
+                      <span>2h</span>
+                      <span>4h</span>
+                      <span>6h</span>
+                      <span>8h</span>
+                    </div>
+
+                    <button
+                      onClick={() =>
+                        fetchRecommend({
+                          overrideMinutes: Math.round(shorterHours * 60),
+                        })
+                      }
+                      disabled={loading}
+                      className="w-full py-2 bg-[#4c6b22] text-[#a4d007] text-xs font-bold border-none rounded-sm cursor-pointer hover:bg-[#5a7d28] transition-colors"
+                    >
+                      Update Time →
+                    </button>
+                  </div>
+                )}
+
+                {/* Intensity Panel */}
+                {showIntensePanel && (
+                  <div className="bg-[#1b2838] border border-[#3d6a8a] rounded-sm p-3 mt-1 shadow-inner">
+                    <div className="mb-2.5 p-2 bg-[#2a475e] rounded-sm border border-[#3d6a8a]">
+                      <span className="text-[9px] md:text-[10px] text-[#8f98a0] block mb-1">
+                        This game is:
+                      </span>
+
+                      <span className="text-xs md:text-[13px] text-[#c6d4df] font-semibold">
+                        {primary.difficulty_label || "⚔️ Fair fight"}
+                      </span>
+                    </div>
+
+                    <p className="text-[10px] md:text-[11px] text-[#8f98a0] mb-2">
+                      I want something:
+                    </p>
+
+                    {DIFFICULTY_OPTIONS.map((opt) => {
+                      const isAvailable =
+                        data.meta.available_difficulties?.includes(opt.val) ?? true;
+
+                      return (
+                        <label
+                          key={opt.val}
+                          className={`flex items-center gap-2 p-1.5 rounded-sm transition-colors cursor-pointer ${
+                            !isAvailable
+                              ? "opacity-40 cursor-not-allowed"
+                              : selectedDifficulty === opt.val
+                                ? "bg-[#2a3d1a]"
+                                : "hover:bg-[#2a475e]"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="difficulty"
+                            value={opt.val}
+                            checked={selectedDifficulty === opt.val}
+                            onChange={() => setSelectedDifficulty(opt.val)}
+                            disabled={!isAvailable}
+                            className="accent-[#a4d007] cursor-inherit"
+                          />
+
+                          <span
+                            className={`text-[11px] md:text-xs ${
+                              !isAvailable
+                                ? "text-[#8f98a0]"
+                                : selectedDifficulty === opt.val
+                                  ? "text-[#a4d007]"
+                                  : "text-[#c6d4df]"
+                            }`}
+                          >
+                            {opt.label}{" "}
+                            {!isAvailable && (
+                              <span className="italic ml-1 text-[9px] md:text-[10px]">
+                                (N/A)
+                              </span>
+                            )}
+                          </span>
+                        </label>
+                      );
+                    })}
+
+                    <button
+                      onClick={() =>
+                        selectedDifficulty &&
+                        fetchRecommend({
+                          modifier: "intensity",
+                          maxDifficulty: selectedDifficulty,
+                        })
+                      }
+                      disabled={!selectedDifficulty || loading}
+                      className={`w-full py-2 text-[11px] md:text-xs font-bold border-none rounded-sm mt-2 transition-colors ${
+                        selectedDifficulty
+                          ? "bg-[#4c6b22] text-[#a4d007] cursor-pointer hover:bg-[#5a7d28]"
+                          : "bg-[#2a475e] text-[#8f98a0] cursor-default opacity-60"
+                      }`}
+                    >
+                      Find intensity →
+                    </button>
+                  </div>
+                )}
+
+                <div className="border-t border-[#3d6a8a] mt-3 pt-3">
+                  {feedbackSent ? (
+                    <p className="text-[11px] text-[#8f98a0] text-center">
+                      Thanks for the feedback 🙏
+                    </p>
+                  ) : (
+                    <div className="flex items-center justify-center gap-2">
+                      <span className="text-[11px] text-[#8f98a0]">Good pick?</span>
+                      <button
+                        onClick={() => submitFeedback(true)}
+                        className="px-3 py-1 text-xs bg-[#1a3a28] text-[#4caf7d] border border-[#2a5a3a] rounded-sm hover:bg-[#1f4a30] transition-colors"
+                      >
+                        👍 Yes
+                      </button>
+                      <button
+                        onClick={() => submitFeedback(false)}
+                        className="px-3 py-1 text-xs bg-[#3a1a1a] text-[#e05c5c] border border-[#5a2a2a] rounded-sm hover:bg-[#4a1f1f] transition-colors"
+                      >
+                        👎 No
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* Alternatives - 1 column on mobile, 2 columns on desktop */}
-        <p className="text-[10px] md:text-[11px] text-[#8f98a0] uppercase tracking-wider mb-2 font-semibold">
-          Alternatives
-        </p>
+            {/* Alternatives - 1 column on mobile, 2 columns on desktop */}
+            {data.alternatives && data.alternatives.length > 0 && (
+              <>
+                <p className="text-[10px] md:text-[11px] text-[#8f98a0] uppercase tracking-wider mb-2 font-semibold">
+                  Alternatives
+                </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-          {data.alternatives.map((game) => (
-            <AlternativeCard
-              key={game.title}
-              game={game}
-              onClick={setModalGame}
-            />
-          ))}
-        </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                  {data.alternatives.map((game) => (
+                    <AlternativeCard
+                      key={game.title}
+                      game={game}
+                      onClick={setModalGame}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
 
-        <button
-          onClick={() => router.push("/")}
-          className="py-2.5 px-4 md:px-5 bg-transparent border border-[#2a475e] text-[#8f98a0] text-xs rounded-sm cursor-pointer hover:text-[#c6d4df] hover:border-[#3d6a8a] transition-colors w-full sm:w-auto shadow-sm"
-        >
-          ← Try with different settings
-        </button>
+            <button
+              onClick={() => router.push("/")}
+              className="py-2.5 px-4 md:px-5 bg-transparent border border-[#2a475e] text-[#8f98a0] text-xs rounded-sm cursor-pointer hover:text-[#c6d4df] hover:border-[#3d6a8a] transition-colors w-full sm:w-auto shadow-sm"
+            >
+              ← Try with different settings
+            </button>
+          </>
+        )}
       </div>
 
       {modalGame && (
