@@ -167,7 +167,16 @@ def get_recommendations(req: RecommendRequest) -> dict:
         else:
             genre_bonus = 0  
             
-        return rating + fit_bonus + sweet_spot + completion_bonus + genre_bonus
+        # Underdog bonus for surprise mode
+        if is_surprise:
+            if 75 <= rating <= 85:
+                underdog_bonus = random.randint(10, 25)
+            else:
+                underdog_bonus = 0
+        else:
+            underdog_bonus = 0
+
+        return rating + fit_bonus + sweet_spot + completion_bonus + genre_bonus + underdog_bonus
 
     # ── Sort + Tier Shuffle ────────────────────────────────────────
     sorted_games = sorted(filtered, key=score, reverse=True)
@@ -223,12 +232,29 @@ def get_recommendations(req: RecommendRequest) -> dict:
             "action":  "High-intensity from start to finish",
             "rpg":     "Deep enough to get lost in",
             "puzzle":  "Satisfying to think through",
-            "surprise": "Something different tonight",
         }
 
         primary_vibe = vibes[0] if vibes else None
-        if primary_vibe and primary_vibe in vibe_explanations:
-            explanation += f" · {vibe_explanations[primary_vibe]}"
+        if primary_vibe:
+            if primary_vibe == "surprise":
+                game_genres = g.get("genres", [])
+                if "Relaxed" in game_genres:
+                    surprise_label = "Unexpectedly cozy"
+                elif "Story" in game_genres:
+                    surprise_label = "A hidden narrative gem"
+                elif "Action" in game_genres:
+                    surprise_label = "A wild card pick"
+                elif "Puzzle" in game_genres:
+                    surprise_label = "A puzzle you won't see coming"
+                elif "RPG" in game_genres:
+                    surprise_label = "An RPG you probably overlooked"
+                elif "Classic" in game_genres:
+                    surprise_label = "A retro surprise"
+                else:
+                    surprise_label = "Something you didn't know you needed"
+                explanation += f" · {surprise_label}"
+            elif primary_vibe in vibe_explanations:
+                explanation += f" · {vibe_explanations[primary_vibe]}"
 
         return {
             "id": g["id"],
