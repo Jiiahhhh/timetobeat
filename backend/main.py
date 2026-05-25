@@ -10,7 +10,8 @@ origins = [
     "http://localhost:3000",
     "https://timetobeat.app",           
     "https://www.timetobeat.app",       
-    "https://timetobeat-saz7.vercel.app"
+    "https://timetobeat-saz7.vercel.app",
+    "http://127.0.0.1:3000"
 ]
 
 # Allow frontend (Next.js) to call backend

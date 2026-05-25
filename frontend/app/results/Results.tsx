@@ -34,7 +34,7 @@ export default function Results() {
 
   const initTime = parseInt(searchParams.get("time") || "60");
   const initVibes = searchParams.getAll("vibe");
-  const initVibe = initVibes.length > 0 ? initVibe = initVibes : ["surprise"];
+  const initVibe = initVibes.length > 0 ? initVibes : ["surprise"];
   const initPlatform = searchParams.get("platform") || "any";
 
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://timetobeat-production.up.railway.app";
@@ -189,16 +189,16 @@ export default function Results() {
 
   const finishLabel = primary
     ? finishDate.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      })
+      month: "short",
+      day: "numeric",
+    })
     : "";
 
   const platformLabel =
     data.meta.platform === "any"
       ? "Steam"
       : data.meta.platform.charAt(0).toUpperCase() +
-        data.meta.platform.slice(1);
+      data.meta.platform.slice(1);
 
   /**
    * Tracks steam search click event and redirects user to Steam store page.
@@ -271,7 +271,6 @@ export default function Results() {
 
   return (
     <main className="min-h-screen bg-[#1b2838]">
-      {/* Responsive Navbar */}
       <div className="bg-[#171a21] border-b border-[#2a475e] px-4 md:px-8 py-3 flex items-center justify-between">
         <h1 className="text-base md:text-lg font-bold text-[#c6d4df] tracking-wide">
           TimeToBeat
@@ -287,7 +286,6 @@ export default function Results() {
 
       <div className="max-w-5xl mx-auto px-4 md:px-8 py-6 md:py-8">
         {!primary ? (
-          /* Premium Empty State */
           <div className="bg-[#2a475e]/40 border border-[#3d6a8a] rounded-sm p-8 md:p-12 text-center flex flex-col items-center justify-center max-w-2xl mx-auto my-8 shadow-xl backdrop-blur-sm animate-in fade-in zoom-in-95 duration-500">
             <div className="text-5xl md:text-6xl mb-6 animate-bounce">🎮🌌</div>
             <h2 className="text-2xl md:text-3xl font-bold text-[#c6d4df] mb-4 tracking-tight leading-tight">
@@ -316,9 +314,7 @@ export default function Results() {
             </div>
           </div>
         ) : (
-          /* Normal Pick & Alternatives */
           <>
-            {/* Primary Card - 1 column on mobile, 3 columns on desktop */}
             <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-5 md:gap-7 bg-[#2a475e] border border-[#a4d007] rounded-sm p-5 md:p-7 mb-6 items-start relative">
               {loading && (
                 <div className="absolute inset-0 bg-[#2a475e]/80 flex items-center justify-center z-10 rounded-sm">
@@ -345,7 +341,6 @@ export default function Results() {
                 </div>
               )}
 
-              {/* Cover image - centered on mobile, left on desktop */}
               <div className="flex justify-center md:block">
                 <div className="w-[160px] h-[220px] md:w-[120px] md:h-[160px] bg-[#1b2838] rounded-sm shadow-md flex items-center justify-center text-3xl overflow-hidden">
                   {primary.cover_portrait_url || primary.cover_url ? (
@@ -377,7 +372,6 @@ export default function Results() {
                 </div>
               </div>
 
-              {/* Text info - centered on mobile, left aligned on desktop */}
               <div className="text-center md:text-left">
                 <div className="inline-block text-[9px] md:text-[10px] bg-[#4c6b22] text-[#a4d007] px-2 py-0.5 rounded-sm font-bold mb-2 tracking-wider">
                   TOP PICK
@@ -439,7 +433,6 @@ export default function Results() {
                 </div>
               </div>
 
-              {/* Action Buttons */}
               <div className="flex flex-col gap-2 w-full md:min-w-[200px] mt-4 md:mt-0">
                 <button
                   onClick={() => openStore(primary)}
@@ -466,18 +459,16 @@ export default function Results() {
                   {loading ? "Finding..." : "Not this one"}
                 </button>
 
-                {/* Fine tune row */}
                 <div className="flex gap-1 mt-1">
                   <button
                     onClick={() => {
                       setShowShorterSlider(!showShorterSlider);
                       setShowIntensePanel(false);
                     }}
-                    className={`flex-1 py-1.5 px-1 text-[10px] rounded-sm cursor-pointer border transition-colors ${
-                      showShorterSlider
-                        ? "bg-[#2a3d1a] border-[#a4d007] text-[#a4d007]"
-                        : "bg-[#1b2838] border-[#3d6a8a] text-[#8f98a0] hover:text-[#c6d4df]"
-                    }`}
+                    className={`flex-1 py-1.5 px-1 text-[10px] rounded-sm cursor-pointer border transition-colors ${showShorterSlider
+                      ? "bg-[#2a3d1a] border-[#a4d007] text-[#a4d007]"
+                      : "bg-[#1b2838] border-[#3d6a8a] text-[#8f98a0] hover:text-[#c6d4df]"
+                      }`}
                   >
                     ⏱ Shorter
                   </button>
@@ -487,11 +478,10 @@ export default function Results() {
                       setShowIntensePanel(!showIntensePanel);
                       setShowShorterSlider(false);
                     }}
-                    className={`flex-1 py-1.5 px-1 text-[10px] rounded-sm cursor-pointer border transition-colors ${
-                      showIntensePanel
-                        ? "bg-[#2a3d1a] border-[#a4d007] text-[#a4d007]"
-                        : "bg-[#1b2838] border-[#3d6a8a] text-[#8f98a0] hover:text-[#c6d4df]"
-                    }`}
+                    className={`flex-1 py-1.5 px-1 text-[10px] rounded-sm cursor-pointer border transition-colors ${showIntensePanel
+                      ? "bg-[#2a3d1a] border-[#a4d007] text-[#a4d007]"
+                      : "bg-[#1b2838] border-[#3d6a8a] text-[#8f98a0] hover:text-[#c6d4df]"
+                      }`}
                   >
                     🎯 Intensity
                   </button>
@@ -505,7 +495,6 @@ export default function Results() {
                   </button>
                 </div>
 
-                {/* Shorter Panel */}
                 {showShorterSlider && (
                   <div className="bg-[#1b2838] border border-[#3d6a8a] rounded-sm p-3 mt-1 shadow-inner">
                     <div className="flex justify-between mb-2">
@@ -550,7 +539,6 @@ export default function Results() {
                   </div>
                 )}
 
-                {/* Intensity Panel */}
                 {showIntensePanel && (
                   <div className="bg-[#1b2838] border border-[#3d6a8a] rounded-sm p-3 mt-1 shadow-inner">
                     <div className="mb-2.5 p-2 bg-[#2a475e] rounded-sm border border-[#3d6a8a]">
@@ -574,13 +562,12 @@ export default function Results() {
                       return (
                         <label
                           key={opt.val}
-                          className={`flex items-center gap-2 p-1.5 rounded-sm transition-colors cursor-pointer ${
-                            !isAvailable
-                              ? "opacity-40 cursor-not-allowed"
-                              : selectedDifficulty === opt.val
-                                ? "bg-[#2a3d1a]"
-                                : "hover:bg-[#2a475e]"
-                          }`}
+                          className={`flex items-center gap-2 p-1.5 rounded-sm transition-colors cursor-pointer ${!isAvailable
+                            ? "opacity-40 cursor-not-allowed"
+                            : selectedDifficulty === opt.val
+                              ? "bg-[#2a3d1a]"
+                              : "hover:bg-[#2a475e]"
+                            }`}
                         >
                           <input
                             type="radio"
@@ -593,13 +580,12 @@ export default function Results() {
                           />
 
                           <span
-                            className={`text-[11px] md:text-xs ${
-                              !isAvailable
-                                ? "text-[#8f98a0]"
-                                : selectedDifficulty === opt.val
-                                  ? "text-[#a4d007]"
-                                  : "text-[#c6d4df]"
-                            }`}
+                            className={`text-[11px] md:text-xs ${!isAvailable
+                              ? "text-[#8f98a0]"
+                              : selectedDifficulty === opt.val
+                                ? "text-[#a4d007]"
+                                : "text-[#c6d4df]"
+                              }`}
                           >
                             {opt.label}{" "}
                             {!isAvailable && (
@@ -621,11 +607,10 @@ export default function Results() {
                         })
                       }
                       disabled={!selectedDifficulty || loading}
-                      className={`w-full py-2 text-[11px] md:text-xs font-bold border-none rounded-sm mt-2 transition-colors ${
-                        selectedDifficulty
-                          ? "bg-[#4c6b22] text-[#a4d007] cursor-pointer hover:bg-[#5a7d28]"
-                          : "bg-[#2a475e] text-[#8f98a0] cursor-default opacity-60"
-                      }`}
+                      className={`w-full py-2 text-[11px] md:text-xs font-bold border-none rounded-sm mt-2 transition-colors ${selectedDifficulty
+                        ? "bg-[#4c6b22] text-[#a4d007] cursor-pointer hover:bg-[#5a7d28]"
+                        : "bg-[#2a475e] text-[#8f98a0] cursor-default opacity-60"
+                        }`}
                     >
                       Find intensity →
                     </button>
@@ -658,7 +643,6 @@ export default function Results() {
               </div>
             </div>
 
-            {/* Alternatives - 1 column on mobile, 2 columns on desktop */}
             {data.alternatives && data.alternatives.length > 0 && (
               <>
                 <p className="text-[10px] md:text-[11px] text-[#8f98a0] uppercase tracking-wider mb-2 font-semibold">

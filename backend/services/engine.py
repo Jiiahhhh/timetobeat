@@ -189,7 +189,7 @@ def get_recommendations(req: RecommendRequest) -> dict:
     if not unique:
         unique = all_games
 
-    def format_game(g):
+    def format_game(g, is_alternative=False, primary_main=None):
         """
         Format internal game database object into client-safe representation,
         calculating session progress and generating localized flavor explanation text.
@@ -250,6 +250,13 @@ def get_recommendations(req: RecommendRequest) -> dict:
             elif primary_vibe in vibe_explanations:
                 explanation += f" · {vibe_explanations[primary_vibe]}"
 
+        if is_alternative and primary_main is not None:
+            alt_main = float(g["hltb_main"] or 0)
+            if alt_main < primary_main * 0.7:
+                explanation += " · Shorter commitment"
+            elif alt_main > primary_main * 1.3:
+                explanation += " · More to explore"
+
         return {
             "id": g["id"],
             "title": g["title"],
@@ -271,7 +278,11 @@ def get_recommendations(req: RecommendRequest) -> dict:
         }
 
     primary = format_game(unique[0]) if len(unique) > 0 else None
-    alts = [format_game(g) for g in unique[1:3]]
+    primary_main = float(unique[0]["hltb_main"] or 0) if unique else None
+    alts = [
+        format_game(g, is_alternative=True, primary_main=primary_main)
+        for g in unique[1:3]
+    ]
 
     return {
         "primary": primary,
