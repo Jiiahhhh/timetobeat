@@ -7,6 +7,10 @@ load_dotenv()
 _access_token = None
 
 def get_access_token() -> str:
+    """
+    Retrieve Twitch OAuth2 client credentials access token for IGDB API requests.
+    Caches the retrieved token in a module-level variable.
+    """
     global _access_token
     if _access_token:
         return _access_token
@@ -23,6 +27,10 @@ def get_access_token() -> str:
     return _access_token
 
 def get_igdb_data(game_title: str) -> dict:
+    """
+    Search IGDB API for a game matching the title.
+    Returns metadata including title, cover URL, genres, platforms, rating, and summary.
+    """
     try:
         client_id = os.getenv("TWITCH_CLIENT_ID")
         token = get_access_token()
@@ -59,4 +67,4 @@ def get_igdb_data(game_title: str) -> dict:
             "summary": g.get("summary", "")
         }
     except Exception as e:
-        return {"error": str(e)}
+        return {"error": str(e)}

@@ -2,14 +2,24 @@ import { useEffect } from "react";
 import { Game } from "../types";
 
 interface Props {
+  /** The game object containing details to display. */
   game: Game;
+  /** Label describing the current platform (e.g. "Steam", "Windows"). */
   platformLabel: string;
+  /** True if this game is displayed as an alternative recommendation. */
   isAlternative: boolean;
+  /** Callback to close the modal. */
   onClose: () => void;
+  /** Callback to open the Steam/store link for the game. */
   onOpenStore: (game: Game) => void;
+  /** Callback to promote this alternative game to be the primary recommendation. */
   onPromoteAlternative: (game: Game) => void;
 }
 
+/**
+ * Renders a full overlay detail modal for a recommended game.
+ * Shows cover, tags, description, YouTube trailer, and action buttons.
+ */
 export default function GameModal({
   game,
   platformLabel,
@@ -34,7 +44,6 @@ export default function GameModal({
         onClick={(e) => e.stopPropagation()}
         className="bg-[#1b2838] border border-[#3d6a8a] rounded-md w-full max-w-[680px] max-h-[90vh] md:max-h-[85vh] overflow-y-auto shadow-2xl"
       >
-        {/* Header */}
         <div className="flex items-center justify-between px-4 md:px-6 py-3 md:py-4 border-b border-[#2a475e] sticky top-0 bg-[#1b2838] z-10">
           <h3 className="text-lg md:text-xl font-bold text-[#c6d4df] truncate pr-4">
             {game.title}
@@ -49,7 +58,6 @@ export default function GameModal({
         </div>
 
         <div className="p-4 md:p-6">
-          {/* Cover + info - stacked vertically on mobile, side by side on desktop */}
           <div className="flex flex-col md:flex-row gap-4 md:gap-5 mb-6">
             <div className="w-[100px] h-[135px] md:w-[100px] md:h-[135px] shrink-0 mx-auto md:mx-0 bg-[#1b2838] rounded-sm shadow-md flex items-center justify-center text-3xl overflow-hidden">
               {game.cover_portrait_url || game.cover_url ? (
@@ -76,7 +84,6 @@ export default function GameModal({
               )}
             </div>
 
-            {/* Text centered on mobile, left aligned on desktop */}
             <div className="text-center md:text-left mt-2 md:mt-0">
               <div className="flex justify-center md:justify-start gap-1.5 flex-wrap mb-3">
                 {game.genres.map((g) => (
@@ -118,7 +125,6 @@ export default function GameModal({
             </div>
           </div>
 
-          {/* Trailer section */}
           <div className="mb-5">
             <p className="text-[10px] md:text-[11px] text-[#8f98a0] uppercase tracking-wider mb-2 font-semibold">
               Trailer
@@ -156,7 +162,6 @@ export default function GameModal({
             )}
           </div>
 
-          {/* Action buttons - stacked vertically on mobile, inline on desktop */}
           <div className="flex flex-col sm:flex-row gap-2.5 md:gap-3">
             <button
               onClick={() => onOpenStore(game)}

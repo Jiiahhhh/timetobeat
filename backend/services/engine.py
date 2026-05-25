@@ -6,6 +6,10 @@ from schemas.request_models import RecommendRequest
 
 
 def parse_genres(genres_val):
+    """
+    Parse the genres field from database into a list of strings.
+    Handles JSON list inputs, JSON strings, and raw strings.
+    """
     if isinstance(genres_val, list): return genres_val
     if isinstance(genres_val, str):
         try: return json.loads(genres_val)
@@ -14,6 +18,10 @@ def parse_genres(genres_val):
 
 
 def parse_platforms(platforms_val):
+    """
+    Parse the platforms field from database into a list of strings.
+    Handles JSON list inputs, JSON strings, and raw strings.
+    """
     if isinstance(platforms_val, list): return platforms_val
     if isinstance(platforms_val, str):
         try: return json.loads(platforms_val)
@@ -37,35 +45,34 @@ def tier_shuffle(games: list, tier_size: int = 5) -> list:
 
 
 def get_recommendations(req: RecommendRequest) -> dict:
+    """
+    Generate game recommendations based on the user's available time, vibe, platform, and other modifiers.
+    Calculates custom suitability scores for games and returns a primary recommendation and alternatives.
+    """
     time_hours = req.time_available / 60
     vibes = req.vibe if isinstance(req.vibe, list) else [req.vibe]
     
-    #  ── Database-level filtering ────────────────────────────────────
     target_genres = []
     for v in vibes:
         target_genres.extend(VIBE_TO_GENRES.get(v, []))
-    target_genres = list(set(target_genres)) # deduplicate
+    target_genres = list(set(target_genres))
 
     query = supabase.table("games").select("*")
 
-    # Apply genre filter at database level (skip if surprise)
     is_surprise = "surprise" in vibes
     if not is_surprise and target_genres:
         query = query.overlaps("genres", target_genres)
 
-    # Apply platform filter at database level
     if req.platform and req.platform != "any":
         query = query.overlaps("platforms", [req.platform])
 
     res = query.execute()
     filtered = res.data
 
-    # ── Normalize data ──────────────────────────────────────────────
     for g in filtered:
         g["genres"] = parse_genres(g["genres"])
         g["platforms"] = parse_platforms(g["platforms"])
 
-    # If database returned no games matching the filters, return a clean empty response
     if not filtered:
         return {
             "primary": None,
@@ -80,13 +87,10 @@ def get_recommendations(req: RecommendRequest) -> dict:
             }
         }
 
-    # Store all_games for fallback
     all_games = filtered[:]
 
-    # ── Available difficulties (before modifier) ───────────────────
     available_diffs = list(set([g.get("difficulty") or 3 for g in filtered]))
 
-    # ── Modifier filters ────────────────────────────────────────────
     if req.modifier == "coop":
         coop_games = [g for g in filtered if g.get("is_coop")]
 
@@ -111,71 +115,70 @@ def get_recommendations(req: RecommendRequest) -> dict:
         if len(exact) >= 1:
             filtered = exact
 
-    # ── Exclude already-shown titles ────────────────────────────────
     if req.exclude_titles:
         filtered = [g for g in filtered if g["title"] not in req.exclude_titles]
 
-    # ── Scoring Engine ──────────────────────────────────────────────
     def score(g):
-        # 0. HARD FILTERS — eliminate mismatches immediately
+        """
+        Calculate game recommendation compatibility score based on rating, session fit,
+        completion ratio, and genre matches. Applies surprise-mode underdog boosts.
+        """
         if "relaxed" in vibes:
             diff = g.get("difficulty") or 3
             if diff >= 3:
                 return -999
 
-        # 1. RATING — null = 70 (neutral, not 0)
         rating = float(g["rating"] or 70)
 
-        # 2. SESSION FIT — how well game duration matches user time
         main_hours = float(g["hltb_main"] or 0)
         sessions = main_hours / time_hours if time_hours > 0 else 999
 
-        if sessions <= 1:    fit_bonus = 25   # finish today
-        elif sessions <= 3:  fit_bonus = 20   # finish in 3 days
-        elif sessions <= 7:  fit_bonus = 15   # finish in a week
-        elif sessions <= 14: fit_bonus = 8    # finish in 2 weeks
-        elif sessions <= 30: fit_bonus = 2    # finish in a month
-        else:                fit_bonus = -20  # too long
+        if sessions <= 1:    fit_bonus = 25
+        elif sessions <= 3:  fit_bonus = 20
+        elif sessions <= 7:  fit_bonus = 15
+        elif sessions <= 14: fit_bonus = 8
+        elif sessions <= 30: fit_bonus = 2
+        else:                fit_bonus = -20
 
-        # 3. SWEET SPOT BONUS — 2-5 sessions is ideal
-        # Gives a sense of progress without being overwhelming
         sweet_spot = 5 if 2 <= sessions <= 5 else 0
 
-        # 4. COMPLETION RATIO — proxy for gameplay quality
-        # Games where completionist time is close to main story = engaging until the end
         comp = float(g["hltb_completionist"] or 0)
         main = float(g["hltb_main"] or 0)
         completion_bonus = 0
         if comp > 0 and main > 0:
             ratio = comp / main
-            if ratio <= 2:    completion_bonus = 5   # close completionist time = engaging
+            if ratio <= 2:    completion_bonus = 5
             elif ratio <= 4:  completion_bonus = 2
-            else:             completion_bonus = -3  # far completionist time = grindy
+            else:             completion_bonus = -3
 
-        # 5. GENRE MATCH BONUS — more genre matches = more relevant
         if not is_surprise:
             game_genres = g.get("genres", [])
             matched = sum(1 for genre in target_genres if genre in game_genres)
             if matched == len(vibes):
-                genre_bonus = 15   # matches all selected genres
+                genre_bonus = 15
             elif matched >= 2:
-                genre_bonus = 8    # matches most selected genres
+                genre_bonus = 8
             elif matched == 1:
-                genre_bonus = 0    # minimal match, no bonus
+                genre_bonus = 0
             else:
-                genre_bonus = -10  # no match at all
+                genre_bonus = -10
         else:
             genre_bonus = 0  
             
-        return rating + fit_bonus + sweet_spot + completion_bonus + genre_bonus
+        if is_surprise:
+            if 75 <= rating <= 85:
+                underdog_bonus = random.randint(10, 25)
+            else:
+                underdog_bonus = 0
+        else:
+            underdog_bonus = 0
 
-    # ── Sort + Tier Shuffle ────────────────────────────────────────
+        return rating + fit_bonus + sweet_spot + completion_bonus + genre_bonus + underdog_bonus
+
     sorted_games = sorted(filtered, key=score, reverse=True)
 
-    # Shuffle within tiers — adds variety without sacrificing quality
     shuffled_games = tier_shuffle(sorted_games, tier_size=5)
 
-    # ── Deduplicate ────────────────────────────────────────────────
     seen = set()
     unique = []
     for g in shuffled_games:
@@ -183,12 +186,14 @@ def get_recommendations(req: RecommendRequest) -> dict:
             seen.add(g["title"])
             unique.append(g)
 
-    # Fallback if filtered results are empty
     if not unique:
         unique = all_games
 
-    # ── Format response ────────────────────────────────────────────
     def format_game(g):
+        """
+        Format internal game database object into client-safe representation,
+        calculating session progress and generating localized flavor explanation text.
+        """
         main = float(g["hltb_main"] or 0)
         days = round(main / time_hours) if time_hours > 0 and main > 0 else None
         framing = f"~{main}h main story"
@@ -197,7 +202,6 @@ def get_recommendations(req: RecommendRequest) -> dict:
         diff = g.get("difficulty") or 3
         game_genres = g.get("genres", [])
 
-        # ── Explanation ───────────────────────────────────────────────
         sessions = main / time_hours if time_hours > 0 and main > 0 else 999
 
         if req.modifier == "coop":
@@ -216,7 +220,6 @@ def get_recommendations(req: RecommendRequest) -> dict:
         else:
             explanation = "A longer commitment, but worth it"
 
-        # Vibe layer — based on user input
         vibe_explanations = {
             "relaxed": "Perfect for winding down",
             "story":   "A story worth experiencing",

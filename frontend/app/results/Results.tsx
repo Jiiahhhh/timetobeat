@@ -8,6 +8,11 @@ import AlternativeCard from "../../components/AlternativeCard";
 import GameModal from "../../components/GameModal";
 import { trackEvent } from "../../lib/analytics";
 
+/**
+ * Results page component that orchestrates recommended games display.
+ * Fetches recommendation data from backend, supports alternative selection,
+ * user feedback submission, and fine-tuning modifiers.
+ */
 export default function Results() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -29,11 +34,16 @@ export default function Results() {
 
   const initTime = parseInt(searchParams.get("time") || "60");
   const initVibes = searchParams.getAll("vibe");
-  const initVibe = initVibes.length > 0 ? initVibes : ["surprise"];
+  const initVibe = initVibes.length > 0 ? initVibe = initVibes : ["surprise"];
   const initPlatform = searchParams.get("platform") || "any";
 
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://timetobeat-production.up.railway.app";
 
+  /**
+   * Fetch recommendations from the FastAPI backend based on current user preferences and options.
+   * 
+   * @param opts Optional modifiers to fine-tune recommendation results.
+   */
   const fetchRecommend = async (opts: {
     modifier?: string;
     overrideMinutes?: number;
@@ -49,9 +59,7 @@ export default function Results() {
         opts.overrideMinutes ??
         (data?.meta?.time_available_minutes || initTime);
 
-      // Use shownTitles as exclude list
       const excludeList = opts.exclude ?? shownTitles;
-
       const rawVibe = data?.meta?.vibe || initVibe;
       const vibeToSend = rawVibe;
       const platformToSend = data?.meta?.platform || initPlatform;
@@ -76,7 +84,6 @@ export default function Results() {
 
       const newData = await res.json();
 
-      // Update shownTitles with newly displayed games safely if primary is found
       if (newData.primary) {
         setShownTitles((prev) => [
           ...prev,
@@ -193,6 +200,11 @@ export default function Results() {
       : data.meta.platform.charAt(0).toUpperCase() +
         data.meta.platform.slice(1);
 
+  /**
+   * Tracks steam search click event and redirects user to Steam store page.
+   * 
+   * @param game The game object to open store for.
+   */
   const openStore = (game: Game) => {
     trackEvent("find_on_steam_clicked", { game: game.title });
     if (game.steam_app_id) {
@@ -208,6 +220,11 @@ export default function Results() {
     }
   };
 
+  /**
+   * Promotes alternative recommendation to primary pick.
+   * 
+   * @param game The game to promote.
+   */
   const promoteAlternative = (game: Game) => {
     if (!primary) return;
     const newAlts = [
@@ -220,6 +237,11 @@ export default function Results() {
     setFeedbackSent(null);
   };
 
+  /**
+   * Submits positive or negative user rating on the recommendation.
+   * 
+   * @param value True for positive thumbs up, false for negative thumbs down.
+   */
   const submitFeedback = async (value: boolean) => {
     if (!data?.primary?.id) return;
     const type = value ? "positive" : "negative";

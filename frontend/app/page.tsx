@@ -19,6 +19,10 @@ export default function Home() {
   const [platform, setPlatform] = useState("any");
   const [loading, setLoading] = useState(false);
 
+  /**
+   * Aggregate preview games across all currently selected moods.
+   * Restricts preview result to a maximum of 5 titles.
+   */
   const previewGames = () => {
     const all = new Set<string>();
 
@@ -29,11 +33,19 @@ export default function Home() {
     return [...all].slice(0, 5);
   };
 
+  /**
+   * Toggles selection state of a specific mood vibe.
+   * 
+   * @param id The identifier of the mood to toggle.
+   */
   const toggleMood = (id: string) =>
     setSelectedMoods((prev) =>
       prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id],
     );
 
+  /**
+   * Submits chosen filters, tracks final step completion, and redirects to results page.
+   */
   const handleSubmit = () => {
     setLoading(true);
     trackEvent("funnel_step3_completed", { platform });
@@ -44,7 +56,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#1b2838]">
-      {/* Navbar - Responsive padding */}
       <nav className="bg-[#171a21] border-b border-[#2a475e] px-4 md:px-8 py-3 flex items-center justify-between">
         <h1 className="text-base md:text-lg font-bold text-[#c6d4df] tracking-wide">
           TimeToBeat
@@ -55,11 +66,8 @@ export default function Home() {
         </p>
       </nav>
 
-      {/* Main Container - Stack vertically on mobile, horizontal on desktop */}
       <div className="max-w-6xl mx-auto px-4 md:px-8 py-8 md:py-12 flex flex-col md:flex-row gap-8 md:gap-10 items-start">
-        {/* Left Column: Form - 100% on mobile, 70% on desktop */}
         <div className="w-full md:w-[70%]">
-          {/* Step indicator */}
           <div className="flex gap-2 md:gap-3 mb-8 md:mb-10">
             {[1, 2, 3].map((s) => (
               <div key={s} className="flex-1">
@@ -84,7 +92,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* STEP 1 */}
           {step === 1 && (
             <div className="animate-in fade-in duration-300">
               <h2 className="text-xl md:text-2xl font-bold text-[#c6d4df] mb-2">
@@ -167,7 +174,6 @@ export default function Home() {
                 Pick one or more — we&apos;ll find what fits.
               </p>
 
-              {/* Grid: 2 columns on mobile, 3 columns on desktop */}
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 mb-4">
                 {MOODS.map((m) => (
                   <div
@@ -225,7 +231,6 @@ export default function Home() {
                 )}
               </div>
 
-              {/* VALIDATION: Disable Next button if nothing selected */}
               <button
                 onClick={() => {
                   trackEvent("funnel_step2_completed", {
@@ -258,7 +263,6 @@ export default function Home() {
             </div>
           )}
 
-          {/* STEP 3 */}
           {step === 3 && (
             <div className="animate-in fade-in duration-300">
               <h2 className="text-xl md:text-2xl font-bold text-[#c6d4df] mb-2">
@@ -327,7 +331,7 @@ export default function Home() {
                     viewBox="0 0 24 24"
                   >
                     <circle
-                      className="opacity-25"
+                       className="opacity-25"
                       cx="12"
                       cy="12"
                       r="10"
@@ -358,7 +362,6 @@ export default function Home() {
           )}
         </div>
 
-        {/* Right Column: Info - Moves below on mobile, 30% on desktop */}
         <div className="w-full md:w-[30%] pt-2 md:pt-14 flex flex-col gap-4">
           <div className="bg-[#2a475e] border border-[#3d6a8a] rounded p-4 md:p-5">
             <p className="text-[9px] md:text-[10px] text-[#8f98a0] uppercase tracking-widest mb-3 md:mb-4">
