@@ -1,6 +1,11 @@
 from howlongtobeatpy import HowLongToBeat
 
 async def get_hltb_data(game_title: str) -> dict:
+    """
+    Search HowLongToBeat for the specified game title.
+    Returns estimated play hours for main story, main+extra, and completionist,
+    filtering for similarity above a confidence threshold (0.5).
+    """
     try:
         results = await HowLongToBeat().async_search(game_title)
         
@@ -9,7 +14,6 @@ async def get_hltb_data(game_title: str) -> dict:
         
         best = max(results, key=lambda x: x.similarity)
         
-        # Only return if similarity is high enough
         if best.similarity < 0.5:
             return {"error": "No confident match found"}
         
@@ -21,4 +25,4 @@ async def get_hltb_data(game_title: str) -> dict:
             "completionist": best.completionist
         }
     except Exception as e:
-        return {"error": str(e)}
+        return {"error": str(e)}

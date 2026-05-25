@@ -1,10 +1,16 @@
 import { Game } from "../types";
 
 interface Props {
+  /** The game object containing recommendation details. */
   game: Game;
+  /** Callback function triggered when the card is clicked. */
   onClick: (game: Game) => void;
 }
 
+/**
+ * Renders a compact clickable card for alternative game recommendations.
+ * Shows game cover, framing title, dynamic explanation parts, and main story hours.
+ */
 export default function AlternativeCard({ game, onClick }: Props) {
   return (
     <div
@@ -57,3 +63,4 @@ export default function AlternativeCard({ game, onClick }: Props) {
     </div>
   );
 }
+
