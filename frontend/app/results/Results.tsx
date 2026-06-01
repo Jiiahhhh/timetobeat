@@ -270,7 +270,7 @@ export default function Results() {
   };
 
   return (
-    <main className="min-h-screen bg-[#1b2838]">
+    <main className="min-h-screen bg-[#1b2838] flex flex-col">
       <div className="bg-[#171a21] border-b border-[#2a475e] px-4 md:px-8 py-3 flex items-center justify-between">
         <h1 className="text-base md:text-lg font-bold text-[#c6d4df] tracking-wide">
           TimeToBeat
@@ -284,7 +284,7 @@ export default function Results() {
         </button>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 md:px-8 py-6 md:py-8">
+      <div className="max-w-5xl mx-auto px-4 md:px-8 py-6 md:py-8 grow w-full">
         {!primary ? (
           <div className="bg-[#2a475e]/40 border border-[#3d6a8a] rounded-sm p-8 md:p-12 text-center flex flex-col items-center justify-center max-w-2xl mx-auto my-8 shadow-xl backdrop-blur-sm animate-in fade-in zoom-in-95 duration-500">
             <div className="text-5xl md:text-6xl mb-6 animate-bounce">🎮🌌</div>
@@ -670,6 +670,22 @@ export default function Results() {
           </>
         )}
       </div>
+
+      {primary && (
+        <div className="w-full bg-[#1e2d3d] border-t border-b border-[#2a475e] py-4 text-center mt-auto">
+          <p className="text-[11px] md:text-xs text-[#8f98a0] leading-relaxed px-4">
+            ☕ TimeToBeat is free forever. If it helped you tonight, a coffee means a lot.{" "}
+            <a
+              href="https://ko-fi.com/timetobeat"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#a4d007] hover:underline font-semibold ml-1"
+            >
+              Support on Ko-fi
+            </a>
+          </p>
+        </div>
+      )}
 
       {modalGame && (
         <GameModal
