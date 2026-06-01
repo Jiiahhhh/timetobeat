@@ -284,7 +284,7 @@ export default function Results() {
         </button>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 md:px-8 py-6 md:py-8 grow w-full">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 py-6 md:py-8 grow w-full">
         {!primary ? (
           <div className="bg-[#2a475e]/40 border border-[#3d6a8a] rounded-sm p-8 md:p-12 text-center flex flex-col items-center justify-center max-w-2xl mx-auto my-8 shadow-xl backdrop-blur-sm animate-in fade-in zoom-in-95 duration-500">
             <div className="text-5xl md:text-6xl mb-6 animate-bounce">🎮🌌</div>
