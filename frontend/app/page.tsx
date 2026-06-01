@@ -66,7 +66,7 @@ export default function Home() {
         </p>
       </nav>
 
-      <div className="max-w-6xl mx-auto px-4 md:px-8 py-8 md:py-12 flex flex-col md:flex-row gap-8 md:gap-10 items-start">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12 flex flex-col md:flex-row gap-8 md:gap-10 items-start">
         <div className="w-full md:w-[70%]">
           <div className="flex gap-2 md:gap-3 mb-8 md:mb-10">
             {[1, 2, 3].map((s) => (
