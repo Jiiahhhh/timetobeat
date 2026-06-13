@@ -438,15 +438,26 @@ async def seed(test_mode: bool = False):
     # Check existing data
     existing_games = get_existing_games()
     existing_ids = {row["steam_app_id"] for row in existing_games if row.get("steam_app_id")}
-    print(f"\nExisting games in DB: {len(existing_games)}")
+    db_size = len(existing_games)
+    print(f"\nExisting games in DB: {db_size}")
 
     # Fetch popular game list
-    target = 50 if test_mode else 1500
+    # Adaptive Daily Target: If DB size is already >= 1150, reduce target to 300 to minimize API requests and run time.
+    if test_mode:
+        target = 50
+    elif db_size >= 1150:
+        target = 300
+        print("Database is near/at limit. Fetching a smaller target of 300 games to optimize sync time.")
+    else:
+        target = 1500
+        print("Database is below threshold. Fetching a large target of 1500 games to seed database.")
+        
     app_ids = get_popular_app_ids(target)
     print(f"App IDs fetched: {len(app_ids)}")
 
     inserted_or_replaced = 0
     skipped_existing = 0
+    skipped_no_rating = 0
     skipped_no_hltb = 0
     skipped_error = 0
     max_insert = 5 if test_mode else 1200
@@ -478,24 +489,11 @@ async def seed(test_mode: bool = False):
         title_clean = title.encode('ascii', errors='replace').decode('ascii')
         print(f"  Title: {title_clean}")
 
-        # 2. Fetch HLTB
-        hltb = await get_hltb_data(title)
-        if not hltb:
-            print(f"  SKIP — no HLTB data")
-            skipped_no_hltb += 1
-            time.sleep(1)
-            continue
-
-        print(f"  HLTB: main={hltb['hltb_main']}hrs, extra={hltb['hltb_extra']}hrs")
-
-        # 3. Fetch Steam Deck
-        deck_verified = get_steam_deck_verified(app_id)
-
-        # 4. Fetch SteamSpy tags and review data
+        # 2. Fetch SteamSpy tags and review data (needed for tags + rating)
         steamspy_data = get_steamspy_data(app_id)
         steamspy_tags = steamspy_data.get("tags", {}) if isinstance(steamspy_data.get("tags"), dict) else {}
 
-        # 5. Determine and estimate rating
+        # 3. Determine and estimate rating
         metacritic = steam_data.get("metacritic", {})
         rating = metacritic.get("score") if metacritic else None
         rating_source = "Metacritic"
@@ -509,13 +507,48 @@ async def seed(test_mode: bool = False):
                 rating_source = f"Steam reviews ({pos}/{total_revs} positive)"
             else:
                 print(f"  SKIP — no Metacritic rating and insufficient Steam reviews ({total_revs} reviews)")
-                skipped_no_hltb += 1
-                time.sleep(1)
+                skipped_no_rating += 1
+                time.sleep(0.5)  # Short sleep for skipped games
                 continue
 
         print(f"  Rating: {rating} (Source: {rating_source})")
 
-        # 6. Parse all other fields
+        # 4. Check database limit and find worst game to see if candidate is worth processing
+        worst_game = None
+        worst_rating = None
+        current_db_size = len(existing_games)
+
+        if current_db_size >= 1200:
+            # Find the worst game in the database
+            # Treat existing None ratings in the database as 70.0
+            def get_rating_value(g):
+                r = g.get("rating")
+                return float(r) if r is not None else 70.0
+            
+            worst_game = min(existing_games, key=get_rating_value)
+            worst_rating = get_rating_value(worst_game)
+
+            # Compare rating
+            if float(rating) <= worst_rating:
+                worst_title_clean = worst_game['title'].encode('ascii', errors='replace').decode('ascii')
+                print(f"  SKIP — Candidate rating ({rating}) is not better than the worst game in DB ({worst_title_clean} with rating {worst_rating})")
+                time.sleep(0.5)  # Short sleep for skipped games
+                continue
+
+        # 5. Fetch HLTB (only fetch if game is NOT skipped by rating check!)
+        hltb = await get_hltb_data(title)
+        if not hltb:
+            print(f"  SKIP — no HLTB data")
+            skipped_no_hltb += 1
+            time.sleep(1)
+            continue
+
+        print(f"  HLTB: main={hltb['hltb_main']}hrs, extra={hltb['hltb_extra']}hrs")
+
+        # 6. Fetch Steam Deck (only fetch if game is NOT skipped by rating and HLTB check!)
+        deck_verified = get_steam_deck_verified(app_id)
+
+        # 7. Parse all other fields
         platforms = parse_platforms(steam_data, deck_verified)
         genres = parse_genres(steam_data, steamspy_tags)
         is_coop = parse_is_coop(steam_data, steamspy_tags)
@@ -541,28 +574,6 @@ async def seed(test_mode: bool = False):
             "difficulty": difficulty,
             "is_coop": is_coop,
         }
-
-        # 7. Check database limit and find worst game if pruning is needed
-        db_size = len(existing_games)
-        worst_game = None
-        worst_rating = None
-
-        if db_size >= 1200:
-            # Find the worst game in the database
-            # Treat existing None ratings in the database as 70.0
-            def get_rating_value(g):
-                r = g.get("rating")
-                return float(r) if r is not None else 70.0
-            
-            worst_game = min(existing_games, key=get_rating_value)
-            worst_rating = get_rating_value(worst_game)
-
-            # Compare rating
-            if float(rating) <= worst_rating:
-                worst_title_clean = worst_game['title'].encode('ascii', errors='replace').decode('ascii')
-                print(f"  SKIP — Candidate rating ({rating}) is not better than the worst game in DB ({worst_title_clean} with rating {worst_rating})")
-                time.sleep(1)
-                continue
 
         # 8. Delete worst game if replacement is triggered, then insert the new game
         try:
@@ -607,10 +618,11 @@ async def seed(test_mode: bool = False):
     # Summary
     print("\n" + "=" * 60)
     print("SEEDING COMPLETE")
-    print(f"  Operations     : {inserted_or_replaced}")
-    print(f"  Skip (exists)  : {skipped_existing}")
-    print(f"  Skip (no HLTB) : {skipped_no_hltb}")
-    print(f"  Skip (error)   : {skipped_error}")
+    print(f"  Operations        : {inserted_or_replaced}")
+    print(f"  Skip (exists)     : {skipped_existing}")
+    print(f"  Skip (no rating)  : {skipped_no_rating}")
+    print(f"  Skip (no HLTB)    : {skipped_no_hltb}")
+    print(f"  Skip (error)      : {skipped_error}")
     print("=" * 60)
 
     if test_mode and inserted_or_replaced > 0:
