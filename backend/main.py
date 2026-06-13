@@ -27,3 +27,10 @@ app.include_router(recommendations.router, prefix="/api")
 @app.get("/")
 def root():
     return {"status": "TimeToBeat API is running"}
+
+@app.get("/health")
+def health_check():
+    """
+    Lightweight health check endpoint for keep-alive pings (cron-job.org).
+    """
+    return {"status": "ok"}
