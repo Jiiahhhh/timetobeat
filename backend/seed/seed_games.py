@@ -449,8 +449,8 @@ async def seed(test_mode: bool = False):
         target = 300
         print("Database is near/at limit. Fetching a smaller target of 300 games to optimize sync time.")
     else:
-        target = 1500
-        print("Database is below threshold. Fetching a large target of 1500 games to seed database.")
+        target = 150
+        print("Database is below threshold. Fetching a target of 150 games to seed database.")
         
     app_ids = get_popular_app_ids(target)
     print(f"App IDs fetched: {len(app_ids)}")
